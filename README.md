@@ -10,6 +10,11 @@ A web app that allow artists to share their artworks easily.
 3. The project should be on http://localhost:3000/
 4. Everytime you save your code file, it will reflect the new changes on the localhost site. 
 
+### How to run firebase
+1. Download the private .env file (only shared within team)
+2. Put the .env file in the src folder
+3. Run the app
+
 ### How to contribute 
 1. Make sure to create your own brance with this format: [catogory]/[name of the reference]
 category: 
