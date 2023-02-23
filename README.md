@@ -1,11 +1,11 @@
 # Easy Art Show
-A web app that can upload arts to create an art show virtually
+A web app that allow artists to share their artworks easily.
 
 ## Contributing guide
 ### How to run
 1. Clone the project
 2. On your terminal at the project's location, run 
-`cd easyartshow`and 
+`cd easyartshow`and `npm install` and finally
 `npm start`
 3. The project should be on http://localhost:3000/
 4. Everytime you save your code file, it will reflect the new changes on the localhost site. 
