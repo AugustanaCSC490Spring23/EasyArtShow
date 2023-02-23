@@ -1,5 +1,5 @@
 # Easy Art Show
-A web app that allow artists to upload their artworks easily.
+A web app that allow artists to share their artworks easily.
 
 ## Contributing guide
 ### How to run
