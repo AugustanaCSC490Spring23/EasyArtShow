@@ -19,7 +19,7 @@ const UploadPicRoom = () => {
   return (
     <div>
       Choose a picture:
-      <input type="file" onChange={handlePictureChange} />
+      <input type="image" alt="Upload pic" onChange={handlePictureChange} />
       {imageUrl && (
         <img
           src={imageUrl}

@@ -15,7 +15,7 @@ function DevNote() {
       <div>
         <Header />
         This is a dev note.
-        <Post title="Fri Feb 24, 2023" content="Just finished the upload picture without firebase." />
+        <Post title="Fri Feb 24, 2023" content="Just finished the upload picture without firebase.\n Remember to @ before firebase/auth" />
       </div>
     );
   }
