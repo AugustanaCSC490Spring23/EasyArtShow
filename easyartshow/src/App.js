@@ -1,5 +1,4 @@
 import './App.css';
-import { useNavigate } from "react-router-dom";
 import {
   BrowserRouter,
   Routes, //replaces "Switch" used till v5

@@ -6,7 +6,6 @@ function Dashboard() {
     return (
       <div>
         Dashboard
-
         <button onClick={() => navigate('/waitingroom')}>Create room</button>
       </div>
     );
