@@ -6,8 +6,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "@firebase/auth";
 
 const app = initializeApp({
-  apiKey: "AIzaSyBV_B_qv5tkl3gYwXFuAhPs06A2qRRwHaA",
-  authDomain: "easyartshow-2dbd2.firebaseapp.com",
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
   projectId: process.env.PROJECT_ID,
   storageBucket: process.env.STORAGE_BUCKET,
   messagingSenderId: process.env.MESSAGE_SENDER_ID,
