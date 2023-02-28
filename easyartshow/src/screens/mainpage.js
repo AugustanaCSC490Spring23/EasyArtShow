@@ -9,7 +9,7 @@ function MainPage() {
       <Header />
       Are you a host or a participant?
       <div>
-        <button onClick={() => navigate("/login")}>Host</button>
+        <button onClick={() => navigate("/dashboard")}>Host</button>
         <button onClick={() => navigate("/joinroom")}>Participant</button>
       </div>
     </div>
