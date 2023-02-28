@@ -11,12 +11,15 @@ function WaitingRoom() {
         return result;
     }
 
-
     return (
       <div>
         Waiting Room
         <div>
           Your passcode is {randomCodeGenerator()}
+          <br/>
+          Share this passcode with your participants
+          <br/> 
+          <button > Upload picture </button>
         </div>
       </div>
     );

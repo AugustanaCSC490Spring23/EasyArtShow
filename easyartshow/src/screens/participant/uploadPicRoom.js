@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import storage from "../../backend/firebase.js";
+import { ref, uploadBytes } from "@firebase/storage";
 
 const UploadPicRoom = () => {
   const [picture, setPicture] = useState(null);
@@ -14,6 +16,13 @@ const UploadPicRoom = () => {
       setImageUrl(reader.result);
     };
     reader.readAsDataURL(file);
+
+    const storageRef = ref(storage, `easyartshow/images/${file.name}`)
+    const uploadTask = uploadBytes(storageRef, file);
+    uploadTask().then((snapshot) => {
+      console.log('Uploaded an image!');
+    });
+
   };
 
   return (
