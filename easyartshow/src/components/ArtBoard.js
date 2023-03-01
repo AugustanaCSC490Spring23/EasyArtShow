@@ -48,7 +48,7 @@ function SlideShow({ imageUrlList }) {
 
 function ArtBoard() {
   const storage = getStorage();
-  const listRef = ref(storage, "easyartshow/images");
+  const listRef = ref(storage, "easyartshow/rooms/VGxhb4/images/");
   const [isSlideShow, setIsSlideShow] = useState(false);
 
   const [imageUrlList, setImageUrlList] = useState([]);

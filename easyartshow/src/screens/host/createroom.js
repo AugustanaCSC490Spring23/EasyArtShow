@@ -1,38 +1,45 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import { getDatabase, ref, set } from "@firebase/database";
 
 function CreateRoom() {
-    const navigate = useNavigate();
-    const [roomName, setRoomName] = useState("");
-    const [roomDescription, setRoomDescription] = useState("");
-    const [roomLocation, setRoomLocation] = useState("");
-    const [roomIsPrivate, setRoomIsPrivate] = useState(true);
-    const [roomVerify, setRoomVerify] = useState(true);
-    
-  // const auth = getAuth();
-  // const randomCodeGenerator = () => {
-  //     let result = "";
-  //     const characters =
-  //       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  //     const charactersLength = characters.length;
-  //     for (let i = 0; i < 6; i++) {
-  //       result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  //     }
-  //     return result;
-  //   };
+  const navigate = useNavigate();
+  const auth = getAuth();
+  const [user, setUser] = useState(null);
+  const [roomName, setRoomName] = useState("");
+  const [roomDescription, setRoomDescription] = useState("");
+  const [roomLocation, setRoomLocation] = useState("");
+  const [roomIsPrivate, setRoomIsPrivate] = useState(true);
+  const [roomVerify, setRoomVerify] = useState(true);
 
-  //   function createRoom() {
-  //     const randomCode = randomCodeGenerator();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  }, []);
 
-  //     const db = getDatabase();
-  //     set(ref(db, "easyartshow/rooms/" + randomCode), {
-  //       hostid: user.uid,
-  //       hostname: user.displayName,
-  //     });
-  //     setGoToWaitingRoom(true);
-  //   };
+  const randomCodeGenerator = () => {
+    let result = "";
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < 6; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  };
+
+  function createRoom() {
+    const randomCode = randomCodeGenerator();
+
+    const db = getDatabase();
+    set(ref(db, "easyartshow/rooms/" + randomCode), {
+      hostid: user.uid,
+      hostname: user.displayName,
+    });
+    navigate("/waitingroom");
+  }
 
   return (
     <div>
@@ -61,7 +68,7 @@ function CreateRoom() {
       <input type="radio" id="no" name="verify" value="no" />
       <label for="no"> No </label>
       <br />
-      <button onClick={() => navigate('/waitingroom')}> Create room </button>
+      <button onClick={() => createRoom()}> Create room </button>
     </div>
   );
 }
