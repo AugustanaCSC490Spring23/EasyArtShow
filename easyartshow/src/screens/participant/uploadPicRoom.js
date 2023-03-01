@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   ref,
   uploadBytes,
@@ -16,6 +16,7 @@ const UploadPicRoom = () => {
   const [imageUrl, setImageUrl] = useState("");
   const navigate = useNavigate();
   const storage = getStorage();
+  const { id } = useParams();
 
   const handlePictureChange = (e) => {
     const file = e.target.files[0];
@@ -25,7 +26,7 @@ const UploadPicRoom = () => {
     };
     reader.readAsDataURL(file);
     const filename = new Date().getTime() + "-" + file.name;
-    const storageRef = ref(storage, `easyartshow/rooms/VGxhb4/images/${filename}`);
+    const storageRef = ref(storage, `easyartshow/rooms/${id}/images/${filename}`);
     uploadBytes(storageRef, file)
       .then((snapshot) => {
         console.log("Uploaded an image!");

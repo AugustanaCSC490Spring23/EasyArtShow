@@ -46,9 +46,9 @@ function SlideShow({ imageUrlList }) {
   );
 }
 
-function ArtBoard() {
+function ArtBoard({id}) {
   const storage = getStorage();
-  const listRef = ref(storage, "easyartshow/rooms/VGxhb4/images/");
+  const listRef = ref(storage, `easyartshow/rooms/${id.toString()}/images/`);
   const [isSlideShow, setIsSlideShow] = useState(false);
 
   const [imageUrlList, setImageUrlList] = useState([]);
@@ -60,7 +60,7 @@ function ArtBoard() {
           const imageURL = getDownloadURL(
             ref(storage, itemRef._location.path_)
           );
-
+          console.log(itemRef._location.path_)
           imageURL.then(function (url) {
             setImageUrlList((currenState) => [...currenState, url.toString()]);
           });

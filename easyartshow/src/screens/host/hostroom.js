@@ -10,7 +10,6 @@ import { getDatabase, ref, set } from "@firebase/database";
 const HostRoom = ({ user }) => {
   const navigate = useNavigate();
   const auth = getAuth();
-  const [goToWaitingRoom, setGoToWaitingRoom] = useState(false);
   const [goToJoinRoom, setGoToJoinRoom] = useState(false);
 
   const logout = () => {
@@ -23,38 +22,15 @@ const HostRoom = ({ user }) => {
       });
   };
 
-  const randomCodeGenerator = () => {
-    let result = "";
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const charactersLength = characters.length;
-    for (let i = 0; i < 6; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  };
-
   function createRoom() {
     navigate('/createroom');
   };
 
-  //   const randomCode = randomCodeGenerator();
-
-  //   const db = getDatabase();
-  //   set(ref(db, "easyartshow/rooms/" + randomCode), {
-  //     hostid: user.uid,
-  //     hostname: user.displayName,
-  //   });
-  //   setGoToWaitingRoom(true);
-  // };
-
   useEffect(() => {
-    if (goToWaitingRoom) {
-      navigate("/waitingroom");
-    } else if (goToJoinRoom) {
+    if (goToJoinRoom) {
       navigate("/joinroom");
     }
-  }, [goToWaitingRoom, goToJoinRoom]); // This will only listen to changes on value
+  }, [goToJoinRoom]); // This will only listen to changes on value
 
   return (
     <div>

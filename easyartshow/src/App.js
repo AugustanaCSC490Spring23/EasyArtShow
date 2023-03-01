@@ -32,11 +32,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/waitingroom" element={<WaitingRoom />} />
+            <Route path="/waitingroom/:id" element={<WaitingRoom />} />
             <Route path="/createroom" element={<CreateRoom />} />
             <Route path="/hostroom" element={<HostRoom />} />
             <Route path="/joinroom" element={<JoinRoom />} />
-            <Route path="/uploadpicroom" element={<UploadPicRoom />} />
+            <Route path="/uploadpicroom/:id" element={<UploadPicRoom />} />
             <Route path="/devnote" element={<DevNote />} />
             <Route path="/map" element={<Map />} />
             <Route path="/threedview" element={<ThreeDView />} />

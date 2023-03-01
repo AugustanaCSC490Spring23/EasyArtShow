@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "@firebase/database";
 
@@ -17,16 +17,17 @@ function JoinRoom() {
   const onChangeHandler = (event) => {
     setRoomCode(event.target.value);
   };
-
-  function joinroom(code) {
+  useEffect(() => {
     onValue(roomRef, (snapshot) => {
       const data = snapshot.val();
       setRoomList(data);
     });
-    
-    // if (roomCode in roomList) {
-    if (roomCode === "VGxhb4") { // Debug 
-      navigate("/waitingroom");
+  }, []);
+
+  function joinroom(id) {
+    if (roomCode in roomList) {
+      // Debug
+      navigate(`/waitingroom/${roomCode}`);
     } else {
       alert("Room does not exist");
     }
@@ -34,7 +35,12 @@ function JoinRoom() {
 
   return (
     <div>
-      Name: <input type="text" onChange={onChangeParticipantName} value={roomPartcipantName}/>
+      Name:{" "}
+      <input
+        type="text"
+        onChange={onChangeParticipantName}
+        value={roomPartcipantName}
+      />
       Room passcode:{" "}
       <input type="text" onChange={onChangeHandler} value={roomCode} />
       <button onClick={() => joinroom()}>Join room</button>

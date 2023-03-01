@@ -37,8 +37,9 @@ function CreateRoom() {
     set(ref(db, "easyartshow/rooms/" + randomCode), {
       hostid: user.uid,
       hostname: user.displayName,
+      roomParticipants: [],
     });
-    navigate("/waitingroom");
+    navigate(`/waitingroom/${randomCode}`);
   }
 
   return (
