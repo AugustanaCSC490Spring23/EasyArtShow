@@ -48,13 +48,13 @@ const HostRoom = ({ user }) => {
   //   setGoToWaitingRoom(true);
   // };
 
-  // useEffect(() => {
-  //   if (goToWaitingRoom) {
-  //     navigate("/waitingroom");
-  //   } else if (goToJoinRoom) {
-  //     navigate("/joinroom");
-  //   }
-  // }, [goToWaitingRoom, goToJoinRoom]); // This will only listen to changes on value
+  useEffect(() => {
+    if (goToWaitingRoom) {
+      navigate("/waitingroom");
+    } else if (goToJoinRoom) {
+      navigate("/joinroom");
+    }
+  }, [goToWaitingRoom, goToJoinRoom]); // This will only listen to changes on value
 
   return (
     <div>
