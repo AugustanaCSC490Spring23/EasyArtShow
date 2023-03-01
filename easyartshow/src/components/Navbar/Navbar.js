@@ -13,7 +13,7 @@ function Navbar() {
           <li className='headtext__major'><a href="/">Contact</a></li>
         </ul>
       </nav>
-      <div className='headtext__major'>placeholder</div>
+      <div className='headtext__major'>Placeholder</div>
     </div>
   );
 }

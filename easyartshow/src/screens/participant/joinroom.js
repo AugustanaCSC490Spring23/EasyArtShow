@@ -18,6 +18,7 @@ function JoinRoom() {
   const onChangeHandler = (event) => {
     setRoomCode(event.target.value);
   };
+  
   useEffect(() => {
     onValue(roomRef, (snapshot) => {
       const data = snapshot.val();

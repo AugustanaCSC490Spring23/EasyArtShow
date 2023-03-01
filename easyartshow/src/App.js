@@ -22,6 +22,7 @@ import ThreeDView from './components/ThreeDView';
 import PageNotFound from './screens/pageNotFound';
 import Contact from './screens/contact';
 import About from './screens/about';
+import QRCodeComponent from './components/QRCodeComponent';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
+            <Route path="/qrcode/:id" element={<QRCodeComponent />} />
         </Routes>
         </div>
       </BrowserRouter>
