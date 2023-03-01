@@ -5,9 +5,12 @@
   "dependencies": {
     "@firebase/auth": "^0.21.3",
     "@google-cloud/secret-manager": "^4.2.1",
+    "@react-three/drei": "^9.56.28",
+    "@react-three/fiber": "^8.11.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/three": "^0.149.0",
     "firebase": "^9.17.1",
     "firebase-tools": "^11.24.0",
     "google-map-react": "^2.2.0",
@@ -17,6 +20,7 @@
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "react-slideshow-image": "^4.2.1",
+    "three": "^0.150.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

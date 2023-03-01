@@ -16,6 +16,7 @@ import JoinRoom from './screens/participant/joinroom';
 import UploadPicRoom from './screens/participant/uploadPicRoom';
 import DevNote from './screens/devnote';
 import Map from './components/Map';
+import ThreeDView from './components/ThreeDView';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/uploadpicroom" element={<UploadPicRoom />} />
             <Route path="/devnote" element={<DevNote />} />
             <Route path="/map" element={<Map />} />
+            <Route path="/threedview" element={<ThreeDView />} />
         </Routes>
         </div>
       </BrowserRouter>

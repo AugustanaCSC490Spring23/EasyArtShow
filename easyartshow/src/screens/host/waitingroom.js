@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ref, uploadBytes, getStorage, listAll } from "@firebase/storage";
 import ArtBoard from "../../components/ArtBoard.js";
+import ThreeDView from "../../components/ThreeDView.js";
 import { useNavigate } from "react-router-dom";
 
 function WaitingRoom() {
@@ -19,6 +20,9 @@ function WaitingRoom() {
         Share this passcode with your participants
         <br />
         <button onClick={() => navigate('/uploadpicroom')}>Upload picture</button>
+        <div> 
+          <ThreeDView />
+        </div>
         <div>
           <ArtBoard />
         </div>
