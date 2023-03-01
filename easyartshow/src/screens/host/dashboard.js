@@ -1,12 +1,23 @@
-import React from 'react'
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from 'react'
+import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import auth from '../../backend/firebase';
 
-function Dashboard() {
-    const navigate = useNavigate();
+import Login from './authentication/login';
+import HostRoom from './hostroom';
+
+const Dashboard = ({user}) => {
+    // const auth = getAuth();
+    const [userInfo, setUser] = useState(null);
+
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        setUser(user);
+      });
+    }, []);
+
     return (
       <div>
-        Dashboard
-        <button onClick={() => navigate('/waitingroom')}>Create room</button>
+        { userInfo ? <HostRoom user={userInfo}/> : <Login />}
       </div>
     );
   }

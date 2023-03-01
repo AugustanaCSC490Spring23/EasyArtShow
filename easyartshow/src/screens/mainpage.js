@@ -13,7 +13,7 @@ function MainPage() {
           <div className='headtext__major modal-title component-padding'>ARE YOU A HOST OR A PARTICIPANT?</div>
           <div className="button-group-row">
             <button className="system-button" onClick={() => navigate("/joinroom")}>Participant</button>
-            <button className="system-button system-button-primary" onClick={() => navigate("/login")}>Host</button>
+            <button className="system-button system-button-primary" onClick={() => navigate("/dashboard")}>Host</button>
           </div>
         </div>
       </div>

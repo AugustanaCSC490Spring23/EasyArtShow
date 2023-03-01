@@ -1,25 +1,38 @@
-import React from 'react'
+import React, { useState } from "react";
+import { ref, uploadBytes, getStorage, listAll } from "@firebase/storage";
+import ArtBoard from "../../components/ArtBoard.js";
+import ThreeDView from "../../components/ThreeDView.js";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import Header from "../../components/Header.js";
 
 function WaitingRoom() {
-    const randomCodeGenerator = () => {
-        let result = '';
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const charactersLength = characters.length;
-        for ( let i = 0; i < 6; i++ ) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-    }
+  const [imageUrl, setImageUrl] = useState("");
+  const storage = getStorage();
+  const navigate = useNavigate();
 
+  const { id } = useParams();
 
-    return (
+  return (
+    <div>
+      <Header/>
+      Waiting Room
       <div>
-        Waiting Room
+        Your passcode is {id}
+        <br />
+        <button onClick={() => navigate('/map')}>View map</button>
+        <br />
+        Share this passcode with your participants
+        <br />
+        <button onClick={() => navigate(`/uploadpicroom/${id}`)}>Upload picture</button>
+        <div> 
+          <ThreeDView />
+        </div>
         <div>
-          Your passcode is {randomCodeGenerator()}
+          <ArtBoard id={id}/>
         </div>
       </div>
-    );
-  }
-  
-export default WaitingRoom; 
+    </div>
+  );
+}
+
+export default WaitingRoom;
