@@ -35,23 +35,26 @@ const HostRoom = ({ user }) => {
   };
 
   function createRoom() {
-    const randomCode = randomCodeGenerator();
-
-    const db = getDatabase();
-    set(ref(db, "easyartshow/rooms/" + randomCode), {
-      hostid: user.uid,
-      hostname: user.displayName,
-    });
-    setGoToWaitingRoom(true);
+    navigate('/createroom');
   };
 
-  useEffect(() => {
-    if (goToWaitingRoom) {
-      navigate("/waitingroom");
-    } else if (goToJoinRoom) {
-      navigate("/joinroom");
-    }
-  }, [goToWaitingRoom, goToJoinRoom]); // This will only listen to changes on value
+  //   const randomCode = randomCodeGenerator();
+
+  //   const db = getDatabase();
+  //   set(ref(db, "easyartshow/rooms/" + randomCode), {
+  //     hostid: user.uid,
+  //     hostname: user.displayName,
+  //   });
+  //   setGoToWaitingRoom(true);
+  // };
+
+  // useEffect(() => {
+  //   if (goToWaitingRoom) {
+  //     navigate("/waitingroom");
+  //   } else if (goToJoinRoom) {
+  //     navigate("/joinroom");
+  //   }
+  // }, [goToWaitingRoom, goToJoinRoom]); // This will only listen to changes on value
 
   return (
     <div>

@@ -1,41 +1,99 @@
-import React from "react";
-import { ref, uploadBytes, getStorage, listAll, getDownloadURL } from "@firebase/storage";
+import React, { useEffect, useState } from "react";
+import {
+  ref,
+  uploadBytes,
+  getStorage,
+  listAll,
+  list,
+  getDownloadURL,
+} from "@firebase/storage";
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
+
+const spanStyle = {
+  padding: "20px",
+  background: "#efefef",
+  color: "#000000",
+};
+
+const divStyle = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundSize: "cover",
+  height: "400px",
+};
+
+function SlideShow({ imageUrlList }) {
+  return (
+    <div className="slide-container">
+      <Slide>
+        {imageUrlList &&
+          imageUrlList.map((slideImage, index) => (
+            <div key={index}>
+              <div style={{ ...divStyle }}>
+                <img
+                  src={slideImage}
+                  alt="Selected"
+                  style={{ width: "400px", height: "400px" }}
+                />
+                {/* <span style={spanStyle}>{slideImage.caption}</span> */}
+              </div>
+            </div>
+          ))}
+      </Slide>
+    </div>
+  );
+}
 
 function ArtBoard() {
   const storage = getStorage();
   const listRef = ref(storage, "easyartshow/images");
-  const listAllPics = () => {
-    listAll(listRef)
-      .then((res) => {
-        res.prefixes.forEach((folderRef) => {});
-        res.items.forEach((itemRef) => {
-          // All the items under listRef.
-          console.log(itemRef._location.path_);
-          getDownloadURL(ref(storage, itemRef._location.path_)).then((url) => {
-            // Or inserted into an <img> element:
-           console.log(url);
+  const [isSlideShow, setIsSlideShow] = useState(false);
+
+  const [imageUrlList, setImageUrlList] = useState([]);
+
+  useEffect(() => {
+    const urlList = async () => {
+      list(listRef).then((res) => {
+        const imagePromises = res.items.forEach((itemRef) => {
+          const imageURL = getDownloadURL(
+            ref(storage, itemRef._location.path_)
+          );
+
+          imageURL.then(function (url) {
+            setImageUrlList((currenState) => [...currenState, url.toString()]);
           });
         });
-      })
-      .catch((error) => {
-        // Uh-oh, an error occurred!
       });
-  };
+    };
+    urlList();
+  }, []);
 
-  listAllPics();
+  const swichView = () => {
+    setIsSlideShow(!isSlideShow);
+  };
 
   return (
     <div>
       Art Board
-      <div class="topContainer">
-        <img
-          src={
-            "https://firebasestorage.googleapis.com/v0/b/easyartshow-2dbd2.appspot.com/o/easyartshow%2Fimages%2FIMG_2792.jpeg?alt=media&token=5bf30843-3de1-4d68-88d8-3e066aaa2fba"
-          }
-          alt="image"
-          style={{ width: "150px", height: "150px" }}
-        />
-      </div>
+      <button onClick={() => swichView()}>View Slide Show</button>
+      {!isSlideShow ? (
+        <div class="topContainer">
+          {imageUrlList &&
+            imageUrlList.map((url, index) => (
+              <li key={index}>
+                <img
+                  src={url}
+                  alt={`Image ${index}`}
+                  style={{ width: "150px", height: "150px" }}
+                />
+              </li>
+            ))}
+        </div>
+      ) : (
+        <SlideShow imageUrlList={imageUrlList} />
+      )}
     </div>
   );
 }
