@@ -19,6 +19,8 @@ import DevNote from './screens/devnote';
 import Map from './components/Map';
 import ThreeDView from './components/ThreeDView';
 import PageNotFound from './screens/pageNotFound';
+import Contact from './screens/contact';
+import About from './screens/about';
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
             <Route path="/threedview" element={<ThreeDView />} />
             <Route path="/404" element={<PageNotFound />} />
             <Route path="*" element={<Navigate to="/404" />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
         </Routes>
         </div>
       </BrowserRouter>
