@@ -1,5 +1,6 @@
 import React from 'react'
-import Header from '../components/header';
+// import Header from '../components/header';
+import Navbar from "../components/Navbar/Navbar";
 function Post(props) {
     return (
       <article>
@@ -13,7 +14,8 @@ function Post(props) {
 function DevNote() {
     return (
       <div>
-        <Header />
+        <Navbar />
+        {/* <Header /> */}
         This is a dev note.
         <Post title="Fri Feb 24, 2023" content="Just finished the upload picture without firebase." />
       </div>
