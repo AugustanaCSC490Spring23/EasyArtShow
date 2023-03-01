@@ -39,10 +39,26 @@ function CreateRoom() {
     set(ref(db, "easyartshow/rooms/" + randomCode), {
       hostid: user.uid,
       hostname: user.displayName,
-      roomParticipants: [],
+      roomInfo: {
+        roomName: roomName,
+        roomDescription: roomDescription,
+        roomLocation: roomLocation,
+        roomIsPrivate: roomIsPrivate,
+        roomVerify: roomVerify,
+        roomParticipants: [],
+      },
     });
     navigate(`/waitingroom/${randomCode}`);
   }
+
+  const onChangeRoomName = (event) => {
+    setRoomName(event.target.value);
+  };
+
+  const onChangeRoomDescription = (event) => {
+    setRoomDescription(event.target.value);
+  };
+
 
   return (
     <div>
@@ -52,10 +68,10 @@ function CreateRoom() {
           <h1> Create room </h1>
           <br />
           <h2> Your room name </h2>
-          <input type="text" />
+          <input type="text" onChange={onChangeRoomName} value={roomName}/>
           <br />
           <h2> Room description </h2>
-          <input type="text" />
+          <input type="text" onChange={onChangeRoomDescription} value={roomDescription} />
           <br />
           <h2> Room location (leave blank if you don't want to add) </h2>
           <input type="text" />
