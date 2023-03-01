@@ -3,6 +3,7 @@ import { ref, uploadBytes, getStorage, listAll } from "@firebase/storage";
 import ArtBoard from "../../components/ArtBoard.js";
 import ThreeDView from "../../components/ThreeDView.js";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import Header from "../../components/Header.js";
 
 function WaitingRoom() {
   const [imageUrl, setImageUrl] = useState("");
@@ -13,6 +14,7 @@ function WaitingRoom() {
 
   return (
     <div>
+      <Header/>
       Waiting Room
       <div>
         Your passcode is {id}

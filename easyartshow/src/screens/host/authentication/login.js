@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
+import Header from "../../../components/Header";
 
 function Login() {
   const navigate = useNavigate();
@@ -18,23 +19,18 @@ function Login() {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        console.log(user);
       })
       .catch((error) => {
         // Handle Errors here.
         // const errorCode = error.code;
         console.log(error.message);
-        // const errorMessage = error.message;
-        // // The email of the user's account used.
-        // const email = error.customData.email;
-        // // The AuthCredential type that was used.
-        // const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
+        
       });
   };
 
   return (
     <div>
+      <Header />
       Login
       {/* <button onClick={() => navigate("/dashboard")}> Get started </button> */}
       <button onClick={loginWithGoogle}> Login with Google </button>
