@@ -3,6 +3,7 @@ import {
   BrowserRouter,
   Routes, //replaces "Switch" used till v5
   Route,
+  Navigate
 } from "react-router-dom";
 
 import Login from './screens/host/authentication/login';
@@ -17,6 +18,7 @@ import UploadPicRoom from './screens/participant/uploadPicRoom';
 import DevNote from './screens/devnote';
 import Map from './components/Map';
 import ThreeDView from './components/ThreeDView';
+import PageNotFound from './screens/pageNotFound';
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
             <Route path="/devnote" element={<DevNote />} />
             <Route path="/map" element={<Map />} />
             <Route path="/threedview" element={<ThreeDView />} />
+            <Route path="/404" element={<PageNotFound />} />
+            <Route path="*" element={<Navigate to="/404" />} />
         </Routes>
         </div>
       </BrowserRouter>
