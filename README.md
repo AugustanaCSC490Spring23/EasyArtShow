@@ -1,6 +1,8 @@
 # Easy Art Show
 A web app that allow artists to share their artworks easily.
 
+Alpha verson: https://easyartshow-2dbd2.web.app/
+
 ## Contributing guide
 ### How to run
 1. Clone the project
