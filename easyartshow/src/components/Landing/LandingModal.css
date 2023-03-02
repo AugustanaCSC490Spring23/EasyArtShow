@@ -33,6 +33,7 @@
     justify-content: center;
     font-weight: 800;
 }
+
 .button-group-row {
     display: flex;
     flex-direction: row;

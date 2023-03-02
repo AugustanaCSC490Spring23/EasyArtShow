@@ -23,13 +23,10 @@
 
 .container {
   width: 100%;
-  /* display: flex;
-  /* justify-content: space-between; */
-  /* align-items: center; */
 }
 
 .section-padding {
-  padding: 2rem 4rem;
+  padding: 2rem 2rem;
 }
 
 .component-padding {
@@ -39,15 +36,35 @@
 .headtext__major {
   font-family: var(--font-system);
   color: var(--color-black);
-  text-transform: capitalize;
 }
 
 .headtext__minor {
   font-family: var(--font-system);
   color: var(--color-gray);
-  font-size: 64px;
 }
 
+
+.system-button {
+  font-family: var(--font-system);
+  font-weight: 700;
+  border-radius: 8px;
+  letter-spacing: 0.04em;
+  line-height: 22px;
+  font-size: 14px;
+  cursor: pointer;
+  /* padding: 0.5rem 1.5rem; */
+  
+  background: #fff;
+  border: 2.5px solid rgba(197, 199, 212, 0.5);
+  color: var(--color-gray);
+}
+
+.system-button-primary {
+  /* background: #4f4f4f; */
+  background: var(--color-golden);
+  border-color: var(--color-golden);
+  color: var(--color-white);
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
