@@ -7,14 +7,14 @@ import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import auth from "../../backend/firebase.js";
 
-import Header from "../../components/Header.js";
 import QRCodeComponent from "../../components/QRCodeComponent.js";
+import Navbar from "../../components/Navbar/Navbar.js";
 
 function WaitingRoomComponent({ id, roomDescription, roomLocation }) {
   const navigate = useNavigate();
   return (
     <div>
-      <Header />
+      <Navbar />
       <h1> Wating room </h1>
       <br />
       <h2> {roomDescription}</h2>
