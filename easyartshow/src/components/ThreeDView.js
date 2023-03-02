@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import React from 'react';
 
 function Box(props) {
   // This reference gives us direct access to the THREE.Mesh object

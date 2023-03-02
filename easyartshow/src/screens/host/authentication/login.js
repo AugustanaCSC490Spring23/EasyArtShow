@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
-import Header from "../../../components/Header";
+import Navbar from "../../../components/Navbar/Navbar";
 
 function Login() {
   const navigate = useNavigate();
@@ -30,9 +30,9 @@ function Login() {
 
   return (
     <div>
-      <Header />
+      <Navbar />
       Login
-      {/* <button onClick={() => navigate("/dashboard")}> Get started </button> */}
+      <button onClick={() => navigate("/dashboard")}> Get started </button>
       <button onClick={loginWithGoogle}> Login with Google </button>
     </div>
   );

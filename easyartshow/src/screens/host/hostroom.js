@@ -6,7 +6,7 @@ import Login from "./authentication/login";
 import WaitingRoom from "./waitingroom";
 
 import { getDatabase, ref, set } from "@firebase/database";
-import Header from "../../components/Header";
+import Navbar from "../../components/Navbar/Navbar";
 
 const HostRoom = () => {
   const navigate = useNavigate();
@@ -41,8 +41,8 @@ const HostRoom = () => {
     <div>
       {user ? (
         <div>
-          <Header />
-          Welcome, {user.displayName}
+          <Navbar />
+          <h1 className='headtext__major'>Welcome back, <span className="multi-text">{user.displayName}</span></h1>
           <br />
           Your user ID is {user.uid}
           <br />
