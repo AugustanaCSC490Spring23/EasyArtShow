@@ -51,7 +51,7 @@ const HostRoom = () => {
           <br />
           <button onClick={() => setGoToJoinRoom(true)}> Join room </button>
           <br />
-          <HostHistory />
+          {/* <HostHistory /> */}
           <br />
           <button onClick={() => logout()}>Logout</button>{" "}
         </div>

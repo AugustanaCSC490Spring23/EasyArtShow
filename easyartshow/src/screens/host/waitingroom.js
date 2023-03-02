@@ -15,14 +15,14 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
   return (
     <div>
       <Header />
-      <h1> Room: {roomName} </h1>
+      <h1> {roomName} </h1>
       <br />
       <h2> {roomDescription}</h2>
       <br />
       <h3> {roomLocation}</h3>
       <button onClick={() => navigate("/map")}>View map</button>
       <div>
-        Your passcode is {id}
+        Your passcode is <h2>{id}</h2>
         <br />
         Share this code with your participants.
         <button onClick={() => navigate(`/qrcode/${id}`)}>
