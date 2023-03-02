@@ -4,6 +4,7 @@ import { getDatabase, ref, onValue } from "@firebase/database";
 
 import Navbar from "../components/Navbar/Navbar";
 import "../components/Landing/LandingModal.css";
+import TopView from "../components/TopView";
 
 function MainPage() {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ function MainPage() {
         </div>
       </div>
       {/* <div className="section-padding">@2023.</div> */}
+      <TopView />
     </div>
   );
 }

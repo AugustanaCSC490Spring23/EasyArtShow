@@ -4,50 +4,14 @@ import ArtBoard from "../../components/ArtBoard.js";
 import ThreeDView from "../../components/ThreeDView.js";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
+import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import auth from "../../backend/firebase.js";
 
 import Header from "../../components/Header.js";
 import QRCodeComponent from "../../components/QRCodeComponent.js";
 
-function WaitingRoom() {
-  const [imageUrl, setImageUrl] = useState("");
-  const [roomData, setRoomData] = useState(null);
-  const [roomName, setRoomName] = useState("");
-  const [roomDescription, setRoomDescription] = useState("");
-  const [roomLocation, setRoomLocation] = useState("");
-  const [roomIsPrivate, setRoomIsPrivate] = useState(true);
-  const [roomVerify, setRoomVerify] = useState(true);
-  const [roomParticipants, setRoomParticipants] = useState([]);
-
-  const db = getDatabase();
-
-  const roomRef = dbRef(db, "easyartshow/rooms/");
-  const storage = getStorage();
+function WaitingRoomComponent({ id, roomDescription, roomLocation }) {
   const navigate = useNavigate();
-
-  const { id } = useParams();
-  
-
-  useEffect(() => {
-    onValue(roomRef, (snapshot) => {
-      const data =  snapshot.val();
-      setRoomData(data);
-    });
-    
-    // if (roomData !== null) {
-    //   if ((isInitialRender) === true) {
-    //     setRoomName(roomData[id].roomInfo.roomName.toString());
-    //     setRoomDescription(roomData[id].roomInfo.roomDescription.toString());
-    //     setRoomLocation(roomData[id].roomInfo.roomLocation.toString());
-    //     setRoomIsPrivate(roomData[id].roomInfo.roomIsPrivate.toString());
-    //     setRoomVerify(roomData[id].roomInfo.roomVerify.toString());
-    //     setIsInitialRender(false);
-    //   }
-    // } else {
-    //   console.log("roomData is null");
-    // }
-
-  }, []);
-
   return (
     <div>
       <Header />
@@ -77,6 +41,55 @@ function WaitingRoom() {
           <ArtBoard id={id} />
         </div>
       </div>
+    </div>
+  );
+}
+
+function WaitingRoom() {
+  const [imageUrl, setImageUrl] = useState("");
+  const [roomData, setRoomData] = useState(null);
+  const [roomName, setRoomName] = useState("");
+  const [roomDescription, setRoomDescription] = useState("");
+  const [roomLocation, setRoomLocation] = useState("");
+  const [roomIsPrivate, setRoomIsPrivate] = useState(true);
+  const [roomVerify, setRoomVerify] = useState(true);
+  const [roomParticipants, setRoomParticipants] = useState([]);
+  const [userInfo, setUser] = useState(null);
+
+  const db = getDatabase();
+
+  const roomRef = dbRef(db, "easyartshow/rooms/");
+  const storage = getStorage();
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    onValue(roomRef, (snapshot) => {
+      const data = snapshot.val();
+      setRoomData(data);
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  }, []);
+
+  return (
+    <div>
+      {userInfo === null ? (
+        <WaitingRoomComponent
+          id={id}
+          roomDescription={roomDescription}
+          roomLocation={roomLocation}
+        />
+      ) : (
+          <WaitingRoomComponent
+          id={id}
+          roomDescription={roomDescription}
+          roomLocation={roomLocation}
+        />
+      )}
     </div>
   );
 }

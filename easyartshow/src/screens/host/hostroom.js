@@ -7,6 +7,7 @@ import WaitingRoom from "./waitingroom";
 
 import { getDatabase, ref, set } from "@firebase/database";
 import Header from "../../components/Header";
+import HostHistory from "./HostHistory";
 
 const HostRoom = () => {
   const navigate = useNavigate();
@@ -49,6 +50,8 @@ const HostRoom = () => {
           <button onClick={() => createRoom()}> Create room </button>
           <br />
           <button onClick={() => setGoToJoinRoom(true)}> Join room </button>
+          <br />
+          <HostHistory />
           <br />
           <button onClick={() => logout()}>Logout</button>{" "}
         </div>
