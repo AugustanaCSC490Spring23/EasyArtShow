@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import { getDatabase, ref, set } from "@firebase/database";
-import Header from "../../components/Header";
 import Login from "./authentication/login";
+import Navbar from "../../components/Navbar/Navbar";
 
 function CreateRoom() {
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ function CreateRoom() {
     <div>
       {user ? (
         <div>
-          <Header />
+          <Navbar />
           <h1> Create room </h1>
           <br />
           <h2> Your room name </h2>

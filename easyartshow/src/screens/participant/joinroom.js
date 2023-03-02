@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "@firebase/database";
-import Header from "../../components/Header";
+import Navbar from "../../components/Navbar/Navbar";
 
 function JoinRoom() {
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ function JoinRoom() {
 
   return (
     <div>
-      <Header />
+      <Navbar />
       Name:{" "}
       <input
         type="text"

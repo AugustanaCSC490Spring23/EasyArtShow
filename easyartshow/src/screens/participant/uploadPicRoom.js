@@ -9,9 +9,9 @@ import {
   getDownloadURL,
 } from "@firebase/storage";
 import { getDatabase, ref as dbRef, set } from "@firebase/database";
-import Header from "../../components/Header";
 import auth from "../../backend/firebase";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import Navbar from "../../components/Navbar/Navbar";
 
 const UploadPicRoom = () => {
   const [picture, setPicture] = useState(null);
@@ -87,7 +87,7 @@ const UploadPicRoom = () => {
 
   return (
     <div>
-      <Header />
+      <Navbar />
       <h2> Upload Pic </h2>
       {user ? (
         <NameBox user={user.displayName} />
