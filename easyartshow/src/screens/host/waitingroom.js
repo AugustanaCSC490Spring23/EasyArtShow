@@ -7,15 +7,15 @@ import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import auth from "../../backend/firebase.js";
 
+import Header from "../../components/Header.js";
 import QRCodeComponent from "../../components/QRCodeComponent.js";
-import Navbar from "../../components/Navbar/Navbar.js";
 
-function WaitingRoomComponent({ id, roomDescription, roomLocation }) {
+function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
   const navigate = useNavigate();
   return (
     <div>
-      <Navbar />
-      <h1> Wating room </h1>
+      <Header />
+      <h1> Room: {roomName} </h1>
       <br />
       <h2> {roomDescription}</h2>
       <br />
@@ -55,6 +55,7 @@ function WaitingRoom() {
   const [roomVerify, setRoomVerify] = useState(true);
   const [roomParticipants, setRoomParticipants] = useState([]);
   const [userInfo, setUser] = useState(null);
+  const [userIDMatch, setUserIDMatch] = useState(false);
 
   const db = getDatabase();
 
@@ -73,19 +74,30 @@ function WaitingRoom() {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
-  }, []);
+
+    if (roomData !== null) {
+      setRoomName(roomData[id].roomInfo.roomName);
+      setRoomDescription(roomData[id].roomInfo.roomdescription);
+      setRoomLocation(roomData[id].roomInfo.roomlocation);
+      setRoomIsPrivate(roomData[id].roomInfo.isprivate);
+      setRoomVerify(roomData[id].roomInfo.verify);
+      // setRoomParticipants(roomData[id.toString()].participants);
+    }
+  }, [roomData]);
 
   return (
     <div>
       {userInfo === null ? (
         <WaitingRoomComponent
           id={id}
+          roomName = {roomName}
           roomDescription={roomDescription}
           roomLocation={roomLocation}
         />
       ) : (
-          <WaitingRoomComponent
+        <WaitingRoomComponent
           id={id}
+          roomName = {roomName}
           roomDescription={roomDescription}
           roomLocation={roomLocation}
         />
