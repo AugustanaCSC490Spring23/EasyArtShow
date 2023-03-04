@@ -14,6 +14,8 @@ import { Slide } from "react-slideshow-image";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 
 import "react-slideshow-image/dist/styles.css";
+import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
+
 
 const spanStyle = {
   padding: "20px",
@@ -44,7 +46,7 @@ function deletePhoto(url) {
       console.log(error);
     });
 }
-function SlideShow({ imageUrlList, imageDirectory }) {
+function SlideShow({ imageUrlList, imageDirectory, userIDMatch }) {
   return (
     <div className="slide-container">
       <Slide>
@@ -59,7 +61,7 @@ function SlideShow({ imageUrlList, imageDirectory }) {
                 />
                 {/* <h4> Hello </h4> */}
                 {/* <span style={spanStyle}>Hello</span> */}
-                <button onClick={() => deletePhoto(imageDirectory[index])}>
+=                <button onClick={() => deletePhoto(imageDirectory[index])}>
                   {" "}
                   delete{" "}
                 </button>
@@ -78,6 +80,7 @@ function ArtBoardComponent({
   swichView,
   imageUrlList,
   imageDirectory,
+  // userIDMatch
 }) {
   return (
     <div>
@@ -108,6 +111,7 @@ function ArtBoardComponent({
         <SlideShow
           imageUrlList={imageUrlList}
           imageDirectory={imageDirectory}
+          // userIDMatch={userIDMatch}
         />
       )}
     </div>
@@ -121,20 +125,31 @@ function ArtBoard({ id }) {
   const [isSlideShow, setIsSlideShow] = useState(false);
   const [imageDirectory, setImageDirectory] = useState([]);
   const auth = getAuth();
+  const [userIDMatch, setUserIDMatch] = useState(false);
+  const [roomData, setRoomData] = useState(null);
+
 
   const [imageUrlList, setImageUrlList] = useState([]);
+  const db = getDatabase();
+
+  const roomRef = dbRef(db, "easyartshow/rooms/");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
-    });
-  }, []); // This will only listen to changes on value
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setUser(user);
+      onValue(roomRef, (snapshot) => {
+        const data = snapshot.val();
+        setRoomData(data);
+      });
+
+      if (user !== null && roomData !== null) {
+        console.log("User logged in!");
+        setUserIDMatch(roomData[id.toString()].hostid.toString() === user.uid.toString());
+      }
     });
 
+  
     const urlList = async () => {
       list(listRef).then((res) => {
         const imagePromises = res.items.forEach((itemRef) => {
@@ -159,6 +174,7 @@ function ArtBoard({ id }) {
         });
       });
     };
+
     urlList();
   }, []);
 
@@ -168,7 +184,7 @@ function ArtBoard({ id }) {
 
   return (
     <div>
-      {user ? (
+      {user || userIDMatch ? (
         <ArtBoardComponent
           id={id}
           user={user}

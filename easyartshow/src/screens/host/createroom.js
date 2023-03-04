@@ -70,7 +70,7 @@ function CreateRoom() {
           <h2> Your room name </h2>
           <input type="text" onChange={onChangeRoomName} value={roomName}/>
           <br />
-          <h2> Room description </h2>
+          {/* <h2> Room description </h2>
           <input type="text" onChange={onChangeRoomDescription} value={roomDescription} />
           <br />
           <h2> Room location (leave blank if you don't want to add) </h2>
@@ -88,7 +88,7 @@ function CreateRoom() {
           <label for="yes"> Yes </label>
           <br />
           <input type="radio" id="no" name="verify" value="no" />
-          <label for="no"> No </label>
+          <label for="no"> No </label> */}
           <br />
           <button onClick={() => createRoom()}> Create room </button>
         </div>
