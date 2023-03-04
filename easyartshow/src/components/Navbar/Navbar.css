@@ -42,7 +42,7 @@ a:hover {
 .logo {
     display: flex;
     align-items: center;
-    font-size: 40px;
+    font-size: 35px;
     font-weight: 1000;
     text-transform: capitalize;
     font-family: 'Poppins', sans-serif;
@@ -51,4 +51,14 @@ a:hover {
 b {
     font-size: 70px;
     color: var(--color-golden);
+}
+
+.logo-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 200px;
+    gap: 20px;
 }

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
 import '../../../components/Auth/Login.css';
-import thumbnail from '../../../asset/Thumbnail.png';
+import { images } from "../../../constants";
 
 function Login() {
   const navigate = useNavigate();
@@ -30,45 +30,48 @@ function Login() {
   };
 
   return (
-    <div>
-      <div className="left-screen">
-        <div className="header">
-          <img src={thumbnail} />
-        </div>
-
-        <div className="content">
-          <h1 className="headtext__major">LOGIN</h1>
-          <div className="input-box">
-            <label className="input-field">
-              <label className="headtext__minor">Email</label>
-              <input type="text" placeholder=" "/>
-            </label>
-            <label className="input-field">
-              <label className="headtext__minor">Password</label>
-              <input type="text" placeholder=" "/>
-            </label>
-            <a className="headtext__major">Forget password?</a>
-          </div>
-      
-          <div className="button-group">
-            <button className="system-button system-button-primary">Login</button>
-            <button className="system-button">Continue as guest</button>
-          </div>
-
-          <div className="line-group">
-            <div className="straight-line"/>
-            <p className="headtext__major" style={{ margin: "0 10px", fontWeight: "200" }}>or</p>
-            <div className="straight-line" />
-          </div>
-
-          <button className="login-with-google-btn" onClick={loginWithGoogle}> Login with Google </button>
-        </div>
-        
-        {/* <div className="footer">
-          <p className="headtext__major" style={{ fontWeight: "200", fontSize: "12px"}}>@wearequails.</p>
-        </div> */}
+    <div className='screen'>
+      <div className='left-screen'>
+        <img src={images.gallery01} className='gallery-img' alt='gallery img'/>
+        <h5 className="headtext__minor" style={{ fontSize: "10px"}}><a href="https://www.freepik.com/free-vector/tourists-escorted-tour-composition_4358851.htm#&position=1&from_view=user#position=1">image by macrovector</a> on Freepik</h5>
       </div>
-      {/* <button onClick={() => navigate("/dashboard")}> Get started </button> */}
+
+
+      <div className="right-screen">
+        <div className="content-container">
+          <div className="header">
+            <img src={images.thumbnail} alt='thumbnail' className="thumbnail-img"/>
+            <h4 className='thumbnail-title'>Easy Art Show</h4>
+          </div>
+
+          <form>
+            <h1 className="headtext__major">Login</h1>
+            <div className="input-box">
+              <label className="input-field">
+                <label className="headtext__minor">Email</label>
+                <input type="text" placeholder=" "/>
+              </label>
+              <label className="input-field">
+                <label className="headtext__minor">Password</label>
+                <input type="text" placeholder=" "/>
+              </label>
+              <p className="headtext__minor">Forget password?</p>
+            </div>
+        
+            <div className="button-group">
+              <button className="system-button system-button-primary">Login</button>
+              <button className="system-button" onClick={() => navigate("/dashboard")}>Continue as guest</button>
+            </div>
+
+            <div className="line-group">
+              <div className="straight-line"/>
+              <p className="headtext__minor" style={{ margin: "0 10px", fontWeight: "400" }}>or</p>
+              <div className="straight-line" />
+          </div>
+          <button className="system-button login-with-google-btn" onClick={loginWithGoogle}>Login with Google</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
