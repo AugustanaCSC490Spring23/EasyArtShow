@@ -40,8 +40,8 @@ function Login() {
       <div className="right-screen">
         <div className="content-container">
           <div className="header">
-            <img src={images.thumbnail} alt='thumbnail' className="thumbnail-img"/>
-            <h4 className='thumbnail-title'>Easy Art Show</h4>
+            <img src={images.logo} alt='thumbnail' className="thumbnail-img"/>
+            {/* <h4 className='thumbnail-title'>Easy Art Show</h4> */}
           </div>
 
           <form>

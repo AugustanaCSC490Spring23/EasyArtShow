@@ -1,5 +1,5 @@
 import thumbnail from '../asset/Thumbnail.png';
-import logo from '../asset/EAS logo.png';
+import logo from '../asset/EAS-logo.png';
 import gallery01 from '../asset/img-1.jpg';
 import gallery02 from '../asset/img-2.jpg';
 import gallery03 from '../asset/img-3.jpg';
