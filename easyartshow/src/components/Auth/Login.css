@@ -83,7 +83,7 @@ form {
     width: 100%;
 }
 
-h1 {
+form h1 {
     font-weight: 250;
     text-shadow: 1px 1px 2px var(--color-brown);
 }

@@ -4,22 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
 import '../../../components/Auth/Login.css';
 import { images } from "../../../constants";
+import auth from '../../../backend/firebase';
 
 function Login() {
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
-  const auth = getAuth();
 
-  const loginWithGoogle = () => {
-    signInWithPopup(auth, provider)
+  const loginWithGoogle = async () => {
+    const loggingAttempt = await signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
-        // The signed-in user info.
         const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+
+        localStorage.setItem(user.displayName, token);
+        navigate("/dashboard");
       })
       .catch((error) => {
         // Handle Errors here.
@@ -27,7 +27,11 @@ function Login() {
         console.log(error.message);
         
       });
+      console.log(loggingAttempt);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
 
   return (
     <div className='screen'>
@@ -41,10 +45,9 @@ function Login() {
         <div className="content-container">
           <div className="header">
             <img src={images.logo} alt='thumbnail' className="thumbnail-img"/>
-            {/* <h4 className='thumbnail-title'>Easy Art Show</h4> */}
           </div>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <h1 className="headtext__major">Login</h1>
             <div className="input-box">
               <label className="input-field">
@@ -59,8 +62,8 @@ function Login() {
             </div>
         
             <div className="button-group">
-              <button className="system-button system-button-primary">Login</button>
-              <button className="system-button" onClick={() => navigate("/dashboard")}>Continue as guest</button>
+              <button className="system-button system-button-primary" type="submit">Login</button>
+              <button className="system-button" onClick={() => navigate("/dashboard")} type="submit">Continue as guest</button>
             </div>
 
             <div className="line-group">
@@ -68,7 +71,7 @@ function Login() {
               <p className="headtext__minor" style={{ margin: "0 10px", fontWeight: "400" }}>or</p>
               <div className="straight-line" />
           </div>
-          <button className="system-button login-with-google-btn" onClick={loginWithGoogle}>Login with Google</button>
+          <button className="system-button login-with-google-btn" onClick={loginWithGoogle} type="submit">Login with Google</button>
           </form>
         </div>
       </div>

@@ -8,6 +8,9 @@ import WaitingRoom from "./waitingroom";
 import { getDatabase, ref, set } from "@firebase/database";
 import HostHistory from "./HostHistory";
 import Navbar from "../../components/Navbar/Navbar";
+import WelcomeUser from "../../components/Dashboard/User";
+import '../../components/Dashboard/Dashboard.css';
+import { images } from '../../constants';
 
 const HostRoom = () => {
   const navigate = useNavigate();
@@ -43,22 +46,23 @@ const HostRoom = () => {
       {user ? (
         <div>
           <Navbar />
-          Welcome, {user.displayName}
-          <br />
-          Your user ID is {user.uid}
-          <br />
-          <button onClick={() => createRoom()}> Create room </button>
-          <br />
-          <button onClick={() => setGoToJoinRoom(true)}> Join room </button>
-          <br />
-          {/* <HostHistory /> */}
-          <br />
-          <button onClick={() => logout()}>Logout</button>{" "}
+          <div className="wrapper">
+            <div className="content-wrapper">
+              <WelcomeUser />
+              <div className="button-group-row">
+                <button className="system-button system-button-primary" onClick={() => createRoom()}> Create room </button>
+                <button className="system-button" onClick={() => setGoToJoinRoom(true)}> Join room </button>
+              </div>
+              {/* <HostHistory /> */}
+              {/* <button className="system-button logout-btn" onClick={() => logout()}>Logout</button>{" "} */}
+            </div>
+            <img src={images.gallery02} alt='gallery-img' className="img"/>
+          </div>
         </div>
       ) : (
         <Login />
       )}
-    </div>
+      </div>
   );
 };
 

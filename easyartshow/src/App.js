@@ -5,7 +5,8 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getAuth } from "@firebase/auth";
 
 import Login from './screens/host/authentication/login';
 import SignUp from './screens/host/authentication/signup';
@@ -25,6 +26,12 @@ import About from './screens/about';
 import QRCodeComponent from './components/QRCodeComponent';
 
 function App() {
+  // console.log('here');
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  console.log(auth);
+  
   return (
     <div className="App">
       <BrowserRouter>

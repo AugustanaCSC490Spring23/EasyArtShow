@@ -8,7 +8,7 @@ import HostRoom from './hostroom';
 const Dashboard = ({user}) => {
     // const auth = getAuth();
     const [userInfo, setUser] = useState(null);
-
+    
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
         setUser(user);
