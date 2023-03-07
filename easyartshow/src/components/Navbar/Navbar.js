@@ -7,7 +7,6 @@ import { getAuth } from "@firebase/auth";
 function Navbar() {
   const navigate = useNavigate();
   const user = getAuth().currentUser;
-  console.log(user);
 
   return (
     <div className='navbar'>
