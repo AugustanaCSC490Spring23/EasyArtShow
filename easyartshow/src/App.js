@@ -25,7 +25,6 @@ import About from './screens/about';
 import QRCodeComponent from './components/QRCodeComponent';
 
 function App() {
-  
   return (
     <div className="App">
       <BrowserRouter>
@@ -48,6 +47,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/qrcode/:id" element={<QRCodeComponent />} />
+            <Route path="/threedview" element={<ThreeDView />} />
         </Routes>
         </div>
       </BrowserRouter>

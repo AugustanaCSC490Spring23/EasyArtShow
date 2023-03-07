@@ -15,6 +15,16 @@ import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import "react-slideshow-image/dist/styles.css";
 import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
 import SlideShow from "./SlideShow";
+import LightGallery from "lightgallery/react";
+
+// import styles
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
+
+// import plugins if you need
+import lgThumbnail from "lightgallery/plugins/thumbnail";
+import lgZoom from "lightgallery/plugins/zoom";
 
 const spanStyle = {
   padding: "20px",
@@ -36,50 +46,6 @@ function deletePhoto(url) {
       // Uh-oh, an error occurred!
       console.log(error);
     });
-}
-
-function ArtBoardComponent({
-  id,
-  user,
-  isSlideShow,
-  swichView,
-  imageUrlList,
-  imageDirectory,
-  userIDMatch
-}) {
-  return (
-    <div>
-      Art Board
-      <button onClick={() => swichView()}>View Slide Show</button>
-      {!isSlideShow ? (
-        <div className="topContainer">
-          {imageUrlList &&
-            imageUrlList.map((url, index) => (
-              <div key={index}>
-                <img
-                  src={url}
-                  alt={`Image ${index}`}
-                  style={{ width: "150px", height: "150px" }}
-                />
-                {userIDMatch ? (
-                  <button onClick={() => deletePhoto(imageDirectory[index])}>
-                    delete{" "}
-                  </button>
-                ) : (
-                  <></>
-                )}
-              </div>
-            ))}
-        </div>
-      ) : (
-        <SlideShow
-          imageUrlList={imageUrlList}
-          imageDirectory={imageDirectory}
-          userIDMatch={userIDMatch}
-        />
-      )}
-    </div>
-  );
 }
 
 function ArtBoard({ id }) {
@@ -144,17 +110,20 @@ function ArtBoard({ id }) {
     setIsSlideShow(!isSlideShow);
   };
 
+  const onInit = () => {
+    console.log("lightGallery has been initialized");
+  };
+
   return (
     <div>
-      <ArtBoardComponent
-        id={id}
-        user={user}
-        isSlideShow={isSlideShow}
-        swichView={swichView}
-        imageUrlList={imageUrlList}
-        imageDirectory={imageDirectory}
-        userIDMatch={userIDMatch}
-      />
+      <LightGallery onInit={onInit} speed={500} plugins={[lgThumbnail, lgZoom]}>
+        {imageUrlList && imageUrlList.map((url, index) => (
+          <a href = {url} key={index}>
+            <img src={url} alt={`${index}`} style={{ width: "250px", height: "250px" }}/>
+            {userIDMatch ? ( <button onClick={() => deletePhoto(imageDirectory[index])}>delete</button> ) : ( <></> )}
+          </a>
+        ))}
+      </LightGallery>
     </div>
   );
 }
