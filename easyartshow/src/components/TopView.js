@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const top3 = ["BZWXdT", "KGNLWA", "QDdLfW"];
+const top3 = ["BZWXdT", "CLyofb", "QDdLfW"];
 
 function SingleRoom({ id }) {
     const navigate = useNavigate();

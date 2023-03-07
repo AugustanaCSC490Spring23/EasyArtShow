@@ -26,7 +26,7 @@ function JoinRoom() {
     });
   }, []);
 
-  function joinroom(id) {
+  function joinroom() {
     if (roomCode in roomList) {
       // Debug
       navigate(`/waitingroom/${roomCode}`);

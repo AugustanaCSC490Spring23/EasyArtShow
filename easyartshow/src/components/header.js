@@ -4,7 +4,7 @@ function Header() {
   return (
     <header>
       <h1>Easy Art Show</h1>
-      <nav class='nav-bar'>
+      <nav className='nav-bar'>
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/devnote">Dev Note</a></li>

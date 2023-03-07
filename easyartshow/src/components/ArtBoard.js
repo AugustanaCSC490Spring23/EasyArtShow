@@ -10,25 +10,16 @@ import {
   getMetadata,
   deleteObject,
 } from "@firebase/storage";
-import { Slide } from "react-slideshow-image";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 
 import "react-slideshow-image/dist/styles.css";
 import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
-
+import SlideShow from "./SlideShow";
 
 const spanStyle = {
   padding: "20px",
   background: "#efefef",
   color: "#000000",
-};
-
-const divStyle = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundSize: "cover",
-  height: "400px",
 };
 
 function deletePhoto(url) {
@@ -46,32 +37,6 @@ function deletePhoto(url) {
       console.log(error);
     });
 }
-function SlideShow({ imageUrlList, imageDirectory, userIDMatch }) {
-  return (
-    <div className="slide-container">
-      <Slide>
-        {imageUrlList &&
-          imageUrlList.map((slideImage, index) => (
-            <div key={index}>
-              <div style={{ ...divStyle }}>
-                <img
-                  src={slideImage}
-                  alt={`Image ${index}`}
-                  style={{ width: "400px", height: "400px" }}
-                />
-                {/* <h4> Hello </h4> */}
-                {/* <span style={spanStyle}>Hello</span> */}
-=                <button onClick={() => deletePhoto(imageDirectory[index])}>
-                  {" "}
-                  delete{" "}
-                </button>
-              </div>
-            </div>
-          ))}
-      </Slide>
-    </div>
-  );
-}
 
 function ArtBoardComponent({
   id,
@@ -80,25 +45,24 @@ function ArtBoardComponent({
   swichView,
   imageUrlList,
   imageDirectory,
-  // userIDMatch
+  userIDMatch
 }) {
   return (
     <div>
       Art Board
       <button onClick={() => swichView()}>View Slide Show</button>
       {!isSlideShow ? (
-        <div class="topContainer">
+        <div className="topContainer">
           {imageUrlList &&
             imageUrlList.map((url, index) => (
-              <div>
+              <div key={index}>
                 <img
                   src={url}
                   alt={`Image ${index}`}
                   style={{ width: "150px", height: "150px" }}
                 />
-                {user ? (
+                {userIDMatch ? (
                   <button onClick={() => deletePhoto(imageDirectory[index])}>
-                    {" "}
                     delete{" "}
                   </button>
                 ) : (
@@ -111,7 +75,7 @@ function ArtBoardComponent({
         <SlideShow
           imageUrlList={imageUrlList}
           imageDirectory={imageDirectory}
-          // userIDMatch={userIDMatch}
+          userIDMatch={userIDMatch}
         />
       )}
     </div>
@@ -128,7 +92,6 @@ function ArtBoard({ id }) {
   const [userIDMatch, setUserIDMatch] = useState(false);
   const [roomData, setRoomData] = useState(null);
 
-
   const [imageUrlList, setImageUrlList] = useState([]);
   const db = getDatabase();
 
@@ -136,20 +99,19 @@ function ArtBoard({ id }) {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setUser(user);
-
       onValue(roomRef, (snapshot) => {
+        setUser(user);
         const data = snapshot.val();
         setRoomData(data);
+
+        if (user !== null && data !== null) {
+          console.log("User logged in!");
+          setUserIDMatch(
+            data[id.toString()].hostid.toString() === user.uid.toString()
+          );
+        }
       });
-
-      if (user !== null && roomData !== null) {
-        console.log("User logged in!");
-        setUserIDMatch(roomData[id.toString()].hostid.toString() === user.uid.toString());
-      }
     });
-
-  
     const urlList = async () => {
       list(listRef).then((res) => {
         const imagePromises = res.items.forEach((itemRef) => {
@@ -184,25 +146,15 @@ function ArtBoard({ id }) {
 
   return (
     <div>
-      {user || userIDMatch ? (
-        <ArtBoardComponent
-          id={id}
-          user={user}
-          isSlideShow={isSlideShow}
-          swichView={swichView}
-          imageUrlList={imageUrlList}
-          imageDirectory={imageDirectory}
-        />
-      ) : (
-        <ArtBoardComponent
+      <ArtBoardComponent
         id={id}
         user={user}
         isSlideShow={isSlideShow}
         swichView={swichView}
         imageUrlList={imageUrlList}
         imageDirectory={imageDirectory}
+        userIDMatch={userIDMatch}
       />
-      )}
     </div>
   );
 }
