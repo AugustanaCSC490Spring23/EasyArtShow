@@ -52,10 +52,10 @@ function ArtBoardComponent({
       Art Board
       <button onClick={() => swichView()}>View Slide Show</button>
       {!isSlideShow ? (
-        <div class="topContainer">
+        <div className="topContainer">
           {imageUrlList &&
             imageUrlList.map((url, index) => (
-              <div>
+              <div key={index}>
                 <img
                   src={url}
                   alt={`Image ${index}`}

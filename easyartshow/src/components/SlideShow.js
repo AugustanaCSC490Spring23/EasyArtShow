@@ -1,14 +1,14 @@
 import { Slide } from "react-slideshow-image";
 import {
-    ref,
-    uploadBytes,
-    getStorage,
-    listAll,
-    list,
-    getDownloadURL,
-    getMetadata,
-    deleteObject,
-  } from "@firebase/storage";
+  ref,
+  uploadBytes,
+  getStorage,
+  listAll,
+  list,
+  getDownloadURL,
+  getMetadata,
+  deleteObject,
+} from "@firebase/storage";
 
 const divStyle = {
   display: "flex",
@@ -43,14 +43,16 @@ function SlideShow({ imageUrlList, imageDirectory, userIDMatch }) {
               <div style={{ ...divStyle }}>
                 <img
                   src={slideImage}
-                  alt={`Image ${index}`}
+                  alt={`${index}`}
                   style={{ width: "400px", height: "400px" }}
                 />
-                {/* <h4> Hello </h4> */}
-                {/* <span style={spanStyle}>Hello</span> */}
-                {userIDMatch ? (<button onClick={() => deletePhoto(imageDirectory[index])}>
-                  delete
-                </button>) : (<></>)}
+                {userIDMatch ? (
+                  <button onClick={() => deletePhoto(imageDirectory[index])}>
+                    delete
+                  </button>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           ))}
