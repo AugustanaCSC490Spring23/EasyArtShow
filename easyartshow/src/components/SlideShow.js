@@ -49,8 +49,7 @@ function SlideShow({ imageUrlList, imageDirectory, userIDMatch }) {
                 {/* <h4> Hello </h4> */}
                 {/* <span style={spanStyle}>Hello</span> */}={" "}
                 <button onClick={() => deletePhoto(imageDirectory[index])}>
-                  {" "}
-                  delete{" "}
+                  delete
                 </button>
               </div>
             </div>

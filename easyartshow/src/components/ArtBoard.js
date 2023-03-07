@@ -64,7 +64,6 @@ function ArtBoardComponent({
                 />
                 {user ? (
                   <button onClick={() => deletePhoto(imageDirectory[index])}>
-                    {" "}
                     delete{" "}
                   </button>
                 ) : (
@@ -100,48 +99,45 @@ function ArtBoard({ id }) {
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
 
-  onAuthStateChanged(auth, (user) => {
-    setUser(user);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {  
+      onValue(roomRef, (snapshot) => {
+        setUser(user);
+        const data = snapshot.val();
+        setRoomData(data);
+        if (user !== null && roomData !== null) {
+          console.log("User logged in!");
+          setUserIDMatch(roomData[id.toString()].hostid.toString() === user.uid.toString());
+        }
+      });
+    });
+    const urlList = async () => {
+      list(listRef).then((res) => {
+        const imagePromises = res.items.forEach((itemRef) => {
+          setImageDirectory((currenState) => [
+            ...currenState,
+            itemRef._location.path_,
+          ]);
+          const imageURL = getDownloadURL(
+            ref(storage, itemRef._location.path_)
+          );
 
-    // onValue(roomRef, (snapshot) => {
-    //   const data = snapshot.val();
-    //   setRoomData(data);
-    // });
+          imageURL.then(function (url) {
+            setImageUrlList((currenState) => [...currenState, url.toString()]);
+          });
 
-    // if (user !== null && roomData !== null) {
-    //   console.log("User logged in!");
-    //   setUserIDMatch(roomData[id.toString()].hostid.toString() === user.uid.toString());
-    // }
-  });
+          const imageMetadata = getMetadata(
+            ref(storage, itemRef._location.path_)
+          );
+          imageMetadata.then(function (metadata) {
+            // console.log(metadata);
+          });
+        });
+      });
+    };
 
-  // useEffect(() => {
-  //   // const urlList = async () => {
-  //   //   list(listRef).then((res) => {
-  //   //     const imagePromises = res.items.forEach((itemRef) => {
-  //   //       setImageDirectory((currenState) => [
-  //   //         ...currenState,
-  //   //         itemRef._location.path_,
-  //   //       ]);
-  //   //       const imageURL = getDownloadURL(
-  //   //         ref(storage, itemRef._location.path_)
-  //   //       );
-
-  //   //       imageURL.then(function (url) {
-  //   //         setImageUrlList((currenState) => [...currenState, url.toString()]);
-  //   //       });
-
-  //   //       const imageMetadata = getMetadata(
-  //   //         ref(storage, itemRef._location.path_)
-  //   //       );
-  //   //       imageMetadata.then(function (metadata) {
-  //   //         // console.log(metadata);
-  //   //       });
-  //   //     });
-  //   //   });
-  //   // };
-
-  //   // urlList();
-  // }, []);
+    urlList();
+  }, []);
 
   const swichView = () => {
     setIsSlideShow(!isSlideShow);
@@ -149,7 +145,7 @@ function ArtBoard({ id }) {
 
   return (
     <div>
-      {user || userIDMatch ? (
+      {userIDMatch ? (
         <ArtBoardComponent
           id={id}
           user={user}

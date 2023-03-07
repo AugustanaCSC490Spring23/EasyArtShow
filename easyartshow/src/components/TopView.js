@@ -9,7 +9,7 @@ function SingleRoom({ id }) {
     return (
       <div>
         <h3>Code: {id} </h3>
-        <button onClick={() => navigate(`/loading/${id}`)}>Join room</button>
+        <button onClick={() => navigate(`/waitingroom/${id}`)}>Join room</button>
       </div>
     );
   }
