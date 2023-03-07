@@ -10,25 +10,16 @@ import {
   getMetadata,
   deleteObject,
 } from "@firebase/storage";
-import { Slide } from "react-slideshow-image";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 
 import "react-slideshow-image/dist/styles.css";
 import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
-
+import SlideShow from "./SlideShow";
 
 const spanStyle = {
   padding: "20px",
   background: "#efefef",
   color: "#000000",
-};
-
-const divStyle = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundSize: "cover",
-  height: "400px",
 };
 
 function deletePhoto(url) {
@@ -46,32 +37,7 @@ function deletePhoto(url) {
       console.log(error);
     });
 }
-function SlideShow({ imageUrlList, imageDirectory, userIDMatch }) {
-  return (
-    <div className="slide-container">
-      <Slide>
-        {imageUrlList &&
-          imageUrlList.map((slideImage, index) => (
-            <div key={index}>
-              <div style={{ ...divStyle }}>
-                <img
-                  src={slideImage}
-                  alt={`Image ${index}`}
-                  style={{ width: "400px", height: "400px" }}
-                />
-                {/* <h4> Hello </h4> */}
-                {/* <span style={spanStyle}>Hello</span> */}
-=                <button onClick={() => deletePhoto(imageDirectory[index])}>
-                  {" "}
-                  delete{" "}
-                </button>
-              </div>
-            </div>
-          ))}
-      </Slide>
-    </div>
-  );
-}
+
 
 function ArtBoardComponent({
   id,
@@ -134,49 +100,48 @@ function ArtBoard({ id }) {
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setUser(user);
+  onAuthStateChanged(auth, (user) => {
+    setUser(user);
 
-      onValue(roomRef, (snapshot) => {
-        const data = snapshot.val();
-        setRoomData(data);
-      });
+    // onValue(roomRef, (snapshot) => {
+    //   const data = snapshot.val();
+    //   setRoomData(data);
+    // });
 
-      if (user !== null && roomData !== null) {
-        console.log("User logged in!");
-        setUserIDMatch(roomData[id.toString()].hostid.toString() === user.uid.toString());
-      }
-    });
+    // if (user !== null && roomData !== null) {
+    //   console.log("User logged in!");
+    //   setUserIDMatch(roomData[id.toString()].hostid.toString() === user.uid.toString());
+    // }
+  });
 
-  
-    const urlList = async () => {
-      list(listRef).then((res) => {
-        const imagePromises = res.items.forEach((itemRef) => {
-          setImageDirectory((currenState) => [
-            ...currenState,
-            itemRef._location.path_,
-          ]);
-          const imageURL = getDownloadURL(
-            ref(storage, itemRef._location.path_)
-          );
+  // useEffect(() => {
+  //   // const urlList = async () => {
+  //   //   list(listRef).then((res) => {
+  //   //     const imagePromises = res.items.forEach((itemRef) => {
+  //   //       setImageDirectory((currenState) => [
+  //   //         ...currenState,
+  //   //         itemRef._location.path_,
+  //   //       ]);
+  //   //       const imageURL = getDownloadURL(
+  //   //         ref(storage, itemRef._location.path_)
+  //   //       );
 
-          imageURL.then(function (url) {
-            setImageUrlList((currenState) => [...currenState, url.toString()]);
-          });
+  //   //       imageURL.then(function (url) {
+  //   //         setImageUrlList((currenState) => [...currenState, url.toString()]);
+  //   //       });
 
-          const imageMetadata = getMetadata(
-            ref(storage, itemRef._location.path_)
-          );
-          imageMetadata.then(function (metadata) {
-            // console.log(metadata);
-          });
-        });
-      });
-    };
+  //   //       const imageMetadata = getMetadata(
+  //   //         ref(storage, itemRef._location.path_)
+  //   //       );
+  //   //       imageMetadata.then(function (metadata) {
+  //   //         // console.log(metadata);
+  //   //       });
+  //   //     });
+  //   //   });
+  //   // };
 
-    urlList();
-  }, []);
+  //   // urlList();
+  // }, []);
 
   const swichView = () => {
     setIsSlideShow(!isSlideShow);

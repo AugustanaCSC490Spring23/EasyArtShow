@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const top3 = ["BZWXdT", "KGNLWA", "QDdLfW"];
+const top3 = ["BZWXdT", "CLyofb", "QDdLfW"];
 
 function SingleRoom({ id }) {
     const navigate = useNavigate();
@@ -9,7 +9,7 @@ function SingleRoom({ id }) {
     return (
       <div>
         <h3>Code: {id} </h3>
-        <button onClick={() => navigate(`/waitingroom/${id}`)}>Join room</button>
+        <button onClick={() => navigate(`/loading/${id}`)}>Join room</button>
       </div>
     );
   }

@@ -8,7 +8,7 @@ import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import auth from "../../backend/firebase.js";
 
 import Header from "../../components/Header.js";
-import QRCodeComponent from "../../components/QRCodeComponent.js";
+import Loading from "../../components/Loading.js";
 
 function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
   const navigate = useNavigate();
@@ -29,14 +29,13 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
           {" "}
           View QR Code{" "}
         </button>
-        {/* <QRCodeComponent/> */}
         <br />
         <button onClick={() => navigate(`/uploadpicroom/${id}`)}>
           Upload picture
         </button>
-        <div>
+        {/* <div>
           <ThreeDView />
-        </div>
+        </div> */}
         <div>
           <ArtBoard id={id} />
         </div>
@@ -51,17 +50,10 @@ function WaitingRoom() {
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
-  const [roomIsPrivate, setRoomIsPrivate] = useState(true);
-  const [roomVerify, setRoomVerify] = useState(true);
-  const [roomParticipants, setRoomParticipants] = useState([]);
-  const [userInfo, setUser] = useState(null);
-  const [userIDMatch, setUserIDMatch] = useState(false);
-
   const db = getDatabase();
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
-  const storage = getStorage();
-  const navigate = useNavigate();
+  let [color, setColor] = useState("#ffffff");
 
   const { id } = useParams();
 
@@ -69,38 +61,26 @@ function WaitingRoom() {
     onValue(roomRef, (snapshot) => {
       const data = snapshot.val();
       setRoomData(data);
+      setRoomName(data[id].roomInfo.roomName);
+      setRoomDescription(data[id].roomInfo.roomdescription);
+      setRoomLocation(data[id].roomInfo.roomlocation);
     });
-
-    onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-
-    if (roomData !== null) {
-      setRoomName(roomData[id].roomInfo.roomName);
-      setRoomDescription(roomData[id].roomInfo.roomdescription);
-      setRoomLocation(roomData[id].roomInfo.roomlocation);
-      setRoomIsPrivate(roomData[id].roomInfo.isprivate);
-      setRoomVerify(roomData[id].roomInfo.verify);
-      // setRoomParticipants(roomData[id.toString()].participants);
-    }
-  }, [roomData]);
+  }, []);
 
   return (
     <div>
-      {userInfo === null ? (
-        <WaitingRoomComponent
-          id={id}
-          roomName = {roomName}
-          roomDescription={roomDescription}
-          roomLocation={roomLocation}
-        />
+      {roomData === null ? (
+        <Loading loadingState={true} />
       ) : (
+        <div> 
+          {/* <h1> {roomData[id].roomInfo.roomName}</h1> */}
         <WaitingRoomComponent
           id={id}
-          roomName = {roomName}
+          roomName={roomName}
           roomDescription={roomDescription}
           roomLocation={roomLocation}
         />
+        </div>
       )}
     </div>
   );
