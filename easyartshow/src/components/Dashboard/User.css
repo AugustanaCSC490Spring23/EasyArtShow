@@ -1,0 +1,11 @@
+.text-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    padding: 2rem 0;
+    gap: 1rem;
+}
+
+.text-wrapper h1 {
+    font-size: 3vw;
+}

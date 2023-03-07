@@ -4,6 +4,7 @@ import { getDatabase, ref, onValue } from "@firebase/database";
 
 import Navbar from "../components/Navbar/Navbar";
 import "../components/Landing/LandingModal.css";
+import { images } from '../constants/';
 import TopView from "../components/TopView";
 
 function MainPage() {
@@ -41,23 +42,32 @@ function MainPage() {
       <Navbar />
       <div className="modal-wrapper">
         <div className="modal-box">
+          
+          <div className="text-content">
+            <h1 className="headtext__major headtext">Explore & Share Art Together</h1>
+            <p className="headtext__minor">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular.</p>
+          </div>
+
           <div className="headtext__major modal-title component-padding">
             Join Room
           </div>
           <input placeholder="Room passcode" type="text" onChange={onChangeHandler} value={roomCode} />
           <div className="button-group-row">
-          <button  className="system-button" onClick={() => joinroom()}>Join room</button>
-            <button
-              className="system-button system-button-primary"
-              onClick={() => navigate("/dashboard")}
-            >
-              or Create room
-            </button>
+            <button  className="system-button" onClick={() => joinroom()}>Join room</button>
+              <button
+                className="system-button system-button-primary"
+                onClick={() => navigate("/dashboard")}
+              >
+                Create room
+              </button>
           </div>
         </div>
+        <div className="img-wrapper">
+          <img src={images.gallery04} alt='img'/>
+        </div>
       </div>
-      {/* <div className="section-padding">@2023.</div> */}
-      <TopView />
+
+      {/* <TopView /> */}
     </div>
   );
 }

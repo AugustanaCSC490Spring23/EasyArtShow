@@ -26,6 +26,7 @@
     "react-wait": "^0.3.0",
     "styled-components": "^5.3.8",
     "three": "^0.150.1",
+    "typed.js": "^2.0.12",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -1,10 +1,16 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import './Navbar.css';
+import { images } from '../../constants';
+import { getAuth } from "@firebase/auth";
 
 function Navbar() {
+  const navigate = useNavigate();
+  const user = getAuth().currentUser;
+
   return (
     <div className='navbar'>
-      <div className='logo'>EAS<b>.</b></div>
+      <img src={images.logo} alt='logo' className='logo'/>
       <nav>
         <ul className='navbar-links'>
           <li className='headtext__major'><a href="/">Home</a></li>
@@ -13,7 +19,8 @@ function Navbar() {
           <li className='headtext__major'><a href="/">Contact</a></li>
         </ul>
       </nav>
-      <div className='headtext__major'>Placeholder</div>
+      { user ? <img src={images.user} alt="user-icon" className='user-icon'/> :
+        <button className='system-button' onClick={() => navigate('/login')}>Log in</button> }
     </div>
   );
 }

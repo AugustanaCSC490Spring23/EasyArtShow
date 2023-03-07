@@ -1,15 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
 .navbar {
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    width: 100%;
+    max-height: 100px;
     padding: 0 2rem;
 }
 
+.navbar .logo {
+    max-width: 15%
+}
+
 .navbar-links {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,28 +40,11 @@ a:hover {
     color: var(--color-black);
 }
 
-
-
-.logo {
-    display: flex;
-    align-items: center;
-    font-size: 35px;
-    font-weight: 1000;
-    text-transform: capitalize;
-    font-family: 'Poppins', sans-serif;
+.navbar button {
+    max-width: 7%;
+    border-radius: 20px;
 }
 
-b {
-    font-size: 70px;
-    color: var(--color-golden);
-}
-
-.logo-box {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    width: 200px;
-    gap: 20px;
+.navbar img {
+    max-width: 50px;
 }
