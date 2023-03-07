@@ -47,10 +47,10 @@ function SlideShow({ imageUrlList, imageDirectory, userIDMatch }) {
                   style={{ width: "400px", height: "400px" }}
                 />
                 {/* <h4> Hello </h4> */}
-                {/* <span style={spanStyle}>Hello</span> */}={" "}
-                <button onClick={() => deletePhoto(imageDirectory[index])}>
+                {/* <span style={spanStyle}>Hello</span> */}
+                {userIDMatch ? (<button onClick={() => deletePhoto(imageDirectory[index])}>
                   delete
-                </button>
+                </button>) : (<></>)}
               </div>
             </div>
           ))}
