@@ -12,6 +12,8 @@ import { getDatabase, ref as dbRef, set } from "@firebase/database";
 import auth from "../../backend/firebase";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import Navbar from "../../components/Navbar/Navbar";
+import { FileUploader } from "react-drag-drop-files";
+
 
 const UploadPicRoom = () => {
   const [picture, setPicture] = useState(null);
@@ -25,9 +27,9 @@ const UploadPicRoom = () => {
   const [user, setUser] = useState(null);
   const [participantName, setParticipantName] = useState("");
   const [artTitle, setArtTitle] = useState("");
+  const fileTypes = ["PNG", "HEIC", "GIF", "JPEG", "JPG"];
 
-  const handlePictureChange = (e) => {
-    const file = e.target.files[0];
+  const handlePictureChange = (file) => {
     const reader = new FileReader();
     reader.onload = () => {
       setImageUrl(reader.result);
@@ -71,17 +73,16 @@ const UploadPicRoom = () => {
         'artTitle': artTitle
       }
     };
-    if (file) {
+    if (file && artTitle && participantName) {
       uploadBytes(storageRef, file, metadata)
       .then((snapshot) => {
-        console.log("Uploaded an image!");
         window.location.reload();
       })
       .catch((error) => {
         console.error("Error uploading image:", error);
       });
     } else {
-      alert("Please select a file to upload!");
+      alert("Please upload your image, enter your name and art's title!");
     }
   };
 
@@ -100,9 +101,8 @@ const UploadPicRoom = () => {
       )}
       Choose a picture:
       <br />
-      <input type="file"  accept="image/png, image/jpeg, image/heic, image/jpg" onChange={handlePictureChange} />
+      <FileUploader handleChange={handlePictureChange} name="Image" types={fileTypes} />
       <br />
-      <button onClick={() => uploadPhoto()}> Upload photo </button>
       {imageUrl && (
         <img
           src={imageUrl}
@@ -114,10 +114,13 @@ const UploadPicRoom = () => {
       <h3> Artwork title </h3>
       <input type="text" onChangeCapture={onChangeArtTitle} value={artTitle}/>
       <br />
-
+      <button onClick={() => uploadPhoto()}> Submit </button>
+      <br />
+      <br />
       <button onClick={() => navigate(`/waitingroom/${id}`)}>
         {" "}
-        Go to library{" "}
+        Go to library
+        {" "}
       </button>
     </div>
   );

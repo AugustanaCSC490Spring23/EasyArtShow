@@ -8,7 +8,7 @@ import {
 import React, { useEffect } from 'react';
 
 import Login from './screens/host/authentication/login';
-import SignUp from './screens/host/authentication/signup';
+// import SignUp from './screens/host/authentication/signup';
 import MainPage from './screens/mainpage';
 import Dashboard from './screens/host/dashboard';
 import WaitingRoom from './screens/host/waitingroom';
@@ -32,7 +32,7 @@ function App() {
         <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
+            {/* <Route path="/signup" element={<SignUp />} /> */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/waitingroom/:id" element={<WaitingRoom />} />
             <Route path="/createroom" element={<CreateRoom />} />

@@ -59,6 +59,7 @@ function ArtBoard({ id }) {
   const [roomData, setRoomData] = useState(null);
 
   const [imageUrlList, setImageUrlList] = useState([]);
+  const [imageMetadataList, setImageMetadataList] = useState([]);
   const db = getDatabase();
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
@@ -97,7 +98,10 @@ function ArtBoard({ id }) {
             ref(storage, itemRef._location.path_)
           );
           imageMetadata.then(function (metadata) {
-            // console.log(metadata);
+            setImageMetadataList((currenState) => [
+              ...currenState,
+              metadata.customMetadata,
+            ]);
           });
         });
       });
@@ -106,20 +110,21 @@ function ArtBoard({ id }) {
     urlList();
   }, []);
 
+  console.log(imageMetadataList)
+
   const swichView = () => {
     setIsSlideShow(!isSlideShow);
   };
 
   const onInit = () => {
-    console.log("lightGallery has been initialized");
   };
 
   return (
     <div>
       <LightGallery onInit={onInit} speed={500} plugins={[lgThumbnail, lgZoom]}>
-        {imageUrlList && imageUrlList.map((url, index) => (
+        {imageUrlList && imageMetadataList && imageUrlList.map((url, index) => (
           <a href = {url} key={index}>
-            <img src={url} alt={`${index}`} style={{ width: "250px", height: "250px" }}/>
+            <img src={url} alt={JSON.stringify(imageMetadataList[index])} style={{ width: "250px", height: "250px" }}/>
             {userIDMatch ? ( <button onClick={() => deletePhoto(imageDirectory[index])}>delete</button> ) : ( <></> )}
           </a>
         ))}
