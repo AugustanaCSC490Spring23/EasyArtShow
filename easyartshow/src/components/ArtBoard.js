@@ -93,19 +93,18 @@ function ArtBoard({ id }) {
 
           imageURL.then(function (url) {
             setImageUrlList((currenState) => [...currenState, url.toString()]);
-          });
-
-          const imageMetadata = getMetadata(
-            ref(storage, itemRef._location.path_)
-          );
-          imageMetadata.then(function (metadata) {
-            const title = metadata.customMetadata.artTitle;
-            const participantName = metadata.customMetadata.participantName;
-            const caption = "Name: " + participantName + " - Title: " + title;
-            setCaptionList((currenState) => [
-              ...currenState,
-              caption,
-            ]);
+            const imageMetadata = getMetadata(
+              ref(storage, itemRef._location.path_)
+            );
+            imageMetadata.then(function (metadata) {
+              const title = metadata.customMetadata.artTitle;
+              const participantName = metadata.customMetadata.participantName;
+              const caption = "Name: " + participantName + " - Title: " + title;
+              setCaptionList((currenState) => [
+                ...currenState,
+                caption,
+              ]);
+            });
           });
         });
       });
@@ -120,6 +119,7 @@ function ArtBoard({ id }) {
 
   const onInit = () => {
   };
+
   return (
     <div>
       Click on the image to view the full screen.

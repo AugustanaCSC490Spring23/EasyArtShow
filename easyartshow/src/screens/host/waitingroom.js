@@ -19,9 +19,7 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
       <Navbar />
       <AiOutlineArrowLeft onClick={() => navigate("/hostroom")} />
       <h1> {roomName} </h1>
-      <br />
-      <text> <b> Description: </b> {roomDescription}</text>
-      <br />
+      {roomDescription &&<> <text><br/> <b> Description: </b> {roomDescription}</text><br/></>}
       <br/>
       {/* <button onClick={() => navigate("/map")}>View map</button> */}
       <div>

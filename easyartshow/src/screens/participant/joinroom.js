@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDatabase, ref, onValue } from "@firebase/database";
 import Navbar from "../../components/Navbar/Navbar";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function JoinRoom() {
   const navigate = useNavigate();
@@ -38,12 +39,9 @@ function JoinRoom() {
   return (
     <div>
       <Navbar />
-      Name:{" "}
-      <input
-        type="text"
-        onChange={onChangeParticipantName}
-        value={roomPartcipantName}
-      />
+      <AiOutlineArrowLeft onClick={() => navigate(`/dashboard`)} />
+      <h1> Join Room </h1>
+      <br />
       Room passcode:{" "}
       <input type="text" onChange={onChangeHandler} value={roomCode} />
       <button onClick={() => joinroom()}>Join room</button>
