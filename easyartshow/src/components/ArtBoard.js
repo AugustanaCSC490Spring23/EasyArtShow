@@ -25,6 +25,7 @@ import "lightgallery/css/lg-thumbnail.css";
 // import plugins if you need
 import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
+import { nanoid } from "nanoid";
 
 const spanStyle = {
   padding: "20px",
@@ -61,6 +62,7 @@ function ArtBoard({ id }) {
   const [imageUrlList, setImageUrlList] = useState([]);
   const [imageMetadataList, setImageMetadataList] = useState([]);
   const db = getDatabase();
+  const [imageData, setImageData] = useState([]);
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
   const [captionList, setCaptionList] = useState([]);
@@ -82,27 +84,31 @@ function ArtBoard({ id }) {
     });
     const urlList = async () => {
       list(listRef).then((res) => {
-        const imagePromises = res.items.forEach((itemRef) => {
-          setImageDirectory((currenState) => [
-            ...currenState,
-            itemRef._location.path_,
-          ]);
-          const imageURL = getDownloadURL(
-            ref(storage, itemRef._location.path_)
-          );
+        const imagePromises = res.items.forEach((itemRef, index) => {
+          const path = itemRef._location.path_;
+
+          setImageDirectory((currenState) => [...currenState, path]);
+
+          const imageURL = getDownloadURL(ref(storage, path));
 
           imageURL.then(function (url) {
             setImageUrlList((currenState) => [...currenState, url.toString()]);
-            const imageMetadata = getMetadata(
-              ref(storage, itemRef._location.path_)
-            );
+            const imageMetadata = getMetadata(ref(storage, path));
             imageMetadata.then(function (metadata) {
               const title = metadata.customMetadata.artTitle;
               const participantName = metadata.customMetadata.participantName;
               const caption = "Name: " + participantName + " - Title: " + title;
-              setCaptionList((currenState) => [
+              setCaptionList((currenState) => [...currenState, caption]);
+
+              const id = nanoid();
+              setImageData((currenState) => [
                 ...currenState,
-                caption,
+                {
+                  id: id,
+                  imageURL: url.toString(),
+                  caption: caption,
+                  imageRef: path,
+                },
               ]);
             });
           });
@@ -117,19 +123,32 @@ function ArtBoard({ id }) {
     setIsSlideShow(!isSlideShow);
   };
 
-  const onInit = () => {
-  };
+  const onInit = () => {};
+  console.log(imageData)
 
   return (
     <div>
-      {imageUrlList.length > 0 && <text> Click on the image to view the full screen. </text>}
+      {imageUrlList.length > 0 && (
+        <text> Click on the image to view the full screen. </text>
+      )}
       <LightGallery onInit={onInit} speed={500} plugins={[lgThumbnail, lgZoom]}>
-        {imageUrlList && imageMetadataList && imageUrlList.map((url, index) => (
-          <a href = {url} key={index}>
-            <img src={url} alt={captionList[index]} style={{ width: "250px", height: "250px" }}/>
-            {userIDMatch ? ( <button onClick={() => deletePhoto(imageDirectory[index])}>delete</button> ) : ( <></> )}
-          </a>
-        ))}
+        {imageData &&
+          imageData.map((item) => (
+            <a href={item.imageURL} key={item.id}>
+              <img
+                src={item.imageURL}
+                alt={item.caption}
+                style={{ width: "250px", height: "250px" }}
+              />
+              {userIDMatch ? (
+                <button onClick={() => deletePhoto(item.imageRef)}>
+                  delete
+                </button>
+              ) : (
+                <></>
+              )}
+            </a>
+          ))}
       </LightGallery>
     </div>
   );
