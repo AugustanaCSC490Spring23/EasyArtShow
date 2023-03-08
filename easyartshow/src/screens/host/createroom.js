@@ -82,7 +82,7 @@ function CreateRoom() {
           <input type="text" onChange={onChangeRoomName} value={roomName} />
           <br />
           <h2> Room description </h2>
-          <input type="text" onChange={onChangeRoomDescription} value={roomDescription} />
+          <textarea type="text" onChange={onChangeRoomDescription} value={roomDescription} />
           <br />
           {/* <br />
           <h2> Room location (leave blank if you don't want to add) </h2>
