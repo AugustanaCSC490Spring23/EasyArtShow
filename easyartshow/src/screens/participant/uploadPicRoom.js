@@ -113,7 +113,7 @@ const UploadPicRoom = () => {
       )}
       <br />
       <h3> Artwork title </h3>
-      <input type="text" onChangeCapture={onChangeArtTitle} value={artTitle}/>
+      <textarea type="text" onChangeCapture={onChangeArtTitle} value={artTitle}/>
       <br />
       <button onClick={() => uploadPhoto()}> Submit </button>
       <br />
