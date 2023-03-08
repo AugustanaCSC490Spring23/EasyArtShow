@@ -30,7 +30,7 @@ function Navbar() {
           <li className='headtext__major'><a href="/contact">Contact</a></li>
         </ul>
       </nav>
-      { user ? <> <img src={images.user} alt="user-icon" className='user-icon'/> <button onClick={() => logout()}> Log out</button> </> :
+      { user ? <> <a href='/dashboard'>  <img src={images.user} alt="user-icon" className='user-icon'/>  </a><button onClick={() => logout()}> Log out</button> </> :
         <button className='system-button' onClick={() => navigate('/login')}>Log in</button> }
     </div>
   );

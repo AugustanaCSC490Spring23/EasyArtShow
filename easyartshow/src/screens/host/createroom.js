@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { getDatabase, ref, set } from "@firebase/database";
+import { getDatabase, ref, push, set } from "@firebase/database";
 import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
 
@@ -41,12 +41,24 @@ function CreateRoom() {
       hostname: user.displayName,
       roomInfo: {
         roomName: roomName,
+        roomCode: randomCode,
         roomDescription: roomDescription,
         roomLocation: roomLocation,
         roomIsPrivate: roomIsPrivate,
         roomVerify: roomVerify,
         roomParticipants: [],
       },
+    });
+
+    const postListRef = ref(db, `easyartshow/hosts/${user.uid}/${randomCode}`);
+    set(postListRef, {
+        roomName: roomName,
+        roomCode: randomCode,
+        roomDescription: roomDescription,
+        roomLocation: roomLocation,
+        roomIsPrivate: roomIsPrivate,
+        roomVerify: roomVerify,
+        roomParticipants: [],
     });
     navigate(`/waitingroom/${randomCode}`);
   }
@@ -59,7 +71,6 @@ function CreateRoom() {
     setRoomDescription(event.target.value);
   };
 
-
   return (
     <div>
       {user ? (
@@ -68,11 +79,12 @@ function CreateRoom() {
           <h1> Create room </h1>
           <br />
           <h2> Your room name </h2>
-          <input type="text" onChange={onChangeRoomName} value={roomName}/>
+          <input type="text" onChange={onChangeRoomName} value={roomName} />
           <br />
-          {/* <h2> Room description </h2>
+          <h2> Room description </h2>
           <input type="text" onChange={onChangeRoomDescription} value={roomDescription} />
           <br />
+          {/* <br />
           <h2> Room location (leave blank if you don't want to add) </h2>
           <input type="text" />
           <br />
@@ -88,8 +100,8 @@ function CreateRoom() {
           <label for="yes"> Yes </label>
           <br />
           <input type="radio" id="no" name="verify" value="no" />
-          <label for="no"> No </label> */}
-          <br />
+          <label for="no"> No </label>
+          <br /> */}
           <button onClick={() => createRoom()}> Create room </button>
         </div>
       ) : (

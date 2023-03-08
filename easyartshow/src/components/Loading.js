@@ -21,21 +21,6 @@ function Loading({ loadingState }) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-//   useEffect(() => {
-//     onValue(roomRef, (snapshot) => {
-//       const data = snapshot.val();
-//       setRoomData(data);
-//     });
-
-//   }, []);
-
-// //   console.log(roomData);
-
-// if (roomData !== null) {
-//     console.log(id);
-//     navigate(`waitingroom/${id}`);
-// }
-
   return (
     <div>
       <ClipLoader

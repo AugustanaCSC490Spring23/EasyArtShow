@@ -110,8 +110,6 @@ function ArtBoard({ id }) {
     urlList();
   }, []);
 
-  console.log(imageMetadataList)
-
   const swichView = () => {
     setIsSlideShow(!isSlideShow);
   };

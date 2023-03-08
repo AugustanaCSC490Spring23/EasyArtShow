@@ -53,7 +53,7 @@ const HostRoom = () => {
                 <button className="system-button system-button-primary" onClick={() => createRoom()}> Create room </button>
                 <button className="system-button" onClick={() => setGoToJoinRoom(true)}> Join room </button>
               </div>
-              {/* <HostHistory /> */}
+              <HostHistory userUid={user.uid}/>
               {/* <button className="system-button logout-btn" onClick={() => logout()}>Logout</button>{" "} */}
             </div>
             <img src={images.gallery02} alt='gallery-img' className="img"/>
