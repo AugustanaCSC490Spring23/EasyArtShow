@@ -63,6 +63,7 @@ function ArtBoard({ id }) {
   const db = getDatabase();
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
+  const [captionList, setCaptionList] = useState([]);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -98,9 +99,12 @@ function ArtBoard({ id }) {
             ref(storage, itemRef._location.path_)
           );
           imageMetadata.then(function (metadata) {
-            setImageMetadataList((currenState) => [
+            const title = metadata.customMetadata.artTitle;
+            const participantName = metadata.customMetadata.participantName;
+            const caption = "Name: " + participantName + " - Title: " + title;
+            setCaptionList((currenState) => [
               ...currenState,
-              metadata.customMetadata,
+              caption,
             ]);
           });
         });
@@ -116,14 +120,13 @@ function ArtBoard({ id }) {
 
   const onInit = () => {
   };
-
   return (
     <div>
       Click on the image to view the full screen.
       <LightGallery onInit={onInit} speed={500} plugins={[lgThumbnail, lgZoom]}>
         {imageUrlList && imageMetadataList && imageUrlList.map((url, index) => (
           <a href = {url} key={index}>
-            <img src={url} alt={JSON.stringify(imageMetadataList[index])} style={{ width: "250px", height: "250px" }}/>
+            <img src={url} alt={captionList[index]} style={{ width: "250px", height: "250px" }}/>
             {userIDMatch ? ( <button onClick={() => deletePhoto(imageDirectory[index])}>delete</button> ) : ( <></> )}
           </a>
         ))}

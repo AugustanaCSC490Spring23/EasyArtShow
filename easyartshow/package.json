@@ -20,6 +20,7 @@
     "react-drag-drop-files": "^2.3.9",
     "react-geolocated": "^4.0.3",
     "react-horizontal-scrolling-menu": "^3.2.5",
+    "react-icons": "^4.8.0",
     "react-photo-album": "^2.0.2",
     "react-qr-code": "^2.0.11",
     "react-router-dom": "^6.8.1",
