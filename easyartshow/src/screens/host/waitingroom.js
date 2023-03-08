@@ -10,18 +10,20 @@ import auth from "../../backend/firebase.js";
 import Navbar from "../../components/Navbar/Navbar";
 import QRCodeComponent from "../../components/QRCodeComponent.js";
 import Loading from "../../components/Loading.js";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
   const navigate = useNavigate();
   return (
     <div>
       <Navbar />
+      <AiOutlineArrowLeft onClick={() => navigate("/hostroom")} />
       <h1> {roomName} </h1>
       <br />
-      <h2> {roomDescription}</h2>
+      <text> <b> Description: </b> {roomDescription}</text>
       <br />
-      <h3> {roomLocation}</h3>
-      <button onClick={() => navigate("/map")}>View map</button>
+      <br/>
+      {/* <button onClick={() => navigate("/map")}>View map</button> */}
       <div>
         Your passcode is <h2>{id}</h2>
         <br />
@@ -63,7 +65,7 @@ function WaitingRoom() {
       const data = snapshot.val();
       setRoomData(data);
       setRoomName(data[id].roomInfo.roomName);
-      setRoomDescription(data[id].roomInfo.roomdescription);
+      setRoomDescription(data[id].roomInfo.roomDescription);
       setRoomLocation(data[id].roomInfo.roomlocation);
     });
   }, []);

@@ -13,7 +13,7 @@ import auth from "../../backend/firebase";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
-
+import {AiOutlineArrowLeft} from "react-icons/ai";
 
 const UploadPicRoom = () => {
   const [picture, setPicture] = useState(null);
@@ -89,6 +89,7 @@ const UploadPicRoom = () => {
   return (
     <div>
       <Navbar />
+      <AiOutlineArrowLeft onClick={() => navigate(`/waitingroom/${id}`)} />
       <h2> Upload Pic </h2>
       {user ? (
         <NameBox user={user.displayName} />
