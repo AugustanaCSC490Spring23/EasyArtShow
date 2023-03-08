@@ -119,6 +119,7 @@ function ArtBoard({ id }) {
 
   return (
     <div>
+      Click on the image to view the full screen.
       <LightGallery onInit={onInit} speed={500} plugins={[lgThumbnail, lgZoom]}>
         {imageUrlList && imageMetadataList && imageUrlList.map((url, index) => (
           <a href = {url} key={index}>
