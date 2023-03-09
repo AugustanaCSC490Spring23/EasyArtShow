@@ -5,6 +5,7 @@ import { getDatabase, ref, push, set } from "@firebase/database";
 import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
 import { Center } from "@react-three/drei";
+import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
 
 function CreateRoom() {
   const navigate = useNavigate();
@@ -78,6 +79,10 @@ function CreateRoom() {
         <div>
           <Navbar />
           <div style={{ textAlign:"center" }}> 
+          <a href="/dashboard"> 
+          < AiOutlineArrowLeft/> 
+          <text> Go back to dashboard </text>
+          </a>
           <h1> Create room </h1>
           <br />
           <h2> Your room name </h2>
