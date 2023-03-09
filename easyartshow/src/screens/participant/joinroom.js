@@ -37,14 +37,23 @@ function JoinRoom() {
   }
 
   return (
-    <div>
+    <div >
+      <div style={{textAlign:"center"}}> 
       <Navbar />
-      <AiOutlineArrowLeft onClick={() => navigate(`/dashboard`)} />
+      <a href="/dashboard"> 
+      <AiOutlineArrowLeft/>
+      <text> Back to dashboard </text>
+      </a>
       <h1> Join Room </h1>
       <br />
       Room passcode:{" "}
+      <br/>
+      <br/>
       <input type="text" onChange={onChangeHandler} value={roomCode} />
+      <br/>
+      <br/>
       <button onClick={() => joinroom()}>Join room</button>
+      </div>
     </div>
   );
 }

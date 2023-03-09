@@ -22,14 +22,14 @@ function Navbar() {
   return (
     <div className='navbar'>
       <a href="/"><img src={images.logo} alt='logo' className='logo'/></a>
-      <nav>
+      {/* <nav>
         <ul className='navbar-links'>
           <li className='headtext__major'><a href="/">Home</a></li>
           <li className='headtext__major'><a href="/devnote">Dev Note</a></li>
           <li className='headtext__major'><a href="/about">About</a></li>
           <li className='headtext__major'><a href="/contact">Contact</a></li>
         </ul>
-      </nav>
+      </nav> */}
       { user ? <> <a href='/dashboard'>  <img src={images.user} alt="user-icon" className='user-icon'/>  </a><button onClick={() => logout()}> Log out</button> </> :
         <button className='system-button' onClick={() => navigate('/login')}>Log in</button> }
     </div>
