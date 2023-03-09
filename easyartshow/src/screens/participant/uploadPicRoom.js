@@ -136,8 +136,10 @@ const UploadPicRoom = () => {
       <h3> Artwork title </h3>
       <textarea
         type="text"
+        placeholder="What do you call your art?"
         onChangeCapture={onChangeArtTitle}
         value={artTitle}
+        style={{ width: "70%"}}
       />
       <br />
       {/* <div>
