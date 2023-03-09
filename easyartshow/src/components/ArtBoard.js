@@ -25,6 +25,9 @@ import "lightgallery/css/lg-thumbnail.css";
 // import plugins if you need
 import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
+import lgAutoplay from "lightgallery/plugins/autoplay";
+import lgComment from "lightgallery/plugins/comment";
+import lgFullscreen from "lightgallery/plugins/fullscreen";
 import { nanoid } from "nanoid";
 
 const spanStyle = {
@@ -108,6 +111,8 @@ function ArtBoard({ id }) {
                   imageURL: url.toString(),
                   caption: caption,
                   imageRef: path,
+                  title: title,
+                  participantName: participantName,
                 },
               ]);
             });
@@ -124,14 +129,17 @@ function ArtBoard({ id }) {
   };
 
   const onInit = () => {};
-  console.log(imageData)
 
   return (
     <div>
       {imageUrlList.length > 0 && (
         <text> Click on the image to view the full screen. </text>
       )}
-      <LightGallery onInit={onInit} speed={500} plugins={[lgThumbnail, lgZoom]}>
+      <LightGallery
+        onInit={onInit}
+        speed={500}
+        plugins={[lgThumbnail, lgZoom, lgAutoplay, lgComment, lgFullscreen]}
+      >
         {imageData &&
           imageData.map((item) => (
             <a href={item.imageURL} key={item.id}>

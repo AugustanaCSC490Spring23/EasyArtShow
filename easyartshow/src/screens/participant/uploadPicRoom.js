@@ -13,7 +13,11 @@ import auth from "../../backend/firebase";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
-import {AiOutlineArrowLeft} from "react-icons/ai";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AudioRecorder } from "react-audio-voice-recorder";
+import ReactAudioPlayer from 'react-audio-player';
+import { Center } from "@react-three/drei";
+
 
 const UploadPicRoom = () => {
   const [picture, setPicture] = useState(null);
@@ -39,20 +43,28 @@ const UploadPicRoom = () => {
     setFile(file);
   };
 
+  const addAudioElement = (blob) => {
+    const url = URL.createObjectURL(blob);
+    const audio = document.createElement("audio");
+    audio.src = url;
+    audio.controls = true;
+    document.body.appendChild(audio);
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
 
       if (user) {
         setParticipantName(user.displayName);
-      };
+      }
     });
   }, []);
 
   const onChangeParticipantName = (event) => {
     setParticipantName(event.target.value);
   };
-  
+
   const onChangeArtTitle = (event) => {
     setArtTitle(event.target.value);
   };
@@ -63,24 +75,24 @@ const UploadPicRoom = () => {
       storage,
       `easyartshow/rooms/${id}/images/${filenameRef}`
     );
-    
+
     if (user) {
       setParticipantName(user.displayName.toString());
-    };
+    }
     const metadata = {
       customMetadata: {
-        'participantName': participantName,
-        'artTitle': artTitle
-      }
+        participantName: participantName,
+        artTitle: artTitle,
+      },
     };
     if (file && artTitle && participantName) {
       uploadBytes(storageRef, file, metadata)
-      .then((snapshot) => {
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Error uploading image:", error);
-      });
+        .then((snapshot) => {
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+        });
     } else {
       alert("Please upload your image, enter your name and art's title!");
     }
@@ -90,19 +102,28 @@ const UploadPicRoom = () => {
     <div>
       <Navbar />
       <AiOutlineArrowLeft onClick={() => navigate(`/waitingroom/${id}`)} />
+      <div style={{ textAlign:"center" }}> 
       <h2> Upload Pic </h2>
       {user ? (
         <NameBox user={user.displayName} />
       ) : (
         <div>
           <h4> Your Name </h4>
-          <input type="text" onChangeCapture={onChangeParticipantName} value={participantName}/>
+          <input
+            type="text"
+            onChangeCapture={onChangeParticipantName}
+            value={participantName}
+          />
           <br />
         </div>
       )}
       Choose a picture:
       <br />
-      <FileUploader handleChange={handlePictureChange} name="Image" types={fileTypes} />
+      <FileUploader
+        handleChange={handlePictureChange}
+        name="Image"
+        types={fileTypes}
+      />
       <br />
       {imageUrl && (
         <img
@@ -113,16 +134,26 @@ const UploadPicRoom = () => {
       )}
       <br />
       <h3> Artwork title </h3>
-      <textarea type="text" onChangeCapture={onChangeArtTitle} value={artTitle}/>
+      <textarea
+        type="text"
+        onChangeCapture={onChangeArtTitle}
+        value={artTitle}
+      />
       <br />
+      {/* <div>
+        <h3> Record a voice message </h3>
+        <AudioRecorder onRecordingComplete={addAudioElement} />
+        <br />
+      </div> */}
+
       <button onClick={() => uploadPhoto()}> Submit </button>
       <br />
       <br />
       <button onClick={() => navigate(`/waitingroom/${id}`)}>
         {" "}
-        Go to library
-        {" "}
+        Go to library{" "}
       </button>
+      </div>
     </div>
   );
 };

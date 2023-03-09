@@ -4,6 +4,7 @@ import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import { getDatabase, ref, push, set } from "@firebase/database";
 import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
+import { Center } from "@react-three/drei";
 
 function CreateRoom() {
   const navigate = useNavigate();
@@ -76,6 +77,7 @@ function CreateRoom() {
       {user ? (
         <div>
           <Navbar />
+          <div style={{ textAlign:"center" }}> 
           <h1> Create room </h1>
           <br />
           <h2> Your room name </h2>
@@ -103,6 +105,7 @@ function CreateRoom() {
           <label for="no"> No </label>
           <br /> */}
           <button onClick={() => createRoom()}> Create room </button>
+        </div>
         </div>
       ) : (
         <Login />

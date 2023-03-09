@@ -11,6 +11,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import QRCodeComponent from "../../components/QRCodeComponent.js";
 import Loading from "../../components/Loading.js";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineCloudUpload } from "react-icons/ai";
 
 function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
     <div>
       <Navbar />
       <AiOutlineArrowLeft onClick={() => navigate("/hostroom")} />
+      <div style={{textAlign: "center"}}> 
       <h1> {roomName} </h1>
       {roomDescription &&<> <text><br/> <b> Description: </b> {roomDescription}</text><br/></>}
       <br/>
@@ -26,12 +28,16 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
         Your passcode is <h2>{id}</h2>
         <br />
         Share this code with your participants.
+        <br />
         <button onClick={() => navigate(`/qrcode/${id}`)}>
           {" "}
           View QR Code{" "}
         </button>
         <br />
+        <br />
+        
         <button onClick={() => navigate(`/uploadpicroom/${id}`)}>
+          <AiOutlineCloudUpload />
           Upload picture
         </button>
         {/* <div>
@@ -40,6 +46,7 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
         <div>
           <ArtBoard id={id} />
         </div>
+      </div>
       </div>
     </div>
   );
