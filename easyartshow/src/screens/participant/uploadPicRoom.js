@@ -82,6 +82,7 @@ const UploadPicRoom = () => {
       customMetadata: {
         participantName: participantName,
         artTitle: artTitle,
+        imageStamp: new Date().getTime(),
       },
     };
     if (file && artTitle && participantName) {

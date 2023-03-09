@@ -14,8 +14,6 @@ function CreateRoom() {
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
-  const [roomIsPrivate, setRoomIsPrivate] = useState(true);
-  const [roomVerify, setRoomVerify] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -46,9 +44,8 @@ function CreateRoom() {
         roomCode: randomCode,
         roomDescription: roomDescription,
         roomLocation: roomLocation,
-        roomIsPrivate: roomIsPrivate,
-        roomVerify: roomVerify,
         roomParticipants: [],
+        timeStamp: Date.now(),
       },
     });
 
@@ -58,9 +55,8 @@ function CreateRoom() {
         roomCode: randomCode,
         roomDescription: roomDescription,
         roomLocation: roomLocation,
-        roomIsPrivate: roomIsPrivate,
-        roomVerify: roomVerify,
         roomParticipants: [],
+        timeStamp: Date.now(),
     });
     navigate(`/waitingroom/${randomCode}`);
   }
@@ -91,24 +87,6 @@ function CreateRoom() {
           <h2> Room description </h2>
           <textarea type="text" onChange={onChangeRoomDescription} value={roomDescription} />
           <br />
-          {/* <br />
-          <h2> Room location (leave blank if you don't want to add) </h2>
-          <input type="text" />
-          <br />
-          <h3> Is your room public or private? </h3>
-          <input type="radio" id="public" name="roomtype" value="public" />
-          <label for="public"> Public </label>
-          <br />
-          <input type="radio" id="private" name="roomtype" value="private" />
-          <label for="private"> Private </label>
-          <br />
-          <h3> Verify before uploading? </h3>
-          <input type="radio" id="yes" name="verify" value="yes" />
-          <label for="yes"> Yes </label>
-          <br />
-          <input type="radio" id="no" name="verify" value="no" />
-          <label for="no"> No </label>
-          <br /> */}
           <button onClick={() => createRoom()}> Create room </button>
         </div>
         </div>

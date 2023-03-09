@@ -70,6 +70,14 @@ function ArtBoard({ id }) {
   const roomRef = dbRef(db, "easyartshow/rooms/");
   const [captionList, setCaptionList] = useState([]);
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  }
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       onValue(roomRef, (snapshot) => {
@@ -100,7 +108,14 @@ function ArtBoard({ id }) {
             imageMetadata.then(function (metadata) {
               const title = metadata.customMetadata.artTitle;
               const participantName = metadata.customMetadata.participantName;
-              const caption = "Name: " + participantName + " - Title: " + title;
+              const timeStamp = formatDate(metadata.timeCreated);
+              const caption =
+                "Name: " +
+                participantName +
+                " - Title: " +
+                title +
+                " - Date created: " +
+                timeStamp;
               setCaptionList((currenState) => [...currenState, caption]);
 
               const id = nanoid();
@@ -113,6 +128,7 @@ function ArtBoard({ id }) {
                   imageRef: path,
                   title: title,
                   participantName: participantName,
+                  dateCreated: timeStamp,
                 },
               ]);
             });
@@ -142,12 +158,13 @@ function ArtBoard({ id }) {
       >
         {imageData &&
           imageData.map((item) => (
-            <a href={item.imageURL} key={item.id}>
+            <a href={item.imageURL} key={item.id}  data-sub-html={`<h4>${item.title}</h4><p><b>${item.participantName}</b> - Date added: <b>${item.dateCreated}</b></p>`}>
               <img
                 src={item.imageURL}
                 alt={item.caption}
                 style={{ width: "250px", height: "250px" }}
               />
+
               {userIDMatch ? (
                 <button onClick={() => deletePhoto(item.imageRef)}>
                   delete

@@ -102,7 +102,8 @@ function HostHistory({ userUid }) {
                       onClick={() => onToggleDelete(roomData[key].roomCode, roomData[key].roomName)}
                     >
                       {" "}
-                      Delete room{" "}
+                      Delete room
+                      {" "}
                     </button>
                   </div>
                   <br />
@@ -112,6 +113,7 @@ function HostHistory({ userUid }) {
           </div>
         </div>
       )}
+      <text> Maximum 3 rooms allowed. <a href="#">Subscribe</a> to add more. </text>
     </div>
   );
 }
