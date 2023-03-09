@@ -181,7 +181,12 @@ function ArtBoard({ id }) {
             </a>
           ))}
       </LightGallery>
-      <CommentBox />
+      <br />
+      <br />
+      <br />
+      <div> 
+      {imageData.length > 0 && (<CommentBox />)}
+      </div>
     </div>
   );
 }
