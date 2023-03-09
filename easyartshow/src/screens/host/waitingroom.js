@@ -12,6 +12,7 @@ import QRCodeComponent from "../../components/QRCodeComponent.js";
 import Loading from "../../components/Loading.js";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import { FiShare } from "react-icons/fi";
 
 function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
   const navigate = useNavigate();
@@ -23,18 +24,15 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
           <text> Back to dashboard </text>
           </a>
       <div style={{textAlign: "center"}}> 
-      <h1> {roomName} </h1>
+      <h1> {roomName} </h1> 
       {roomDescription &&<> <text><br/> <b> Description: </b> {roomDescription}</text><br/></>}
+      <a href={`/qrcode/${id}`}> <FiShare/> Share this room</a>
+
       <br/>
       {/* <button onClick={() => navigate("/map")}>View map</button> */}
       <div>
-        Your passcode is <h2>{id}</h2>
-        <br />
-        Share this code with your participants. 
-        <button onClick={() => navigate(`/qrcode/${id}`)}>
-          View QR Code for your room{" "}
-        </button>
-        <br />
+        
+        
         <br />
         
         <button onClick={() => navigate(`/uploadpicroom/${id}`)}>

@@ -14,6 +14,12 @@ function QRCodeComponent() {
         <AiOutlineArrowLeft />
         <text> Back to waiting room </text>
       </a>
+      <div>
+        Your passcode is <h2>{id}</h2>
+        <br />
+        Share this code with your participants or scan the QR code below to join the room.
+        <br />
+        </div>
       <br />
       <h1> QR Code: </h1>
       <div
