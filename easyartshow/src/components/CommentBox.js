@@ -1,9 +1,21 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from "react";
+import { DiscussionEmbed } from 'disqus-react';
+import { nanoid } from "nanoid";
 
-export default class CommentBox extends Component {
-  render() {
-    return (
-      <div>CommentBox</div>
-    )
-  }
-}
+const CommentBox = ({post}) => {
+  return (
+    <DiscussionEmbed
+    shortname='easyartshow-2'
+    config={
+        {
+            url: window.location.href,
+            identifier: window.location.href,
+            title: document.title,
+            language: 'en_US' 
+        }
+    }
+/>
+  )
+};
+
+export default CommentBox;

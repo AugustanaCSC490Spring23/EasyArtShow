@@ -30,6 +30,8 @@ import lgComment from "lightgallery/plugins/comment";
 import lgFullscreen from "lightgallery/plugins/fullscreen";
 import { nanoid } from "nanoid";
 
+import CommentBox from "./CommentBox";
+
 const spanStyle = {
   padding: "20px",
   background: "#efefef",
@@ -158,7 +160,11 @@ function ArtBoard({ id }) {
       >
         {imageData &&
           imageData.map((item) => (
-            <a href={item.imageURL} key={item.id}  data-sub-html={`<h4>${item.title}</h4><p><b>${item.participantName}</b> - Date added: <b>${item.dateCreated}</b></p>`}>
+            <a
+              href={item.imageURL}
+              key={item.id}
+              data-sub-html={`<h4>${item.title}</h4><p><b>${item.participantName}</b> - Date added: <b>${item.dateCreated}</b></p>`}
+            >
               <img
                 src={item.imageURL}
                 alt={item.caption}
@@ -175,6 +181,7 @@ function ArtBoard({ id }) {
             </a>
           ))}
       </LightGallery>
+      <CommentBox />
     </div>
   );
 }
