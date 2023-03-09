@@ -15,9 +15,8 @@ import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AudioRecorder } from "react-audio-voice-recorder";
-import ReactAudioPlayer from 'react-audio-player';
+import ReactAudioPlayer from "react-audio-player";
 import { Center } from "@react-three/drei";
-
 
 const UploadPicRoom = () => {
   const [picture, setPicture] = useState(null);
@@ -101,60 +100,64 @@ const UploadPicRoom = () => {
   return (
     <div>
       <Navbar />
-      <AiOutlineArrowLeft onClick={() => navigate(`/waitingroom/${id}`)} />
-      <div style={{ textAlign:"center" }}> 
-      <h2> Upload Pic </h2>
-      {user ? (
-        <NameBox user={user.displayName} />
-      ) : (
-        <div>
-          <h4> Your Name </h4>
-          <input
-            type="text"
-            onChangeCapture={onChangeParticipantName}
-            value={participantName}
-          />
-          <br />
-        </div>
-      )}
-      Choose a picture:
-      <br />
-      <FileUploader
-        handleChange={handlePictureChange}
-        name="Image"
-        types={fileTypes}
-      />
-      <br />
-      {imageUrl && (
-        <img
-          src={imageUrl}
-          alt="Selected"
-          style={{ width: "150px", height: "150px" }}
+      <div style={{ textAlign: "center" }}>
+        <a href={`/waitingroom/${id}`}>
+          <AiOutlineArrowLeft/>
+           <text> Back to library </text>
+        </a>
+        <h2> Upload Pic </h2>
+        {user ? (
+          <NameBox user={user.displayName} />
+        ) : (
+          <div>
+            <h4> Your Name </h4>
+            <input
+              type="text"
+              onChangeCapture={onChangeParticipantName}
+              value={participantName}
+            />
+            <br />
+          </div>
+        )}
+        Choose a picture:
+        <br />
+        <div style={{textAlign:"-webkit-center"}}> 
+        <FileUploader
+          handleChange={handlePictureChange}
+          name="Image"
+          types={fileTypes}
         />
-      )}
-      <br />
-      <h3> Artwork title </h3>
-      <textarea
-        type="text"
-        placeholder="What do you call your art?"
-        onChangeCapture={onChangeArtTitle}
-        value={artTitle}
-        style={{ width: "70%"}}
-      />
-      <br />
-      {/* <div>
+        </div>
+        <br />
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt="Selected"
+            style={{ width: "150px", height: "150px" }}
+          />
+        )}
+        <br />
+        <h3> Artwork title </h3>
+        <textarea
+          type="text"
+          placeholder="What do you call your art?"
+          onChangeCapture={onChangeArtTitle}
+          value={artTitle}
+          style={{ width: "70%" }}
+        />
+        <br />
+        {/* <div>
         <h3> Record a voice message </h3>
         <AudioRecorder onRecordingComplete={addAudioElement} />
         <br />
       </div> */}
-
-      <button onClick={() => uploadPhoto()}> Submit </button>
-      <br />
-      <br />
-      <button onClick={() => navigate(`/waitingroom/${id}`)}>
-        {" "}
-        Go to library{" "}
-      </button>
+        <button onClick={() => uploadPhoto()}> Submit </button>
+        <br />
+        <br />
+        <button onClick={() => navigate(`/waitingroom/${id}`)}>
+          {" "}
+          Go to library{" "}
+        </button>
       </div>
     </div>
   );

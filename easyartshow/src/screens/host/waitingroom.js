@@ -16,9 +16,12 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
   const navigate = useNavigate();
   return (
-    <div>
+    <div style={{textAlign: "center"}}>
       <Navbar />
-      <AiOutlineArrowLeft onClick={() => navigate("/hostroom")} />
+      <a href={`/hostroom`}>
+          <AiOutlineArrowLeft />
+          <text> Back to dashboard </text>
+          </a>
       <div style={{textAlign: "center"}}> 
       <h1> {roomName} </h1>
       {roomDescription &&<> <text><br/> <b> Description: </b> {roomDescription}</text><br/></>}
@@ -27,17 +30,15 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
       <div>
         Your passcode is <h2>{id}</h2>
         <br />
-        Share this code with your participants.
-        <br />
+        Share this code with your participants. 
         <button onClick={() => navigate(`/qrcode/${id}`)}>
-          {" "}
-          View QR Code{" "}
+          View QR Code for your room{" "}
         </button>
         <br />
         <br />
         
         <button onClick={() => navigate(`/uploadpicroom/${id}`)}>
-          <AiOutlineCloudUpload />
+          <AiOutlineCloudUpload/>
           Upload picture
         </button>
         {/* <div>
