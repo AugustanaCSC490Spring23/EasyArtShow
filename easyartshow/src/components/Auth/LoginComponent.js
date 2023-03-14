@@ -10,28 +10,28 @@ import {
 } from "@firebase/auth";
 
 const LoginComponent = (props) => {
-  var email = "";
-  var password = "";
+  
   var name = "";
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const auth = getAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(email);
   };
 
-  // const onChangeName = (e) => {
-  //   name = e.target.value;
-  // };
+  const onChangeName = (e) => {
+    name = e.target.value;
+  };
 
-  // const onChangeEmail = (e) => {
-  //   email = e.target.value;
-  // };
+  const onChangeEmail = (e) => {
+    email = e.target.value;
+  };
 
-  // const onChangePassword = (e) => {
-  //   password = e.target.value;
-  // };
+  const onChangePassword = (e) => {
+    password = e.target.value;
+  };
   const wrapper = document.querySelector(".form-wrapper");
   const loginLink = document.querySelector(".login-link");
   const registerLink = document.querySelector(".register-link");
@@ -45,7 +45,7 @@ const LoginComponent = (props) => {
   });
 
   function createUserWithEmailAndPassword(email, password) {
-    createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -58,26 +58,34 @@ const LoginComponent = (props) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         // ..
+        alert(errorCode);
+
       });
   }
 
-  function signInWithEmailAndPassword() {
-    signInWithEmailAndPassword(email, password)
+  function signInWithEmailAndPassword(email, password) {
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+       // console.log(user);
+        alert("Successfully created account");
+    
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        alert(errorCode);
+        
       });
+  
   }
 
   return (
     <div className="form-wrapper">
       <form onSubmit={handleSubmit} className="form-box login">
-        {/* <h1 className="headtext__major">Login</h1>
+        <h1 className="headtext__major">Login</h1>
         <div className="input-box">
           <label className="input-field">
             <label className="headtext__minor">Email</label>
@@ -115,7 +123,7 @@ const LoginComponent = (props) => {
             or
           </p>
           <div className="straight-line" />
-        </div> */}
+        </div>
         <button
           className="system-button login-with-google-btn"
           onClick={props.loginWithGoogle}
@@ -124,7 +132,7 @@ const LoginComponent = (props) => {
           Login with Google
         </button>
 
-        {/* <div className="login-register">
+        <div className="login-register">
           <p className="headtext__minor">
             Don't have an account?{" "}
             <a href="#" className="register-link">
@@ -150,7 +158,7 @@ const LoginComponent = (props) => {
             >
               Email
             </label>
-            <input type="text" placeholder=" " />
+            <input type="text" placeholder=" " onChange={(e) => setEmail(e.target.value)}/>
           </label>
           <label className="input-field">
             <label
@@ -158,7 +166,7 @@ const LoginComponent = (props) => {
             >
               Password
             </label>
-            <input type="password" placeholder=" " />
+            <input type="password" placeholder=" " onChange={(e) => setPassword(e.target.value)} />
           </label>
         </div>
 
@@ -196,8 +204,8 @@ const LoginComponent = (props) => {
             <a href="#" className="login-link">
               Login
             </a>
-          </p> */}
-        {/* </div> */}
+          </p> 
+        </div>
       </form>
     </div>
   );
