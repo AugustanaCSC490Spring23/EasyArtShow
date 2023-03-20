@@ -1,91 +1,71 @@
 import React from "react";
-//import "./style.css";
-import Contact from './screens/Contact';
- import { Route} from "react-router-dom";
-import ValidateForm from "./ValidateForm";
+import "./style.css";
+import { Container, Row, Col } from "react-bootstrap";
+//import { contactConfig } from "./ValidateForm";
 function ContactUs() {
-  // const nameInput = document.getElementById("name");
-  // const email = document.getElementById("email");
-  // const message = document.getElementById("message");
-  // const success = document.getElementById("success");
-  // const errorNodes = document.querySelectorAll(".error");
-
-  // function validateForm() {
-  //   clearMessages();
-    
-  //   let error = false;
-  //   if (nameInput.value.length < 1) {
-  //     errorNodes[0].innerText = "Write your name";
-  //     nameInput.classList.add("error-border");
-  //     error = true;
-  //   }
-  //   if (!emailIsValid(email.value)) {
-  //     errorNodes[1].innerText = "Invalid Email";
-  //     email.classList.add("error-border");
-  //     error = true;
-  //   }
-  //   if (message.value.length < 1) {
-  //     errorNodes[2].innerText = "Please enter message";
-  //     message.classList.add("error-border");
-  //     error = true;
-
-  //   }
-  //   if (!error) {
-  //     success.innerText = "Success";
-  //   }
-    
-  // }
-
-  // function clearMessages() {
-  //   for (let i = 0; i < errorNodes.length; i++) {
-  //     errorNodes[i].innerText = "";
-  //   }
-  //   success.innerText = " ";
-  //   nameInput.classList.remove("error-border");
-  //   email.classList.remove("error-border");
-  //   message.classList.remove("error-border");
-  // }
-  // function emailIsValid() {
-  //   let pattern = /\S+@\S+\.\S+/;
-  //   return pattern.test(email);
-  // }
-  //  const handleSubmit=(event)=>{
-    
-  //   event.preventDefault();
-  //   validateForm();
-  
-  // }
   return (
-
-    <div id="overlay">
-
-      <form onSubmit={event=>event.preventDefault()&& ValidateForm()}>
-
-        <h1> Contact US</h1>
-
-        <label htmlFor="name">Name:</label>
-        <input type="text" id="name" placeholder="Your name" />
-        <small className="error"></small>
-
-        <label htmlFor="email">Email:</label>
-        <input type="text" id="email" placeholder="Your email" />
-        <small className="error"></small>
-
-        <label htmlFor="message">Message:</label>
-        <textarea id="message" placeholder="Your message" rows="6"></textarea>
-        <small className="error"></small>
-
-        <div className="center">
-          <input type="submit" value="Send Message" />
-          <p id="success"></p>
-        </div>
-      </form>
-      <script src={ValidateForm.js}></script>
-    </div>
-
+    <Container className="contact">
+      <Row className="mb-5 mt-3">
+        <Col lg="8">
+          <h1 className="display-4 mb-4">Contact Us</h1>
+        </Col>
+      </Row>
+      <Row className="sec_sp">
+        <Col lg="5" className="mb-5">
+          <h3> Get in touch</h3>
+          <address>
+            <strong>Email : artShow@gmail.com.com</strong>
+            <br />
+            <br />
+            <p>
+              <strong>Phone : +1 xxx xxx xxxx</strong>
+            </p>
+          </address>
+        </Col>
+        <Col lg="7">
+          <form className="contact__form">
+            <Row>
+              <Col lg="6" className="form-group">
+                <input
+                  className="form-control"
+                  id="name"
+                  name="name"
+                  placeholder="Name"
+                  type="text"
+                  required
+                />
+              </Col>
+              <Col lg="6">
+                <input
+                  className="form-control rounded-0"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  type="email"
+                  required
+                />
+              </Col>
+            </Row>
+            <textarea
+              className="form-control rounded-0"
+              id="message"
+              name="message"
+              placeholder="Message"
+              rows="5"
+              required
+            ></textarea>
+            <br />
+            <Row>
+              <Col lg="12" className="form-group">
+                <button className="btn ac_btn" type="submit">
+                  Send
+                </button>
+              </Col>
+            </Row>
+          </form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 export default ContactUs;
-
-
-

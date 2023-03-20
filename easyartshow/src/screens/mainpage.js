@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar/Navbar";
 import "../components/Landing/LandingModal.css";
 import { images } from '../constants/';
 import TopView from "../components/TopView";
+import { Color } from "three";
 
 function MainPage() {
   const navigate = useNavigate();
@@ -45,6 +46,12 @@ function MainPage() {
         <div className="contact">
           {/* Contact Us */}
           <button  className="contact-button" onClick={() => navigate("/contactUs")}>Contact Us</button>
+          <style>
+          contact-button
+            
+
+          </style>
+          
         </div>
         <div className="contact">
           {/* About Us */}
