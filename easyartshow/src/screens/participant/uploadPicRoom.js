@@ -1,26 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ref,
   uploadBytes,
-  getStorage,
-  listAll,
-  list,
-  getDownloadURL,
+  getStorage,  
 } from "@firebase/storage";
-import { getDatabase, ref as dbRef, set } from "@firebase/database";
 import auth from "../../backend/firebase";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import { onAuthStateChanged } from "@firebase/auth";
 import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { AudioRecorder } from "react-audio-voice-recorder";
-import ReactAudioPlayer from "react-audio-player";
-import { Center } from "@react-three/drei";
 
 const UploadPicRoom = () => {
-  const [picture, setPicture] = useState(null);
-  const [progress, setProgress] = useState(0);
+  
   const [imageUrl, setImageUrl] = useState("");
   const [filename, setFilename] = useState("");
   const [file, setFile] = useState(null);
@@ -40,14 +32,6 @@ const UploadPicRoom = () => {
     reader.readAsDataURL(file);
     setFilename(file.name);
     setFile(file);
-  };
-
-  const addAudioElement = (blob) => {
-    const url = URL.createObjectURL(blob);
-    const audio = document.createElement("audio");
-    audio.src = url;
-    audio.controls = true;
-    document.body.appendChild(audio);
   };
 
   useEffect(() => {
@@ -87,7 +71,7 @@ const UploadPicRoom = () => {
     };
     if (file && artTitle && participantName) {
       uploadBytes(storageRef, file, metadata)
-        .then((snapshot) => {
+        .then(() => {
           window.location.reload();
         })
         .catch((error) => {

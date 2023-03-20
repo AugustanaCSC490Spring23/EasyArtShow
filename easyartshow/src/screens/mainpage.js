@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+//import {Route, Link, Routes} from 'react-router-dom';
 import { getDatabase, ref, onValue } from "@firebase/database";
 
 import Navbar from "../components/Navbar/Navbar";
@@ -41,6 +42,14 @@ function MainPage() {
     <div className="mainpage-container">
       <Navbar />
       <div className="modal-wrapper">
+        <div className="contact">
+          {/* Contact Us */}
+          <button  className="contact-button" onClick={() => navigate("/contactUs")}>Contact Us</button>
+        </div>
+        <div className="contact">
+          {/* About Us */}
+          <button  className="About-button" onClick={() => navigate("/About")}>About Us Us</button>
+        </div>
         <div className="modal-box">
           
           <div className="text-content">
