@@ -8,8 +8,11 @@
     padding: 0 2rem;
 }
 
+.navbar .logo-anchor {
+    width: 20%
+}
 .navbar .logo {
-    max-width: 15%
+    max-width: 80%;
 }
 
 .navbar-links {
@@ -43,8 +46,20 @@ a:hover {
 .navbar button {
     max-width: 7%;
     border-radius: 20px;
+    border: none;
+    min-width: 60%
 }
 
 .navbar img {
     max-width: 50px;
 }
+
+.right-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    gap: 0 1rem;
+}
+

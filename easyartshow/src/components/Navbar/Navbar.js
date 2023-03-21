@@ -21,7 +21,7 @@ function Navbar() {
 
   return (
     <div className='navbar'>
-      <a href="/"><img src={images.logo} alt='logo' className='logo'/></a>
+      <a href="/" className='logo-anchor'><img src={images.logo} alt='logo' className='logo'/></a>
       {/* <nav>
         <ul className='navbar-links'>
           <li className='headtext__major'><a href="/">Home</a></li>
@@ -30,7 +30,7 @@ function Navbar() {
           <li className='headtext__major'><a href="/contact">Contact</a></li>
         </ul>
       </nav> */}
-      { user ? <> <a href='/dashboard'>  <img src={images.user} alt="user-icon" className='user-icon'/>  </a><button onClick={() => logout()}> Log out</button> </> :
+      { user ? <div className='right-group'> <button className='system-button logout-button' onClick={() => logout()}> Log out</button> <a href='/dashboard'>  <img src={images.user} alt="user-icon" className='user-icon'/>  </a> </div> :
         <button className='system-button' onClick={() => navigate('/login')}>Log in</button> }
     </div>
   );
