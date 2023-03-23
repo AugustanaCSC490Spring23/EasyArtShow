@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import TopView from "../../components/TopView";
 import { getDatabase, ref, onValue, set } from "@firebase/database";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import { useNavigate } from "react-router-dom";
 import {
   getStorage,
   ref as storageRef,
-  listAll,
   deleteObject,
 } from "@firebase/storage";
 
@@ -68,7 +65,7 @@ function HostHistory({ userUid }) {
       const data = snapshot.val();
       setRoomData(data);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
@@ -113,7 +110,7 @@ function HostHistory({ userUid }) {
           </div>
         </div>
       )}
-      <text> Maximum 3 rooms allowed. <a href="#">Subscribe</a> to add more. </text>
+      <text> Maximum 3 rooms allowed. <a href="#">Subscribe</a> to add more. </text> 
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { DiscussionEmbed } from 'disqus-react';
-import { nanoid } from "nanoid";
+
 
 const CommentBox = ({post}) => {
   return (

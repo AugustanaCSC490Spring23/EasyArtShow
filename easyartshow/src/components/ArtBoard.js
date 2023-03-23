@@ -2,19 +2,19 @@
 import React, { useEffect, useState } from "react";
 import {
   ref,
-  uploadBytes,
+ 
   getStorage,
-  listAll,
+  
   list,
   getDownloadURL,
   getMetadata,
   deleteObject,
 } from "@firebase/storage";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
 import "react-slideshow-image/dist/styles.css";
 import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
-import SlideShow from "./SlideShow";
+
 import LightGallery from "lightgallery/react";
 
 // import styles
@@ -31,12 +31,6 @@ import lgFullscreen from "lightgallery/plugins/fullscreen";
 import { nanoid } from "nanoid";
 
 import CommentBox from "./CommentBox";
-
-const spanStyle = {
-  padding: "20px",
-  background: "#efefef",
-  color: "#000000",
-};
 
 function deletePhoto(url) {
   // delete photo)
@@ -57,20 +51,19 @@ function deletePhoto(url) {
 function ArtBoard({ id }) {
   const storage = getStorage();
   const listRef = ref(storage, `easyartshow/rooms/${id.toString()}/images/`);
-  const [user, setUser] = useState(null);
-  const [isSlideShow, setIsSlideShow] = useState(false);
-  const [imageDirectory, setImageDirectory] = useState([]);
+  const [ setUser] = useState(null);
+  
+  const [setImageDirectory] = useState([]);
   const auth = getAuth();
   const [userIDMatch, setUserIDMatch] = useState(false);
-  const [roomData, setRoomData] = useState(null);
+  const [ setRoomData] = useState(null);
 
   const [imageUrlList, setImageUrlList] = useState([]);
-  const [imageMetadataList, setImageMetadataList] = useState([]);
   const db = getDatabase();
   const [imageData, setImageData] = useState([]);
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
-  const [captionList, setCaptionList] = useState([]);
+  const [ setCaptionList] = useState([]);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -97,7 +90,7 @@ function ArtBoard({ id }) {
     });
     const urlList = async () => {
       list(listRef).then((res) => {
-        const imagePromises = res.items.forEach((itemRef, index) => {
+        res.items.forEach((itemRef, index) => {
           const path = itemRef._location.path_;
 
           setImageDirectory((currenState) => [...currenState, path]);
@@ -140,11 +133,7 @@ function ArtBoard({ id }) {
     };
 
     urlList();
-  }, []);
-
-  const swichView = () => {
-    setIsSlideShow(!isSlideShow);
-  };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onInit = () => {};
 

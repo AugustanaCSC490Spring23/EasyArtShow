@@ -5,7 +5,7 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Login from './screens/host/authentication/login';
 // import SignUp from './screens/host/authentication/signup';

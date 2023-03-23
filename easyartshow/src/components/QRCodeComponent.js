@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import QRCode from "react-qr-code";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 

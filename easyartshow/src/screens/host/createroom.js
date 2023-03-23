@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { getDatabase, ref, push, set } from "@firebase/database";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { getDatabase, ref, set } from "@firebase/database";
 import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
-import { Center } from "@react-three/drei";
-import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
+
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function CreateRoom() {
   const navigate = useNavigate();
@@ -13,13 +13,13 @@ function CreateRoom() {
   const [user, setUser] = useState(null);
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
-  const [roomLocation, setRoomLocation] = useState("");
+  const [roomLocation] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const randomCodeGenerator = () => {
     let result = "";

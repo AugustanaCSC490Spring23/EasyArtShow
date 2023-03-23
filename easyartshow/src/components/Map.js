@@ -18,10 +18,10 @@ const formatDegrees = (degrees, isLongitude) =>
 function Map() {
   const {
     coords,
-    getPosition,
+    
     isGeolocationAvailable,
     isGeolocationEnabled,
-    positionError,
+    
   } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: false,

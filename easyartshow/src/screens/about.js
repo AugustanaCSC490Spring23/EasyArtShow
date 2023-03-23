@@ -1,12 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./about.css";
 
 function About() {
  
+ 
   return(
-    <div className = "about">
-      <div className ="hero">
+
         <div className ="container">
           <div className = "article">
             <div className ="title">
@@ -16,8 +15,12 @@ function About() {
               <h3>
                  It is an art web app
               </h3>
+              <br/>
+              <br/>
              <p> The art show ap is developed to make sharing of art easy </p>
             </div>
+            <br/>
+            <br/>
             <div className= "comment">
               <p> Leave a comment</p>
               <form className=" comment-form">
@@ -33,9 +36,6 @@ function About() {
           </div>
 
         </div>
-
-      </div>
-    </div>
 
   );
     
