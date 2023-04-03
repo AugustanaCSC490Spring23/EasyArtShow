@@ -9,6 +9,7 @@ const Dashboard = ({user}) => {
     // const auth = getAuth();
     const [userInfo, setUser] = useState(null);
     
+    // console.log(auth.currentUser)
     useEffect(() => {
       onAuthStateChanged(auth, (user) => {
         setUser(user);
@@ -16,9 +17,9 @@ const Dashboard = ({user}) => {
     }, []);
 
     return (
-      <div>
+      <>
         { userInfo ? <HostRoom user={userInfo}/> : <Login />}
-      </div>
+      </>
     );
   }
   

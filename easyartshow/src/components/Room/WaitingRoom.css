@@ -1,0 +1,42 @@
+
+.waitingroom-wrapper {
+    padding: 2rem 2rem;
+}
+.header-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    margin: 2rem 2rem;
+}
+
+.system-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px;
+
+    border-bottom: 2px solid rgba(185, 185, 185, 0.5);
+}
+
+.left-button-group, .right-button-group {
+    display: flex;
+    flex-direction: row;
+
+    width: 20%;
+    gap: 20px;
+}
+
+.info-button {
+    border-radius: 50%;
+    width: 50px;
+    height: 30px
+}
+
+.qr-button {
+    border: none;
+}
