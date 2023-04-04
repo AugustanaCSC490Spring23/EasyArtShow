@@ -1,25 +1,24 @@
 #host-history-section {
-    width: 80%;
+    width: 100%;
     height: 100%;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
+    /* align-items: center; */
 }
 
 .host-history-wrapper {
-    justify-content: flex-start;
-    width: 100%;
-    margin-top: 4rem;
-    margin-left: 10rem;
-    padding: 2rem 2rem;
-    overflow: hidden;
+    max-width: 80%;
     z-index: 1;
+
+    margin-top: 4rem;
+    margin-left: 4rem;
+    padding: 2rem 2rem;
 
     border-radius: 20px;
     backdrop-filter: blur(10px);
     box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
-    /* background-image: linear-gradient( 174.2deg,  rgba(241,238,223,0.2) 7.1%, rgba(224, 215, 186, 0.2), rgba(211,198,169,0.4) 67.4% ); */
 }
 
 .room-card {
@@ -42,7 +41,6 @@
 .room-card img {
     width: 50%;
 }
-
 
 .delete-prompt-background {
     width: 100vw;

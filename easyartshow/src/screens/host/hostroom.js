@@ -57,9 +57,10 @@ const HostRoom = () => {
               </div>
             </div>
             <img src={images.gallery02} alt='gallery-img' className="img"/>
+            <HostHistory userUid={user.uid}/>
           </div>
 
-          <HostHistory userUid={user.uid}/>
+          
         </div>
       ) : (
         <Login />

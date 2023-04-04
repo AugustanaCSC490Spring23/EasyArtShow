@@ -91,8 +91,8 @@ function HostHistory({ userUid }) {
               onCancel={handleCancelDelete}
             />
           )}
-          
-          <Carousel itemsToShow={3} itemPadding={[10,10]} className='host-history-wrapper wrapper'>
+
+          <Carousel itemsToShow={3} className='host-history-wrapper wrapper'>
             {Object.keys(roomData).map((key, index) => {
                 return (
                   <div key={index} className='room-card'>
@@ -122,7 +122,7 @@ function HostHistory({ userUid }) {
           </Carousel>
         </div>
       )}
-      <text> Maximum 3 rooms allowed. <a href="#">Subscribe</a> to add more. </text>
+      {/* <text> Maximum 3 rooms allowed. <a href="#">Subscribe</a> to add more. </text> */}
     </div>
   );
 }
