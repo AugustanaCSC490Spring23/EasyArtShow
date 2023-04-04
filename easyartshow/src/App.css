@@ -25,8 +25,12 @@
 .headtext__minor {
   font-family: var(--font-system);
   color: var(--color-gray);
-  font-size: 12px;
+  font-size: 13px;
+}
 
+.headtext__custom {
+  font-family: var(--font-major);
+  color: var(--color-black);
 }
 
 .system-button {
