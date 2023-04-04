@@ -31,6 +31,8 @@ import lgFullscreen from "lightgallery/plugins/fullscreen";
 import { nanoid } from "nanoid";
 
 import CommentBox from "./CommentBox";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import "../components/Room/ArtBoard.css";
 
 function deletePhoto(url) {
   // delete photo)
@@ -138,44 +140,42 @@ function ArtBoard({ id }) {
   const onInit = () => {};
 
   return (
-    <div>
-      {imageUrlList.length > 0 && (
+    <div className="artboard">
+      {/* {imageUrlList.length > 0 && (
         <text> Click on the image to view the full screen. </text>
-      )}
-      <LightGallery
+      )} */}
+      {/* <LightGallery className="artboard"
         onInit={onInit}
         speed={500}
         plugins={[lgThumbnail, lgZoom, lgAutoplay, lgComment, lgFullscreen]}
-      >
+      > */}
         {imageData &&
           imageData.map((item) => (
-            <a
-              href={item.imageURL}
-              key={item.id}
-              data-sub-html={`<h4>${item.title}</h4><p><b>${item.participantName}</b> - Date added: <b>${item.dateCreated}</b></p>`}
-            >
-              <img
+            <span className="img-card">
+              <a
+                href={item.imageURL}
+                key={item.id}
+                data-sub-html={`<h4>${item.title}</h4><p><b>${item.participantName}</b> - Date added: <b>${item.dateCreated}</b></p>`}
+              >
+              <div className="img-div">
+                <img
                 src={item.imageURL}
                 alt={item.caption}
-                style={{ width: "250px", height: "250px" }}
-              />
-
-              {userIDMatch ? (
-                <button onClick={() => deletePhoto(item.imageRef)}>
-                  delete
-                </button>
-              ) : (
-                <></>
-              )}
-            </a>
+                />
+              </div>
+              <div className="caption-div">
+                <h3 className="headtext__custom img-title">{item.title}</h3>
+                <BsThreeDotsVertical />
+                {/* {userIDMatch && (
+                  <button onClick={() => deletePhoto(item.imageRef)}>
+                    delete
+                  </button>
+                ) } */}
+              </div>
+              </a>
+            </span>
           ))}
-      </LightGallery>
-      <br />
-      <br />
-      <br />
-      <div> 
-      {imageData.length > 0 && (<CommentBox />)}
-      </div>
+      {/* </LightGallery> */}
     </div>
   );
 }

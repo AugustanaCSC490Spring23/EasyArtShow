@@ -16,7 +16,6 @@ const HostRoom = () => {
   const [user, setUser] = useState(null);
   const [goToJoinRoom, setGoToJoinRoom] = useState(false);
 
-
   function createRoom() {
     navigate("/createroom");
   }
@@ -30,28 +29,41 @@ const HostRoom = () => {
     }
   }, [goToJoinRoom]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const handleClickOnScroll = () => {
+    const element = document.getElementById('host-history-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth'})
+    }
+  }
+
   return (
-    <div>
+    <>
       {user ? (
         <div>
           <Navbar />
           <div className="wrapper">
             <div className="content-wrapper">
               <WelcomeUser />
-              <div className="button-group-row">
-                <button className="system-button system-button-primary" onClick={() => createRoom()}> Create room </button>
-                <button className="system-button" onClick={() => setGoToJoinRoom(true)}> Join room </button>
+              <div className="hostroom-button-group">
+                <div className="button-group-row">
+                  <button className="system-button system-button-primary" onClick={() => createRoom()}> Create room </button>
+                  <button className="system-button" onClick={() => setGoToJoinRoom(true)}> Join room </button>
+                </div>
+                <div className="second-button-group">
+                  <button className="system-button view-room-button" onClick={handleClickOnScroll}>Your rooms</button>
+                </div>
               </div>
-              <HostHistory userUid={user.uid}/>
-              {/* <button className="system-button logout-btn" onClick={() => logout()}>Logout</button>{" "} */}
             </div>
             <img src={images.gallery02} alt='gallery-img' className="img"/>
+            <HostHistory userUid={user.uid}/>
           </div>
+
+          
         </div>
       ) : (
         <Login />
       )}
-      </div>
+      </>
   );
 };
 

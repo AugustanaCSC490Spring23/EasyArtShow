@@ -1,0 +1,54 @@
+.artboard {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    max-width: 100%;
+    gap: 20px;
+
+    /* background-color: antiquewhite; */
+}
+
+.img-card {
+    width: 250px;
+    max-height: 250px;
+    /* overflow: hidden; */
+
+    border-bottom: 2px solid #B9B9B9;
+    border-radius: 10px;
+
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,249,250,1) 89%, rgba(93,81,121,0.18951330532212884) 99%);
+}
+
+.img-div {
+    height: 80%;
+    width: 100%;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.img-div img {
+    /* object-fit: fill; */
+   max-height: 100%;
+   max-width: 100%;    
+   display: block;
+
+   border-radius: 10px;
+}
+
+.caption-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    
+    height: 40px;
+    padding: 0 10px;
+}
+
+.img-title {
+    font-size: 16px;
+}
