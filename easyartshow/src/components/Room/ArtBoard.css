@@ -10,7 +10,7 @@
     /* background-color: antiquewhite; */
 }
 
-span {
+.img-card {
     width: 250px;
     max-height: 250px;
     /* overflow: hidden; */
