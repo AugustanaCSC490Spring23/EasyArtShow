@@ -5,18 +5,6 @@
   align-items: center;
 }
 
-.container {
-  width: 100%;
-}
-
-.section-padding {
-  padding: 2rem 2rem;
-}
-
-.component-padding {
-  padding: 1rem 1rem;
-}
-
 .headtext__major {
   font-family: var(--font-system);
   color: var(--color-black);
@@ -48,6 +36,7 @@
   cursor: pointer;
 
   max-height: 3vh;
+  max-width: 200px;
 }
 
 .system-button-primary {
