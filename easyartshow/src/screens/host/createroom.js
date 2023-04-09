@@ -6,6 +6,7 @@ import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
 import { Center } from "@react-three/drei";
 import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
+import "../../components/Room/CreateRoom.css";
 
 function CreateRoom() {
   const navigate = useNavigate();
@@ -71,24 +72,23 @@ function CreateRoom() {
 
   return (
     <div>
+      <Navbar />
       {user ? (
-        <div>
-          <Navbar />
-          <div style={{ textAlign:"center" }}> 
-          <a href="/dashboard"> 
-          < AiOutlineArrowLeft/> 
-          <text> Go back to dashboard </text>
-          </a>
-          <h1> Create room </h1>
-          <br />
-          <h2> Your room name </h2>
-          <input type="text" onChange={onChangeRoomName} value={roomName} />
-          <br />
-          <h2> Room description </h2>
-          <textarea type="text" onChange={onChangeRoomDescription} value={roomDescription} />
-          <br />
-          <button onClick={() => createRoom()}> Create room </button>
-        </div>
+        <div className="waitingroom-wrapper">
+          <div className="header-wrapper">
+            <a className="headtext__minor" href="/dashboard"> 
+              < AiOutlineArrowLeft/> Dashboard
+            </a>
+          </div>
+          
+          <div className="modal-wrapper">
+            <h1> Create room </h1>
+            <h2> Your room name </h2>
+            <input className="input-field" type="text" onChange={onChangeRoomName} value={roomName} />
+            <h2> Room description </h2>
+            <input className="input-field" type="text" onChange={onChangeRoomDescription} value={roomDescription} />
+            <button className="system-button system-button-primary" onClick={() => createRoom()}> Create room </button>
+          </div>
         </div>
       ) : (
         <Login />

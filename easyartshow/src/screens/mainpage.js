@@ -66,8 +66,6 @@ function MainPage() {
           <img src={images.gallery04} alt='img'/>
         </div>
       </div>
-
-      {/* <TopView /> */}
     </div>
   );
 }
