@@ -11,6 +11,7 @@ import {
 import { getDatabase, ref as dbRef, set } from "@firebase/database";
 import auth from "../../backend/firebase";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import { doc, setDoc } from "@firebase/firestore"; 
 import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -23,6 +24,7 @@ const UploadPicRoom = () => {
   const [progress, setProgress] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
   const [filename, setFilename] = useState("");
+  const [isUploaded, setIsUploaded] = useState(false);
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
   const storage = getStorage();
@@ -88,7 +90,8 @@ const UploadPicRoom = () => {
     if (file && artTitle && participantName) {
       uploadBytes(storageRef, file, metadata)
         .then((snapshot) => {
-          window.location.reload();
+          setIsUploaded(true);
+          // window.location.reload();
         })
         .catch((error) => {
           console.error("Error uploading image:", error);
@@ -120,6 +123,7 @@ const UploadPicRoom = () => {
             <br />
           </div>
         )}
+        {isUploaded &&  <h2> Photo uploaded. Upload another picture or go back to library. </h2>}
         Choose a picture:
         <br />
         <div style={{textAlign:"-webkit-center"}}> 
