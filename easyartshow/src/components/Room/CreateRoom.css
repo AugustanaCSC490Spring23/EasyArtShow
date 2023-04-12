@@ -1,8 +1,30 @@
-.modal-wrapper {
-    width: 100%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.pricing-toggle {
+    background-color: #F5F5F5;
+    padding: 14px 5px;
+    border-radius: 30px;
+    display: inline-block;
+  }
+  
+.pricing-toggle [name="pricing"] {
+    display: none;
+}
+  
+.pricing-toggle input[type="radio"]+label {
+    background-color: #4F4F4F;
+    color: #F5F5F5;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    user-select: none;
+
+    font-family: var(--font-system);
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+}
+  
+.pricing-toggle input[type="radio"]:checked+label {
+    background-color: #F5F5F5;
+    color: #4F4F4F;
 }

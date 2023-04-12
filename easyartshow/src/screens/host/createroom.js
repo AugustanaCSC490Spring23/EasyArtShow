@@ -76,83 +76,46 @@ function CreateRoom() {
   const onChangeIsPrivate = (nextChecked) => {
     setIsPrivate(nextChecked);
   }
-
-  // return (
-  //   <div>
-  //     <Navbar />
-  //     {user ? (
-  //       <div className="waitingroom-wrapper">
-  //         <div className="header-wrapper">
-  //           <a className="headtext__minor" href="/dashboard"> 
-  //             < AiOutlineArrowLeft/> Dashboard
-  //           </a>
-  //         </div>
-          
-  //         <div className="modal-wrapper">
-  //           <h1> Create room </h1>
-  //           <h2> Your room name </h2>
-  //           <input className="input-field" type="text" onChange={onChangeRoomName} value={roomName} />
-  //           <h2> Room description </h2>
-  //           <input className="input-field" type="text" onChange={onChangeRoomDescription} value={roomDescription} />
-  //           <button className="system-button system-button-primary" onClick={() => createRoom()}> Create room </button>
-  //         </div>
-  //       </div>
-  //     ) : (
-  //       <Login />
-  //     )}
-  //   </div>
-  // );
+  
   return (
-    <div className="modal-background">
-      <div className="modal">
-        <h1 className="headtext__major">CREATE ROOM</h1>
-        <div className="input-field">
-          <h2 className="headtext__minor">Room name</h2>
-          <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
-        </div>
-        <div className="input-field">
-          <h2 className="headtext__minor">Room description</h2>
-          <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
-        </div>
-        <Switch
-          width = {100}
-          handleDiameter = {60}
-          onHandleColor = "#ffd100"
-          onColor = "#fff"
-          offColor = "#b9b9b9"
-          checked = {isPrivate}
-          onChange = {onChangeIsPrivate}
-          checkedIcon = {false}
-          uncheckedIcon = {false}
-          checkedHandleIcon={
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-                fontSize: 15,
-                paddingRight: 5
-              }}>
-              Public
+    <>
+    {
+      user ? (
+        <div className="modal-background">
+          <div className="modal">
+            <h1 className="headtext__major">CREATE ROOM</h1>
+            <div className="input-field">
+              <h2 className="headtext__info">Room name</h2>
+              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
             </div>
-          }
-          uncheckedHandleIcon={
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-                fontSize: 15,
-                paddingRight: 5
-              }}>
-              Private
+            <div className="input-field">
+              <h2 className="headtext__info">Room description</h2>
+              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
             </div>
-          }
-        />
-      </div>
-    </div>
+            <div className="button-group-row">
+              <label>
+                <input type="checkbox" />
+                <span className="headtext__info">Anyone with link can contribute</span>
+              </label>
+              <div class="pricing-toggle">
+              <input type="radio" id="pricing-toggle-monthly" name="pricing" value="monthly" checked/>
+              <label class="radio-button" for="pricing-toggle-monthly">Private</label>
+    
+              <input type="radio" id="pricing-toggle-annually" name="pricing" value="annually" />
+              <label class="radio-button" for="pricing-toggle-annually">Public</label>
+            </div>
+            </div>
+            
+            <div className="button-group-row">
+              <button className="system-button">No, cancel</button>
+              <button className="system-button system-button-primary" onClick={() => createRoom()}>Create room</button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <Login />
+      )}
+    </>
   )
 }
 
