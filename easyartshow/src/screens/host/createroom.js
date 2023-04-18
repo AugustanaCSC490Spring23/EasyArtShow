@@ -83,7 +83,7 @@ function CreateRoom() {
       user ? (
         <div className="modal-background">
           <div className="modal">
-            <h1 className="headtext__major">CREATE ROOM</h1>
+            <h1 className="headtext__major">Create room</h1>
             <div className="input-field">
               <h2 className="headtext__info">Room name</h2>
               <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
@@ -107,7 +107,7 @@ function CreateRoom() {
             </div>
             
             <div className="button-group-row">
-              <button className="system-button">No, cancel</button>
+              <button className="system-button" onClick={() => navigate(-1)}>No, cancel</button>
               <button className="system-button system-button-primary" onClick={() => createRoom()}>Create room</button>
             </div>
           </div>

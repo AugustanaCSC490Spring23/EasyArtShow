@@ -42,16 +42,18 @@ function MainPage() {
       <Navbar />
       <div className="modal-wrapper">
         <div className="modal-box">
-          
           <div className="text-content">
             <h1 className="headtext__major headtext">Explore & Share Art Together</h1>
             <p className="headtext__minor">Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular.</p>
           </div>
 
-          <div className="headtext__major modal-title component-padding">
-            Join Room
+          <div className="input-field">
+            <div className="headtext__major modal-title component-padding">
+              Join Room
+            </div>
+            <input placeholder="Room passcode" type="text" onChange={onChangeHandler} value={roomCode} />
           </div>
-          <input placeholder="Room passcode" type="text" onChange={onChangeHandler} value={roomCode} />
+
           <div className="button-group-row">
             <button  className="system-button" onClick={() => joinroom()}>Join room</button>
               <button
