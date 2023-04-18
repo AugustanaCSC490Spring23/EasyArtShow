@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import { getDatabase, ref, push, set } from "@firebase/database";
+import { doc, getFirestore, setDoc } from "@firebase/firestore";
 import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
 import { Center } from "@react-three/drei";
@@ -49,6 +50,23 @@ function CreateRoom() {
       },
     });
 
+    const dbFireStore = getFirestore();
+    setDoc(doc(dbFireStore, "hosts", randomCode), {
+      hostid: user.uid,
+      hostname: user.displayName,
+      roomInfo: {
+        roomName: roomName,
+        roomCode: randomCode,
+        roomDescription: roomDescription,
+        roomLocation: roomLocation,
+        roomParticipants: [],
+        timeStamp: Date.now(),
+      },
+    });
+
+    setDoc(doc(dbFireStore, "rooms", randomCode), {
+    });
+  
     const postListRef = ref(db, `easyartshow/hosts/${user.uid}/${randomCode}`);
     set(postListRef, {
         roomName: roomName,

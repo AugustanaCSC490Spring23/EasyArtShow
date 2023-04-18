@@ -9,15 +9,17 @@ import {
   getDownloadURL,
 } from "@firebase/storage";
 import { getDatabase, ref as dbRef, set } from "@firebase/database";
-import auth from "../../backend/firebase";
+import { auth } from "../../backend/firebase";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { doc, setDoc } from "@firebase/firestore"; 
+import { doc, setDoc, updateDoc, addDoc,arrayUnion, getFirestore } from "@firebase/firestore";
 import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import ReactAudioPlayer from "react-audio-player";
 import { Center } from "@react-three/drei";
+
+import { fireStoreDB } from "../../backend/firebase";
 
 const UploadPicRoom = () => {
   const [picture, setPicture] = useState(null);
@@ -33,6 +35,7 @@ const UploadPicRoom = () => {
   const [participantName, setParticipantName] = useState("");
   const [artTitle, setArtTitle] = useState("");
   const fileTypes = ["PNG", "HEIC", "GIF", "JPEG", "JPG"];
+  const fireStoreDB = getFirestore()
 
   const handlePictureChange = (file) => {
     const reader = new FileReader();
@@ -80,17 +83,31 @@ const UploadPicRoom = () => {
     if (user) {
       setParticipantName(user.displayName.toString());
     }
+
+    const timeStamp = new Date().getTime();
     const metadata = {
       customMetadata: {
         participantName: participantName,
         artTitle: artTitle,
-        imageStamp: new Date().getTime(),
+        imageStamp: timeStamp,
       },
     };
     if (file && artTitle && participantName) {
       uploadBytes(storageRef, file, metadata)
         .then((snapshot) => {
           setIsUploaded(true);
+          getDownloadURL(snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            updateDoc(doc(fireStoreDB, "rooms", `${id}`), {
+              images: arrayUnion({
+                fileName: filenameRef,
+                participantName: participantName,
+                artTitle: artTitle,
+                imageStamp: timeStamp,
+                imageUrl: downloadURL,
+              })
+            });
+          });
           // window.location.reload();
         })
         .catch((error) => {
@@ -106,8 +123,8 @@ const UploadPicRoom = () => {
       <Navbar />
       <div style={{ textAlign: "center" }}>
         <a href={`/waitingroom/${id}`}>
-          <AiOutlineArrowLeft/>
-           <text> Back to library </text>
+          <AiOutlineArrowLeft />
+          <text> Back to library </text>
         </a>
         <h2> Upload Pic </h2>
         {user ? (
@@ -123,15 +140,20 @@ const UploadPicRoom = () => {
             <br />
           </div>
         )}
-        {isUploaded &&  <h2> Photo uploaded. Upload another picture or go back to library. </h2>}
+        {isUploaded && (
+          <h2>
+            {" "}
+            Photo uploaded. Upload another picture or go back to library.{" "}
+          </h2>
+        )}
         Choose a picture:
         <br />
-        <div style={{textAlign:"-webkit-center"}}> 
-        <FileUploader
-          handleChange={handlePictureChange}
-          name="Image"
-          types={fileTypes}
-        />
+        <div style={{ textAlign: "-webkit-center" }}>
+          <FileUploader
+            handleChange={handlePictureChange}
+            name="Image"
+            types={fileTypes}
+          />
         </div>
         <br />
         {imageUrl && (
