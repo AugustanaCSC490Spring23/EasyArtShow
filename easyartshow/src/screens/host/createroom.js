@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import { getDatabase, ref, push, set } from "@firebase/database";
+import { doc, getFirestore, setDoc } from "@firebase/firestore";
 import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
 import { Center } from "@react-three/drei";
@@ -18,6 +19,9 @@ function CreateRoom() {
   const [isPrivate,setIsPrivate] = useState(false);
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
+  const [isCheckedPublic, setIsCheckedPublic] = useState(false);
+  const [isCheckedPrivate, setIsCheckedPrivate] = useState(false);
+  const [privacy, setPrivacy]= useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -35,11 +39,20 @@ function CreateRoom() {
     }
     return result;
   };
-
+  const handlePublicChange = (event) => {
+    setIsCheckedPublic(event.target.checked);
+    setIsCheckedPrivate(!event.target.checked);
+    setPrivacy("Public");
+  };
+  
+  const handlePrivateChange = (event) => {
+    setIsCheckedPrivate(event.target.checked);
+    setIsCheckedPublic(!event.target.checked);
+    setPrivacy("Private");
+  };
   function createRoom() {
     const randomCode = randomCodeGenerator();
-
-    const db = getDatabase();
+    const db = getDatabase();    
     set(ref(db, "easyartshow/rooms/" + randomCode), {
       hostid: user.uid,
       hostname: user.displayName,
@@ -50,18 +63,24 @@ function CreateRoom() {
         roomLocation: roomLocation,
         roomParticipants: [],
         timeStamp: Date.now(),
+        privacy: privacy
+        
       },
     });
 
+    const dbFireStore = getFirestore();  
     const postListRef = ref(db, `easyartshow/hosts/${user.uid}/${randomCode}`);
     set(postListRef, {
-        roomName: roomName,
-        roomCode: randomCode,
-        roomDescription: roomDescription,
-        roomLocation: roomLocation,
-        roomParticipants: [],
-        timeStamp: Date.now(),
+      roomName: roomName,
+      roomCode: randomCode,
+      roomDescription: roomDescription,
+      roomLocation: roomLocation,
+      roomParticipants: [],
+      timeStamp: Date.now(),
+      privacy:privacy
+      
     });
+   
     navigate(`/waitingroom/${randomCode}`);
   }
 
