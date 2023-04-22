@@ -169,18 +169,18 @@ function ArtBoard({ id }) {
     <div>
       {/* {imageData.length > 0 && (
         <text> Click on the image to view the full screen. </text>
-      )}
-      <LightGallery
+      )} */}
+      {/* <LightGallery
         onInit={onInit}
         speed={500}
         plugins={[lgThumbnail, lgZoom, lgAutoplay, lgComment, lgFullscreen]}
-      >
+      > */}
         {imageData &&
           imageData.map((item) => (
             <a
               href={item.imageURL}
               key={item.id}
-              data-sub-html={`<h4>${item.artTitle}</h4><p><b>${item.participantName}</b></p>`}
+              data-sub-html={`<h4>${item.timeCreatedFullFormat}</h4><p><b>${item.participantName}</b></p>`}
             >
               <img
                 src={item.imageUrl}
@@ -197,11 +197,11 @@ function ArtBoard({ id }) {
               )}
             </a>
           ))}
-      </LightGallery>
+      {/* </LightGallery> */}
       <br />
       <br />
       <br />
-      <div>{imageData.length > 0 && <CommentBox />}</div> */}
+      <div>{imageData.length > 0 && <CommentBox />}</div>
     </div>
   );
 }
