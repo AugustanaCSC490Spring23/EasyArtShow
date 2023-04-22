@@ -5,18 +5,6 @@
   align-items: center;
 }
 
-.container {
-  width: 100%;
-}
-
-.section-padding {
-  padding: 2rem 2rem;
-}
-
-.component-padding {
-  padding: 1rem 1rem;
-}
-
 .headtext__major {
   font-family: var(--font-system);
   color: var(--color-black);
@@ -26,6 +14,14 @@
   font-family: var(--font-system);
   color: var(--color-gray);
   font-size: 13px;
+}
+
+.headtext__info {
+  font-family: var(--font-system);
+  font-size: 13px;
+  font-weight: 300;
+
+  color: var(--color-black);
 }
 
 .headtext__custom {
@@ -48,6 +44,7 @@
   cursor: pointer;
 
   max-height: 3vh;
+  max-width: 200px;
 }
 
 .system-button-primary {

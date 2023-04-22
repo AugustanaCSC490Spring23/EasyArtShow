@@ -5,8 +5,10 @@ import {
   uploadBytes,
   getStorage,  
 } from "@firebase/storage";
-import auth from "../../backend/firebase";
-import { onAuthStateChanged } from "@firebase/auth";
+import { getDatabase, ref as dbRef, set } from "@firebase/database";
+import { auth } from "../../backend/firebase";
+import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import { doc, setDoc, updateDoc, addDoc,arrayUnion, getFirestore } from "@firebase/firestore";
 import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -15,6 +17,7 @@ const UploadPicRoom = () => {
   
   const [imageUrl, setImageUrl] = useState("");
   const [filename, setFilename] = useState("");
+  const [isUploaded, setIsUploaded] = useState(false);
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
   const storage = getStorage();
@@ -23,6 +26,7 @@ const UploadPicRoom = () => {
   const [participantName, setParticipantName] = useState("");
   const [artTitle, setArtTitle] = useState("");
   const fileTypes = ["PNG", "HEIC", "GIF", "JPEG", "JPG"];
+  const fireStoreDB = getFirestore()
 
   const handlePictureChange = (file) => {
     const reader = new FileReader();
@@ -52,6 +56,17 @@ const UploadPicRoom = () => {
     setArtTitle(event.target.value);
   };
 
+  const convertTime = (timeStamp) => {
+    const date = new Date(timeStamp);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+    return `${day}-${month}-${year} at ${hour}:${minute}`;
+  };
+
   const uploadPhoto = () => {
     const filenameRef = new Date().getTime() + "-" + filename;
     const storageRef = ref(
@@ -62,17 +77,34 @@ const UploadPicRoom = () => {
     if (user) {
       setParticipantName(user.displayName.toString());
     }
+
+    const timeStamp = new Date().getTime();
     const metadata = {
       customMetadata: {
         participantName: participantName,
         artTitle: artTitle,
-        imageStamp: new Date().getTime(),
+        imageStamp: timeStamp,
+        timeCreatedFullFormat: convertTime(timeStamp),
       },
     };
     if (file && artTitle && participantName) {
       uploadBytes(storageRef, file, metadata)
-        .then(() => {
-          window.location.reload();
+        .then((snapshot) => {
+          setIsUploaded(true);
+          getDownloadURL(snapshot.ref).then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            updateDoc(doc(fireStoreDB, "rooms", `${id}`), {
+              images: arrayUnion({
+                fileName: filenameRef,
+                participantName: participantName,
+                artTitle: artTitle,
+                imageStamp: timeStamp,
+                timeCreatedFullFormat: convertTime(timeStamp),
+                imageUrl: downloadURL,
+              })
+            });
+          });
+          // window.location.reload();
         })
         .catch((error) => {
           console.error("Error uploading image:", error);
@@ -87,8 +119,8 @@ const UploadPicRoom = () => {
       <Navbar />
       <div style={{ textAlign: "center" }}>
         <a href={`/waitingroom/${id}`}>
-          <AiOutlineArrowLeft/>
-           <text> Back to library </text>
+          <AiOutlineArrowLeft />
+          <text> Back to library </text>
         </a>
         <h2> Upload Pic </h2>
         {user ? (
@@ -104,14 +136,20 @@ const UploadPicRoom = () => {
             <br />
           </div>
         )}
+        {isUploaded && (
+          <h2>
+            {" "}
+            Photo uploaded. Upload another picture or go back to library.{" "}
+          </h2>
+        )}
         Choose a picture:
         <br />
-        <div style={{textAlign:"-webkit-center"}}> 
-        <FileUploader
-          handleChange={handlePictureChange}
-          name="Image"
-          types={fileTypes}
-        />
+        <div style={{ textAlign: "-webkit-center" }}>
+          <FileUploader
+            handleChange={handlePictureChange}
+            name="Image"
+            types={fileTypes}
+          />
         </div>
         <br />
         {imageUrl && (
@@ -131,11 +169,6 @@ const UploadPicRoom = () => {
           style={{ width: "70%" }}
         />
         <br />
-        {/* <div>
-        <h3> Record a voice message </h3>
-        <AudioRecorder onRecordingComplete={addAudioElement} />
-        <br />
-      </div> */}
         <button onClick={() => uploadPhoto()}> Submit </button>
         <br />
         <br />

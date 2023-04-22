@@ -14,7 +14,16 @@ import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
 import "react-slideshow-image/dist/styles.css";
 import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
-
+import {
+  doc,
+  getDocFromCache,
+  getFirestore,
+  getDoc,
+  collection,
+  getDocs,
+  onSnapshot,
+} from "@firebase/firestore";
+import SlideShow from "./SlideShow";
 import LightGallery from "lightgallery/react";
 
 // import styles
@@ -31,8 +40,6 @@ import lgFullscreen from "lightgallery/plugins/fullscreen";
 import { nanoid } from "nanoid";
 
 import CommentBox from "./CommentBox";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import "../components/Room/ArtBoard.css";
 
 function deletePhoto(url) {
   // delete photo)
@@ -62,8 +69,9 @@ function ArtBoard({ id }) {
 
   const [imageUrlList, setImageUrlList] = useState([]);
   const db = getDatabase();
+  const dbFireStore = getFirestore();
   const [imageData, setImageData] = useState([]);
-
+  const docRef = doc(dbFireStore, "rooms", `${id}`);
   const roomRef = dbRef(db, "easyartshow/rooms/");
   const [ setCaptionList] = useState([]);
 
@@ -74,6 +82,10 @@ function ArtBoard({ id }) {
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
   }
+
+  const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
+    setImageData(doc.data().images);
+  });
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -90,92 +102,50 @@ function ArtBoard({ id }) {
         }
       });
     });
-    const urlList = async () => {
-      list(listRef).then((res) => {
-        res.items.forEach((itemRef, index) => {
-          const path = itemRef._location.path_;
-
-          setImageDirectory((currenState) => [...currenState, path]);
-
-          const imageURL = getDownloadURL(ref(storage, path));
-
-          imageURL.then(function (url) {
-            setImageUrlList((currenState) => [...currenState, url.toString()]);
-            const imageMetadata = getMetadata(ref(storage, path));
-            imageMetadata.then(function (metadata) {
-              const title = metadata.customMetadata.artTitle;
-              const participantName = metadata.customMetadata.participantName;
-              const timeStamp = formatDate(metadata.timeCreated);
-              const caption =
-                "Name: " +
-                participantName +
-                " - Title: " +
-                title +
-                " - Date created: " +
-                timeStamp;
-              setCaptionList((currenState) => [...currenState, caption]);
-
-              const id = nanoid();
-              setImageData((currenState) => [
-                ...currenState,
-                {
-                  id: id,
-                  imageURL: url.toString(),
-                  caption: caption,
-                  imageRef: path,
-                  title: title,
-                  participantName: participantName,
-                  dateCreated: timeStamp,
-                },
-              ]);
-            });
-          });
-        });
-      });
-    };
-
-    urlList();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
+  const swichView = () => {
+    setIsSlideShow(!isSlideShow);
+  };
 
   const onInit = () => {};
 
   return (
-    <div className="artboard">
-      {/* {imageUrlList.length > 0 && (
+    <div>
+      {/* {imageData.length > 0 && (
         <text> Click on the image to view the full screen. </text>
       )} */}
-      {/* <LightGallery className="artboard"
+      {/* <LightGallery
         onInit={onInit}
         speed={500}
         plugins={[lgThumbnail, lgZoom, lgAutoplay, lgComment, lgFullscreen]}
       > */}
         {imageData &&
           imageData.map((item) => (
-            <span className="img-card">
-              <a
-                href={item.imageURL}
-                key={item.id}
-                data-sub-html={`<h4>${item.title}</h4><p><b>${item.participantName}</b> - Date added: <b>${item.dateCreated}</b></p>`}
-              >
-              <div className="img-div">
-                <img
-                src={item.imageURL}
-                alt={item.caption}
-                />
-              </div>
-              <div className="caption-div">
-                <h3 className="headtext__custom img-title">{item.title}</h3>
-                <BsThreeDotsVertical />
-                {/* {userIDMatch && (
-                  <button onClick={() => deletePhoto(item.imageRef)}>
-                    delete
-                  </button>
-                ) } */}
-              </div>
-              </a>
-            </span>
+            <a
+              href={item.imageURL}
+              key={item.id}
+              data-sub-html={`<h4>${item.timeCreatedFullFormat}</h4><p><b>${item.participantName}</b></p>`}
+            >
+              <img
+                src={item.imageUrl}
+                alt={item.artTitle}
+                style={{ width: "250px", height: "250px" }}
+              />
+
+              {userIDMatch ? (
+                <button onClick={() => deletePhoto(item.imageRef)}>
+                  delete
+                </button>
+              ) : (
+                <></>
+              )}
+            </a>
           ))}
       {/* </LightGallery> */}
+      <br />
+      <br />
+      <br />
+      <div>{imageData.length > 0 && <CommentBox />}</div>
     </div>
   );
 }

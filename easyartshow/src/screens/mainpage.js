@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { getDatabase, ref, onValue } from "@firebase/database";
+import { useNavigate } from "react-router-dom";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  orderByChild,
+  equalTo,
+} from "@firebase/database";
 
 import Navbar from "../components/Navbar/Navbar";
 import "../components/Landing/LandingModal.css";
 import { images } from "../constants/";
+import TopView from "../components/TopView";
 
 function MainPage() {
   const navigate = useNavigate();
   const [roomCode, setRoomCode] = useState("");
   const [roomList, setRoomList] = useState([]);
+  const [roomPartcipantName, setRoomParticipantName] = useState("");
+  //
+  const [roomData, setRoomData] = useState({});
+  const [publicRoomsMap, setPublicRoomsMap] = useState({});
+
   const db = getDatabase();
   const roomRef = ref(db, "easyartshow/rooms/");
   // const ul = document.querySelector('ul');
@@ -23,6 +35,65 @@ function MainPage() {
       setRoomList(data);
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // function getPublicRooms() {
+  //   return new Promise((resolve, reject) => {
+  //     onValue(
+  //       roomRef,
+  //       (snapshot) => {
+  //         const rooms = snapshot.val();
+  //         if (rooms) {
+  //           Object.keys(rooms).forEach((roomCode) => {
+  //             const roomPrivacy = rooms[roomCode].roomInfo.privacy;
+  //             const roomName = rooms[roomCode].roomInfo.roomName;
+  //             if (roomPrivacy == "Public") {
+  //               setPublicRoomsMap(roomCode, { roomCode, roomName });
+  //               console.log(
+  //                 publicRoomsMap.get(roomCode).roomCode,
+  //                 publicRoomsMap.get(roomCode).roomName
+  //               );
+  //               setRoomData(roomName, roomCode);
+  //             }
+  //           });
+  //           resolve(publicRoomsMap);
+  //         }
+  //       },
+  //       (error) => {
+  //         console.error("Error:", error);
+  //       }
+  //     );
+  //   });
+  // }
+  function getPublicRooms() {
+    return new Promise((resolve, reject) => {
+      onValue(
+        roomRef,
+        (snapshot) => {
+          const rooms = snapshot.val();
+          if (rooms) {
+            Object.keys(rooms).forEach((roomCode) => {
+              const roomPrivacy = rooms[roomCode].roomInfo.privacy;
+              const roomName = rooms[roomCode].roomInfo.roomName;
+              if (roomPrivacy === "Public") {
+                setPublicRoomsMap((prevState) => ({
+                  ...prevState,
+                  [roomCode]: { roomCode, roomName },
+                }));
+                setRoomData((prevState) => ({
+                  ...prevState,
+                  [roomCode]: { roomName, roomCode },
+                }));
+              }
+            });
+            resolve(publicRoomsMap);
+          }
+        },
+        (error) => {
+          console.error("Error:", error);
+        }
+      );
+    });
+  }
 
   function joinroom(id) {
     if (roomCode in roomList) {
@@ -79,13 +150,35 @@ function MainPage() {
               Create room
             </button>
           </div>
+          <div style={{ marginTop: '50px' }}>
+            <h3> Public rooms: </h3>
+            <button onClick={() => getPublicRooms()}> Get public rooms </button>
+            <div style={{ display: "flex", flexDirection: "row", marginTop: '50px' , gap: '20px'}}>
+              
+
+              {Object.entries(publicRoomsMap).map(
+                ([roomCode, roomData], index) => (
+                  <div key={index} >
+                    <h2>{roomData.roomName}</h2>
+                    <p >Room Code: {roomData.roomCode}</p>                   
+                    <p >Privacy: Public</p>
+                    <button 
+                      onClick={() => navigate(`/waitingroom/${roomCode}`)}
+                    >
+                      Join room
+                    </button>
+                  </div>
+                )
+              )}
+
+            
+            </div>
+          </div>
         </div>
         <div className="img-wrapper">
           <img src={images.gallery04} alt="img" />
         </div>
       </div>
-
-      {/* <TopView /> */}
     </div>
   );
 }

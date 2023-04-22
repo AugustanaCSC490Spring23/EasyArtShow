@@ -28,7 +28,6 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <div className="container">
         <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
@@ -49,7 +48,6 @@ function App() {
             <Route path="/qrcode/:id" element={<QRCodeComponent />} />
             <Route path="/threedview" element={<ThreeDView />} />
         </Routes>
-        </div>
       </BrowserRouter>
     </div>
   );

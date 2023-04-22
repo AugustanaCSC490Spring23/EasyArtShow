@@ -8,13 +8,14 @@ import {
   deleteObject,
 } from "@firebase/storage";
 import '../../components/Dashboard/HostHistory.css';
+import '../../components/Room/Modal.css';
 import placeholder from "../../asset/img-3.jpg";
 import Carousel from "react-elastic-carousel";
 
 const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
   return (
-    <div className="delete-prompt-background">
-      <div className="delete-prompt">
+    <div className="modal-background">
+      <div className="modal">
         <p className="headtext__major title">Are you sure you want to delete this room?</p> <h1 className="headtext__major">{roomTitle}</h1>
         <div className="button-group-row">
           <button className="system-button system-button-primary" onClick={onDelete}>Yes</button>
@@ -22,7 +23,6 @@ const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
         </div>
       </div>
     </div>
-    
   );
 };
 

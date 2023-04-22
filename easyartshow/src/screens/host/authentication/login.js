@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {  signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
 import '../../../components/Auth/Login.css';
 import { images } from "../../../constants";
-import auth from '../../../backend/firebase';
+import { auth } from '../../../backend/firebase';
 
 import LoginComponent from "../../../components/Auth/LoginComponent";
 

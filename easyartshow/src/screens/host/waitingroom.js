@@ -52,6 +52,7 @@ function WaitingRoom() {
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
+  
   const db = getDatabase();
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
@@ -65,6 +66,7 @@ function WaitingRoom() {
       setRoomName(data[id].roomInfo.roomName);
       setRoomDescription(data[id].roomInfo.roomDescription);
       setRoomLocation(data[id].roomInfo.roomlocation);
+      
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
