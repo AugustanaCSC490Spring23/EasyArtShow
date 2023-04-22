@@ -7,12 +7,16 @@ import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
 import { Center } from "@react-three/drei";
 import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
+import Switch from 'react-switch';
+import "../../components/Room/CreateRoom.css";
+import '../../components/Room/Modal.css';
 
 function CreateRoom() {
   const navigate = useNavigate();
   const auth = getAuth();
   const [user, setUser] = useState(null);
   const [roomName, setRoomName] = useState("");
+  const [isPrivate,setIsPrivate] = useState(false);
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
   const [isCheckedPublic, setIsCheckedPublic] = useState(false);
@@ -88,60 +92,50 @@ function CreateRoom() {
     setRoomDescription(event.target.value);
   };
 
-
+  const onChangeIsPrivate = (nextChecked) => {
+    setIsPrivate(nextChecked);
+  }
+  
   return (
-    <div>
-      {user ? (
-        <div>
-          <Navbar />
-          <div style={{ textAlign: "center" }}>
-            <a href="/dashboard">
-              <AiOutlineArrowLeft />
-              <text> Go back to dashboard </text>
-            </a>
-            <h1> Create room </h1>
-            <br />
-            <h2> Your room name </h2>
-            <input type="text" onChange={onChangeRoomName} value={roomName} />
-            <br />
-            <h2> Room description </h2>
-            <textarea
-              type="text"
-              onChange={onChangeRoomDescription}
-              value={roomDescription}
-            />
-            <br />
-            <label>
-              <input
-                
-                type="checkbox"
-                name="option"
-                value="Public"
-                checked={isCheckedPublic}
-                onChange={handlePublicChange}
-              />
-              Public
-            </label>
-            <label>
-              <input
-                
-                type="checkbox"
-                name="option"
-                value="Private"
-                checked={isCheckedPrivate}
-                onChange={handlePrivateChange}
-              />
-              Private
-            </label>
-            <br />
-            <button onClick={() => createRoom()}> Create room </button>
+    <>
+    {
+      user ? (
+        <div className="modal-background">
+          <div className="modal">
+            <h1 className="headtext__major">Create room</h1>
+            <div className="input-field">
+              <h2 className="headtext__info">Room name</h2>
+              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
+            </div>
+            <div className="input-field">
+              <h2 className="headtext__info">Room description</h2>
+              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
+            </div>
+            <div className="button-group-row">
+              <label>
+                <input type="checkbox" />
+                <span className="headtext__info">Anyone with link can contribute</span>
+              </label>
+              <div class="pricing-toggle">
+              <input type="radio" id="pricing-toggle-monthly" name="pricing" value="monthly" checked/>
+              <label class="radio-button" for="pricing-toggle-monthly">Private</label>
+    
+              <input type="radio" id="pricing-toggle-annually" name="pricing" value="annually" />
+              <label class="radio-button" for="pricing-toggle-annually">Public</label>
+            </div>
+            </div>
+            
+            <div className="button-group-row">
+              <button className="system-button" onClick={() => navigate(-1)}>No, cancel</button>
+              <button className="system-button system-button-primary" onClick={() => createRoom()}>Create room</button>
+            </div>
           </div>
         </div>
       ) : (
         <Login />
       )}
-    </div>
-  );
+    </>
+  )
 }
 
 export default CreateRoom;
