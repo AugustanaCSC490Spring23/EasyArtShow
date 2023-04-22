@@ -50,23 +50,7 @@ function CreateRoom() {
       },
     });
 
-    const dbFireStore = getFirestore();
-    setDoc(doc(dbFireStore, "hosts", randomCode), {
-      hostid: user.uid,
-      hostname: user.displayName,
-      roomInfo: {
-        roomName: roomName,
-        roomCode: randomCode,
-        roomDescription: roomDescription,
-        roomLocation: roomLocation,
-        roomParticipants: [],
-        timeStamp: Date.now(),
-      },
-    });
-
-    setDoc(doc(dbFireStore, "rooms", randomCode), {
-    });
-  
+    const dbFireStore = getFirestore();  
     const postListRef = ref(db, `easyartshow/hosts/${user.uid}/${randomCode}`);
     set(postListRef, {
         roomName: roomName,
