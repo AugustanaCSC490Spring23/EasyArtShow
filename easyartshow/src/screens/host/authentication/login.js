@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
+import {  signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
 import '../../../components/Auth/Login.css';
 import { images } from "../../../constants";
 import { auth } from '../../../backend/firebase';
@@ -15,10 +15,6 @@ function Login() {
   function loginWithGoogle() {
     const loggingAttempt = signInWithPopup(auth, provider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
-
         navigate("/dashboard");
       })
       .catch((error) => {

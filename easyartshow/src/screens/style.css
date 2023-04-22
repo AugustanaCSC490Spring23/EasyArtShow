@@ -1,0 +1,46 @@
+ h1 {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.2em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+  }
+  h3{
+    text-align: center;
+  }
+  
+ /* .contact {
+    margin: 0; 
+    height: 100%;
+    width: 100%;
+    padding-top:60px;
+    overflow-x: hidden; 
+    overflow-y: visible;
+    background: black;
+    color:#fff;
+    font-family: 'Raleway',sans-serif;
+   
+ } */
+
+.contact__form .form-control {
+    padding: 1.375rem .75rem;
+    line-height: 1.5;
+    color: #ffffff;
+    background-color:  wheat;
+    border-radius: 0 !important;
+    border: 1px solid #fff;
+}
+.contact__form input.form-control {
+    margin-bottom: 2em;
+    height: calc(2.5em + .75rem + 2px);
+}
+.btn{
+    color: black;
+}
+.btn:hover{
+    color: white;
+}
+
+

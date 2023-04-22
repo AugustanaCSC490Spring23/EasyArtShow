@@ -8,13 +8,10 @@ function JoinRoom() {
   const navigate = useNavigate();
   const [roomCode, setRoomCode] = useState("");
   const [roomList, setRoomList] = useState([]);
-  const [roomPartcipantName, setRoomParticipantName] = useState("");
+ 
   const db = getDatabase();
   const roomRef = ref(db, "easyartshow/rooms/");
 
-  const onChangeParticipantName = (event) => {
-    setRoomParticipantName(event.target.value);
-  };
 
   const onChangeHandler = (event) => {
     setRoomCode(event.target.value);
@@ -25,7 +22,7 @@ function JoinRoom() {
       const data = snapshot.val();
       setRoomList(data);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function joinroom() {
     if (roomCode in roomList) {

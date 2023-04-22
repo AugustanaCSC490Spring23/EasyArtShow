@@ -27,7 +27,7 @@ function CreateRoom() {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const randomCodeGenerator = () => {
     let result = "";

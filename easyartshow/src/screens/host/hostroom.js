@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
 import Login from "./authentication/login";
-import WaitingRoom from "./waitingroom";
 
-import { getDatabase, ref, set } from "@firebase/database";
 import HostHistory from "./HostHistory";
 import Navbar from "../../components/Navbar/Navbar";
 import WelcomeUser from "../../components/Dashboard/User";
@@ -29,7 +27,7 @@ const HostRoom = () => {
     if (goToJoinRoom) {
       navigate("/joinroom");
     }
-  }, [goToJoinRoom]); // This will only listen to changes on value
+  }, [goToJoinRoom]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClickOnScroll = () => {
     const element = document.getElementById('host-history-section');

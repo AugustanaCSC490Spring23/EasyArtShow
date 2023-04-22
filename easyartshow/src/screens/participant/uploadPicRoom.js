@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ref,
   uploadBytes,
-  getStorage,
-  listAll,
-  list,
-  getDownloadURL,
+  getStorage,  
 } from "@firebase/storage";
 import { getDatabase, ref as dbRef, set } from "@firebase/database";
 import { auth } from "../../backend/firebase";
@@ -17,8 +14,7 @@ import { FileUploader } from "react-drag-drop-files";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const UploadPicRoom = () => {
-  const [picture, setPicture] = useState(null);
-  const [progress, setProgress] = useState(0);
+  
   const [imageUrl, setImageUrl] = useState("");
   const [filename, setFilename] = useState("");
   const [isUploaded, setIsUploaded] = useState(false);
