@@ -7,7 +7,6 @@ import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
 import { Center } from "@react-three/drei";
 import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
-import Switch from 'react-switch';
 import "../../components/Room/CreateRoom.css";
 import '../../components/Room/Modal.css';
 

@@ -12,8 +12,8 @@ import QRCodeComponent from "../../components/QRCodeComponent.js";
 import Loading from "../../components/Loading.js";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { FiShare } from "react-icons/fi";
-import { SlInfo }  from "react-icons/sl";
+import { FiShare, FiUpload } from "react-icons/fi";
+import { SlInfo } from "react-icons/sl";
 import "../../components/Room/WaitingRoom.css";
 
 function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
@@ -22,7 +22,7 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
     <div className="waitingroom-wrapper">
       <div className="header-wrapper">
         <a className="headtext__minor" href={`/hostroom`}>
-            <AiOutlineArrowLeft /> Dashboard
+          <AiOutlineArrowLeft /> Dashboard
         </a>
       </div>
 
@@ -33,19 +33,28 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
 
       <div className="system-bar">
         <div className="left-button-group">
-          <a className="headtext__minor" href={`/qrcode/${id}`}> <FiShare/> Share this room</a>
+          <a className="headtext__minor" href={`/qrcode/${id}`}>
+            {" "}
+            <FiShare /> Share this room
+          </a>
         </div>
         <div className="right-button-group">
-          <button className="system-button system-button-primary">Slideshow</button>
+          <button
+            className="system-button"
+            style={{ maxWidth: "200px" }}
+            onClick={() => navigate(`/uploadpicroom/${id}`)}
+          >
+            <AiOutlineCloudUpload /> Upload picture
+          </button>
+          <button className="system-button system-button-primary">
+            Slideshow
+          </button>
           <SlInfo className="info-button" />
         </div>
       </div>
-      
-      <div className="gallery-wrapper"> 
+
+      <div className="gallery-wrapper">
         <ArtBoard id={id} />
-        <button className="system-button" style={{maxWidth: "200px"}} onClick={() => navigate(`/uploadpicroom/${id}`)}>
-            <AiOutlineCloudUpload/> Upload picture
-        </button>
       </div>
     </div>
   );
@@ -57,7 +66,7 @@ function WaitingRoom() {
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
-  
+
   const db = getDatabase();
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
@@ -72,7 +81,6 @@ function WaitingRoom() {
       setRoomName(data[id].roomInfo.roomName);
       setRoomDescription(data[id].roomInfo.roomDescription);
       setRoomLocation(data[id].roomInfo.roomlocation);
-      
     });
   }, []);
 
@@ -81,9 +89,9 @@ function WaitingRoom() {
       {roomData === null ? (
         <Loading loadingState={true} />
       ) : (
-        <div> 
+        <div>
           {/* <h1> {roomData[id].roomInfo.roomName}</h1> */}
-          <Navbar/>
+          <Navbar />
           <WaitingRoomComponent
             id={id}
             roomName={roomName}

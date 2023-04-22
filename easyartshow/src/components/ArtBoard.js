@@ -82,14 +82,6 @@ function ArtBoard({ id }) {
   const roomRef = dbRef(db, "easyartshow/rooms/");
   const [captionList, setCaptionList] = useState([]);
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  }
-
   const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
     setImageData(doc.data().images);
   });
@@ -124,13 +116,13 @@ function ArtBoard({ id }) {
       {/* <LightGallery
         onInit={onInit}
         speed={500}
-        plugins={[lgThumbnail, lgZoom, lgAutoplay, lgComment, lgFullscreen]}
+        plugins={[ lgZoom, lgAutoplay, lgFullscreen]}
       > */}
         {imageData &&
           imageData.map((item) => (
             <a
-              href={item.imageURL}
-              key={item.id}
+              href={item.imageUrl}
+              key={item.imageStamp}
               data-sub-html={`<h4>${item.timeCreatedFullFormat}</h4><p><b>${item.participantName}</b></p>`}
             >
               <img
@@ -149,10 +141,10 @@ function ArtBoard({ id }) {
             </a>
           ))}
       {/* </LightGallery> */}
+      {/* <br />
       <br />
       <br />
-      <br />
-      <div>{imageData.length > 0 && <CommentBox />}</div>
+      <div>{imageData.length > 0 && <CommentBox />}</div> */}
     </div>
   );
 }
