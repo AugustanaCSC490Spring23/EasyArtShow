@@ -14,6 +14,15 @@ import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 
 import "react-slideshow-image/dist/styles.css";
 import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
+import {
+  doc,
+  getDocFromCache,
+  getFirestore,
+  getDoc,
+  collection,
+  getDocs,
+  onSnapshot,
+} from "@firebase/firestore";
 import SlideShow from "./SlideShow";
 import LightGallery from "lightgallery/react";
 
@@ -67,8 +76,9 @@ function ArtBoard({ id }) {
   const [imageUrlList, setImageUrlList] = useState([]);
   const [imageMetadataList, setImageMetadataList] = useState([]);
   const db = getDatabase();
+  const dbFireStore = getFirestore();
   const [imageData, setImageData] = useState([]);
-
+  const docRef = doc(dbFireStore, "rooms", `${id}`);
   const roomRef = dbRef(db, "easyartshow/rooms/");
   const [captionList, setCaptionList] = useState([]);
 
@@ -79,6 +89,10 @@ function ArtBoard({ id }) {
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
   }
+
+  const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
+    setImageData(doc.data().images);
+  });
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -95,53 +109,7 @@ function ArtBoard({ id }) {
         }
       });
     });
-    const urlList = async () => {
-      list(listRef).then((res) => {
-        const imagePromises = res.items.forEach((itemRef, index) => {
-          const path = itemRef._location.path_;
-
-          setImageDirectory((currenState) => [...currenState, path]);
-
-          const imageURL = getDownloadURL(ref(storage, path));
-
-          imageURL.then(function (url) {
-            setImageUrlList((currenState) => [...currenState, url.toString()]);
-            const imageMetadata = getMetadata(ref(storage, path));
-            imageMetadata.then(function (metadata) {
-              const title = metadata.customMetadata.artTitle;
-              const participantName = metadata.customMetadata.participantName;
-              const timeStamp = formatDate(metadata.timeCreated);
-              const caption =
-                "Name: " +
-                participantName +
-                " - Title: " +
-                title +
-                " - Date created: " +
-                timeStamp;
-              setCaptionList((currenState) => [...currenState, caption]);
-
-              const id = nanoid();
-              setImageData((currenState) => [
-                ...currenState,
-                {
-                  id: id,
-                  imageURL: url.toString(),
-                  caption: caption,
-                  imageRef: path,
-                  title: title,
-                  participantName: participantName,
-                  dateCreated: timeStamp,
-                },
-              ]);
-            });
-          });
-        });
-      });
-    };
-
-    urlList();
   }, []);
-
   const swichView = () => {
     setIsSlideShow(!isSlideShow);
   };
@@ -150,24 +118,24 @@ function ArtBoard({ id }) {
 
   return (
     <div>
-      {imageUrlList.length > 0 && (
+      {/* {imageData.length > 0 && (
         <text> Click on the image to view the full screen. </text>
-      )}
-      <LightGallery
+      )} */}
+      {/* <LightGallery
         onInit={onInit}
         speed={500}
         plugins={[lgThumbnail, lgZoom, lgAutoplay, lgComment, lgFullscreen]}
-      >
+      > */}
         {imageData &&
           imageData.map((item) => (
             <a
               href={item.imageURL}
               key={item.id}
-              data-sub-html={`<h4>${item.title}</h4><p><b>${item.participantName}</b> - Date added: <b>${item.dateCreated}</b></p>`}
+              data-sub-html={`<h4>${item.timeCreatedFullFormat}</h4><p><b>${item.participantName}</b></p>`}
             >
               <img
-                src={item.imageURL}
-                alt={item.caption}
+                src={item.imageUrl}
+                alt={item.artTitle}
                 style={{ width: "250px", height: "250px" }}
               />
 
@@ -180,13 +148,11 @@ function ArtBoard({ id }) {
               )}
             </a>
           ))}
-      </LightGallery>
+      {/* </LightGallery> */}
       <br />
       <br />
       <br />
-      <div> 
-      {imageData.length > 0 && (<CommentBox />)}
-      </div>
+      <div>{imageData.length > 0 && <CommentBox />}</div>
     </div>
   );
 }
