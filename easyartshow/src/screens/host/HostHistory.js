@@ -2,21 +2,28 @@ import React, { useEffect, useState } from "react";
 import TopView from "../../components/TopView";
 import { getDatabase, ref, onValue, set } from "@firebase/database";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   getStorage,
   ref as storageRef,
-  listAll,
   deleteObject,
 } from "@firebase/storage";
+import '../../components/Dashboard/HostHistory.css';
+import placeholder from "../../asset/img-3.jpg";
+import Carousel from "react-elastic-carousel";
 
 const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
   return (
-    <div className="delete-prompt">
-      <p>Are you sure you want to delete this room {roomCode} - Title: {roomTitle}?</p>
-      <button onClick={onDelete}>Yes</button>
-      <button onClick={onCancel}>No</button>
+    <div className="delete-prompt-background">
+      <div className="delete-prompt">
+        <p className="headtext__major title">Are you sure you want to delete this room?</p> <h1 className="headtext__major">{roomTitle}</h1>
+        <div className="button-group-row">
+          <button className="system-button system-button-primary" onClick={onDelete}>Yes</button>
+          <button className="system-button" onClick={onCancel}>No</button>
+        </div>
+      </div>
     </div>
+    
   );
 };
 
@@ -29,6 +36,7 @@ function HostHistory({ userUid }) {
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
   const [selectRoomCode, setSelectRoomCode] = useState("");
   const [selectRoomTitle, setSelectRoomTitle] = useState("");
+
 
   const deletePhoto = (roomCode) => {
     const imgRef = storageRef(storage, "easyartshow/rooms/" + roomCode);
@@ -70,8 +78,9 @@ function HostHistory({ userUid }) {
     });
   }, []);
 
+
   return (
-    <div>
+    <div id='host-history-section'>
       {roomData && (
         <div>
           {showDeletePrompt && (
@@ -82,38 +91,38 @@ function HostHistory({ userUid }) {
               onCancel={handleCancelDelete}
             />
           )}
-          <h1> Your rooms: </h1>
-          <div>
+
+          <Carousel itemsToShow={3} className='host-history-wrapper wrapper'>
             {Object.keys(roomData).map((key, index) => {
-              return (
-                <div key={index}>
-                  <br />
-                  <h3> Title: {roomData[key].roomName} </h3>
-                  <h4> Code: {roomData[key].roomCode} </h4>
-                  <div>
-                    <button
-                      onClick={() =>
-                        navigate(`/waitingroom/${roomData[key].roomCode}`)
-                      }
-                    >
-                      Join room
-                    </button>
-                    <button
-                      onClick={() => onToggleDelete(roomData[key].roomCode, roomData[key].roomName)}
-                    >
-                      {" "}
-                      Delete room
-                      {" "}
-                    </button>
+                return (
+                  <div key={index} className='room-card'>
+                    <h3 className="headtext__major"> {roomData[key].roomName} </h3>
+                    <h4 className="headtext__minor"> Code: {roomData[key].roomCode} </h4>
+                    <img src={placeholder} />
+                    <div className="button-group-row">
+                      <button className="system-button system-button-primary"
+                        onClick={() =>
+                          navigate(`/waitingroom/${roomData[key].roomCode}`)
+                        }
+                      >
+                        Join room
+                      </button>
+                      <button className="system-button"
+                        onClick={() => onToggleDelete(roomData[key].roomCode, roomData[key].roomName)}
+                      >
+                        {" "}
+                        Delete room
+                        {" "}
+                      </button>
+                    </div>
+                    <br />
                   </div>
-                  <br />
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+          </Carousel>
         </div>
       )}
-      <text> Maximum 3 rooms allowed. <a href="#">Subscribe</a> to add more. </text>
+      {/* <text> Maximum 3 rooms allowed. <a href="#">Subscribe</a> to add more. </text> */}
     </div>
   );
 }

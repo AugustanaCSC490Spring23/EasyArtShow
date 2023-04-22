@@ -109,55 +109,6 @@ function ArtBoard({ id }) {
         }
       });
     });
-
-    
-
-    // const urlList = async () => {
-    //   list(listRef).then((res) => {
-    //     const imagePromises = res.items.forEach((itemRef, index) => {
-    //       const path = itemRef._location.path_;
-
-    //       setImageDirectory((currenState) => [...currenState, path]);
-
-    //       const imageURL = getDownloadURL(ref(storage, path));
-
-    //       imageURL.then(function (url) {
-    //         setImageUrlList((currenState) => [...currenState, url.toString()]);
-    //         const imageMetadata = getMetadata(ref(storage, path));
-    //         imageMetadata.then(function (metadata) {
-    //           const title = metadata.customMetadata.artTitle;
-    //           const participantName = metadata.customMetadata.participantName;
-    //           const timeStamp = formatDate(metadata.timeCreated);
-    //           const caption =
-    //             "Name: " +
-    //             participantName +
-    //             " - Title: " +
-    //             title +
-    //             " - Date created: " +
-    //             timeStamp;
-    //           setCaptionList((currenState) => [...currenState, caption]);
-
-    //           const id = nanoid();
-    //           setImageData((currenState) => [
-    //             ...currenState,
-    //             {
-    //               id: id,
-    //               imageURL: url.toString(),
-    //               caption: caption,
-    //               imageRef: path,
-    //               title: title,
-    //               participantName: participantName,
-    //               dateCreated: timeStamp,
-    //             },
-    //           ]);
-    //         });
-    //       });
-    //     });
-    //   });
-    // };
-
-    // urlList();
-    
   }, []);
   const swichView = () => {
     setIsSlideShow(!isSlideShow);
