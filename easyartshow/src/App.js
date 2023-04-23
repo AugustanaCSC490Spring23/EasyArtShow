@@ -20,8 +20,8 @@ import DevNote from './screens/devnote';
 import Map from './components/Map';
 import ThreeDView from './components/ThreeDView';
 import PageNotFound from './screens/pageNotFound';
-import ContactUs from './screens/ContactUs';
-import About from './screens/About';
+import ContactUs from './screens/contactUs';
+import About from './screens/about';
 import QRCodeComponent from './components/QRCodeComponent';
 
 function App() {

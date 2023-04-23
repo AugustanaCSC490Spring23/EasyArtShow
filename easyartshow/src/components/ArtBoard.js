@@ -60,12 +60,12 @@ function deletePhoto(url) {
 function ArtBoard({ id }) {
   const storage = getStorage();
   const listRef = ref(storage, `easyartshow/rooms/${id.toString()}/images/`);
-  const [ setUser] = useState(null);
-  
+  const [ user, setUser] = useState(null);
+  const [isSlideShow, setIsSlideShow] = useState(false);
   const [setImageDirectory] = useState([]);
   const auth = getAuth();
   const [userIDMatch, setUserIDMatch] = useState(false);
-  const [ setRoomData] = useState(null);
+  const [ roomData, setRoomData] = useState(null);
 
   const [imageUrlList, setImageUrlList] = useState([]);
   const db = getDatabase();
@@ -83,9 +83,11 @@ function ArtBoard({ id }) {
     return `${month}/${day}/${year}`;
   }
 
-  const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
-    setImageData(doc.data().images);
-  });
+
+  // This block of code does not work!
+  // const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
+  //   setImageData(doc.data().images);
+  // });
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
