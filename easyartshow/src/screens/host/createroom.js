@@ -3,10 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import { getDatabase, ref, push, set } from "@firebase/database";
 import Login from "./authentication/login";
-import Navbar from "../../components/Navbar/Navbar";
-import { Center } from "@react-three/drei";
-import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
-import Switch from 'react-switch';
 import "../../components/Room/CreateRoom.css";
 import '../../components/Room/Modal.css';
 
@@ -15,7 +11,7 @@ function CreateRoom() {
   const auth = getAuth();
   const [user, setUser] = useState(null);
   const [roomName, setRoomName] = useState("");
-  const [isPrivate,setIsPrivate] = useState(false);
+  const [isPrivate,setIsPrivate] = useState(true);
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
 
@@ -73,8 +69,10 @@ function CreateRoom() {
     setRoomDescription(event.target.value);
   };
 
-  const onChangeIsPrivate = (nextChecked) => {
-    setIsPrivate(nextChecked);
+  const onChangeIsPrivate = (event) => {
+    console.log(isPrivate);
+    setIsPrivate(!isPrivate);
+    console.log(isPrivate);
   }
   
   return (
@@ -86,29 +84,29 @@ function CreateRoom() {
             <h1 className="headtext__major">Create room</h1>
             <div className="input-field">
               <h2 className="headtext__info">Room name</h2>
-              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
+              <input className="" type="text" onChange={onChangeRoomName} value={roomName} />
             </div>
             <div className="input-field">
               <h2 className="headtext__info">Room description</h2>
-              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
+              <input className="" type="text" onChange={onChangeRoomDescription} value={roomDescription} />
             </div>
-            <div className="button-group-row">
-              <label>
+            <div className="toggle-switch" >
+              {/* <label>
                 <input type="checkbox" />
                 <span className="headtext__info">Anyone with link can contribute</span>
-              </label>
+              </label> */}
               <div class="pricing-toggle">
-              <input type="radio" id="pricing-toggle-monthly" name="pricing" value="monthly" checked/>
-              <label class="radio-button" for="pricing-toggle-monthly">Private</label>
-    
-              <input type="radio" id="pricing-toggle-annually" name="pricing" value="annually" />
-              <label class="radio-button" for="pricing-toggle-annually">Public</label>
-            </div>
+                <input type="radio" id="pricing-toggle-monthly" name="pricing" onClick={onChangeIsPrivate} value={isPrivate} />
+                <label class="radio-button" for="pricing-toggle-monthly">Private</label>
+      
+                <input type="radio" id="pricing-toggle-annually" name="pricing" onClick={onChangeIsPrivate} value={isPrivate} checked/>
+                <label class="radio-button" for="pricing-toggle-annually">Public</label>
+              </div>
             </div>
             
             <div className="button-group-row">
-              <button className="system-button" onClick={() => navigate(-1)}>No, cancel</button>
-              <button className="system-button system-button-primary" onClick={() => createRoom()}>Create room</button>
+              <button className="system-button" onClick={() => navigate(-1)}>Cancel</button>
+              <button className="button-custom" onClick={() => createRoom()}>Create room</button>
             </div>
           </div>
         </div>
