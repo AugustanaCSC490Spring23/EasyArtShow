@@ -2,25 +2,31 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import { getDatabase, ref, push, set } from "@firebase/database";
-import { doc, getFirestore, setDoc } from "@firebase/firestore";
+import {
+  doc,
+  getFirestore,
+  setDoc,
+  addDoc,
+  updateDoc,
+} from "@firebase/firestore";
 import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
 import { Center } from "@react-three/drei";
 import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
 import "../../components/Room/CreateRoom.css";
-import '../../components/Room/Modal.css';
+import "../../components/Room/Modal.css";
 
 function CreateRoom() {
   const navigate = useNavigate();
   const auth = getAuth();
   const [user, setUser] = useState(null);
   const [roomName, setRoomName] = useState("");
-  const [isPrivate,setIsPrivate] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
   const [isCheckedPublic, setIsCheckedPublic] = useState(false);
   const [isCheckedPrivate, setIsCheckedPrivate] = useState(false);
-  const [privacy, setPrivacy]= useState("");
+  const [privacy, setPrivacy] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -43,7 +49,7 @@ function CreateRoom() {
     setIsCheckedPrivate(!event.target.checked);
     setPrivacy("Public");
   };
-  
+
   const handlePrivateChange = (event) => {
     setIsCheckedPrivate(event.target.checked);
     setIsCheckedPublic(!event.target.checked);
@@ -51,35 +57,33 @@ function CreateRoom() {
   };
   function createRoom() {
     const randomCode = randomCodeGenerator();
-    const db = getDatabase();    
-    set(ref(db, "easyartshow/rooms/" + randomCode), {
+    const dbFireStore = getFirestore();
+    const currentTime = Date.now();
+    setDoc(doc(dbFireStore, "rooms/" + randomCode), {
       hostid: user.uid,
       hostname: user.displayName,
       roomInfo: {
         roomName: roomName,
-        roomCode: randomCode,
         roomDescription: roomDescription,
         roomLocation: roomLocation,
-        roomParticipants: [],
-        timeStamp: Date.now(),
-        privacy: privacy
-        
+        roomPrivacy: privacy,
+        createdAt: currentTime,
+      },
+      images: [],
+    });
+
+    const hostListRef = doc(dbFireStore, "hosts/", `${user.uid}`);
+    updateDoc(hostListRef, {
+      [randomCode]: {
+        roomCode: randomCode,
+        roomName: roomName,
+        roomDescription: roomDescription,
+        roomLocation: roomLocation,
+        roomPrivacy: privacy,
+        createdAt: currentTime,
       },
     });
 
-    const dbFireStore = getFirestore();  
-    const postListRef = ref(db, `easyartshow/hosts/${user.uid}/${randomCode}`);
-    set(postListRef, {
-      roomName: roomName,
-      roomCode: randomCode,
-      roomDescription: roomDescription,
-      roomLocation: roomLocation,
-      roomParticipants: [],
-      timeStamp: Date.now(),
-      privacy:privacy
-      
-    });
-   
     navigate(`/waitingroom/${randomCode}`);
   }
 
@@ -93,40 +97,73 @@ function CreateRoom() {
 
   const onChangeIsPrivate = (nextChecked) => {
     setIsPrivate(nextChecked);
-  }
-  
+  };
+
   return (
     <>
-    {
-      user ? (
+      {user ? (
         <div className="modal-background">
           <div className="modal">
             <h1 className="headtext__major">Create room</h1>
             <div className="input-field">
               <h2 className="headtext__info">Room name</h2>
-              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
+              <input
+                className=""
+                type="text"
+                onChangeCapture={onChangeRoomName}
+                value={roomName}
+              />
             </div>
             <div className="input-field">
               <h2 className="headtext__info">Room description</h2>
-              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
+              <input
+                className=""
+                type="text"
+                onChangeCapture={onChangeRoomDescription}
+                value={roomDescription}
+              />
             </div>
             <div className="button-group-row">
               <label>
                 <input type="checkbox" />
-                <span className="headtext__info">Anyone with link can contribute</span>
+                <span className="headtext__info">
+                  Anyone with link can contribute
+                </span>
               </label>
               <div class="pricing-toggle">
-              <input type="radio" id="pricing-toggle-monthly" name="pricing" value="monthly" checked/>
-              <label class="radio-button" for="pricing-toggle-monthly">Private</label>
-    
-              <input type="radio" id="pricing-toggle-annually" name="pricing" value="annually" />
-              <label class="radio-button" for="pricing-toggle-annually">Public</label>
+                <input
+                  type="radio"
+                  id="pricing-toggle-monthly"
+                  name="pricing"
+                  value="monthly"
+                  checked
+                />
+                <label class="radio-button" for="pricing-toggle-monthly">
+                  Private
+                </label>
+
+                <input
+                  type="radio"
+                  id="pricing-toggle-annually"
+                  name="pricing"
+                  value="annually"
+                />
+                <label class="radio-button" for="pricing-toggle-annually">
+                  Public
+                </label>
+              </div>
             </div>
-            </div>
-            
+
             <div className="button-group-row">
-              <button className="system-button" onClick={() => navigate(-1)}>No, cancel</button>
-              <button className="system-button system-button-primary" onClick={() => createRoom()}>Create room</button>
+              <button className="system-button" onClick={() => navigate(-1)}>
+                No, cancel
+              </button>
+              <button
+                className="system-button system-button-primary"
+                onClick={() => createRoom()}
+              >
+                Create room
+              </button>
             </div>
           </div>
         </div>
@@ -134,7 +171,7 @@ function CreateRoom() {
         <Login />
       )}
     </>
-  )
+  );
 }
 
 export default CreateRoom;

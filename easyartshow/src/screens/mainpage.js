@@ -7,6 +7,8 @@ import {
   orderByChild,
   equalTo,
 } from "@firebase/database";
+import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import { auth } from '../backend/firebase';
 
 import Navbar from "../components/Navbar/Navbar";
 import "../components/Landing/LandingModal.css";
@@ -18,6 +20,7 @@ function MainPage() {
   const [roomCode, setRoomCode] = useState("");
   const [roomList, setRoomList] = useState([]);
   const [roomPartcipantName, setRoomParticipantName] = useState("");
+  const [user, setUser] = useState(null);
   //
   const [roomData, setRoomData] = useState({});
   const [publicRoomsMap, setPublicRoomsMap] = useState({});
@@ -36,6 +39,9 @@ function MainPage() {
     onValue(roomRef, (snapshot) => {
       const data = snapshot.val();
       setRoomList(data);
+    });
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
     });
   }, []);
 
@@ -106,6 +112,14 @@ function MainPage() {
       alert("Room does not exist");
     }
   }
+
+  function createRoom() {
+    if (user) {
+      navigate("/createroom");
+    } else {
+      navigate('/dashboard');
+    }
+  }
   return (
     <div className="mainpage-container">
       <Navbar />
@@ -137,7 +151,7 @@ function MainPage() {
             </button>
             <button
               className="system-button system-button-primary"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => createRoom()}
             >
               Create room
             </button>

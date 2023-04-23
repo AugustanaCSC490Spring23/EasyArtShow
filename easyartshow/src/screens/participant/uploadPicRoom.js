@@ -111,7 +111,6 @@ const UploadPicRoom = () => {
         .then((snapshot) => {
           setIsUploaded(true);
           getDownloadURL(snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
             updateDoc(doc(fireStoreDB, "rooms", `${id}`), {
               images: arrayUnion({
                 fileName: filenameRef,
@@ -120,6 +119,7 @@ const UploadPicRoom = () => {
                 imageStamp: timeStamp,
                 timeCreatedFullFormat: convertTime(timeStamp),
                 imageUrl: downloadURL,
+                imageRef: snapshot.ref.fullPath.replace("easyartshow/", ""),
               }),
             });
           });

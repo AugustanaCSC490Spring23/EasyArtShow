@@ -8,6 +8,14 @@ import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import auth from "../../backend/firebase.js";
 
 import Navbar from "../../components/Navbar/Navbar";
+import {
+  doc,
+  getFirestore,
+  setDoc,
+  addDoc,
+  updateDoc,
+  getDoc,
+} from "@firebase/firestore";
 import QRCodeComponent from "../../components/QRCodeComponent.js";
 import Loading from "../../components/Loading.js";
 import { AiOutlineArrowLeft } from "react-icons/ai";
@@ -67,21 +75,23 @@ function WaitingRoom() {
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
 
-  const db = getDatabase();
-
-  const roomRef = dbRef(db, "easyartshow/rooms/");
-  let [color, setColor] = useState("#ffffff");
-
+  const db = getFirestore();
   const { id } = useParams();
+  const roomRef = doc(db, "rooms", `${id}`);
 
   useEffect(() => {
-    onValue(roomRef, (snapshot) => {
-      const data = snapshot.val();
-      setRoomData(data);
-      setRoomName(data[id].roomInfo.roomName);
-      setRoomDescription(data[id].roomInfo.roomDescription);
-      setRoomLocation(data[id].roomInfo.roomlocation);
-    });
+    const getRoomData = async () => {
+      const docSnap = await getDoc(roomRef);
+      if (docSnap.exists()) {
+        setRoomData(docSnap.data());
+        setRoomName(docSnap.data().roomInfo.roomName);
+        setRoomDescription(docSnap.data().roomInfo.roomDescription);
+        setRoomLocation(docSnap.data().roomInfo.roomLocation);
+      } else {
+        console.log("No such document!");
+      }
+    }
+    getRoomData();
   }, []);
 
   return (

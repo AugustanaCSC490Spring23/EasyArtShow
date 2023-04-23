@@ -19,7 +19,9 @@ const HostRoom = () => {
   const [goToJoinRoom, setGoToJoinRoom] = useState(false);
 
   function createRoom() {
-    navigate("/createroom");
+    if (user) {
+      navigate("/createroom");
+    }
   }
 
   useEffect(() => {
