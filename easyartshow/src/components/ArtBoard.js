@@ -85,9 +85,11 @@ function ArtBoard({ id }) {
 
 
   // This block of code does not work!
-  // const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
-  //   setImageData(doc.data().images);
-  // });
+  const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
+    if (doc.data().images) {
+      setImageData(doc.data().images);
+    }
+  });
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

@@ -46,8 +46,8 @@ const HostRoom = () => {
               <WelcomeUser />
               <div className="hostroom-button-group">
                 <div className="button-group-row">
-                  <button className="system-button system-button-primary" onClick={() => createRoom()}> Create room </button>
-                  <button className="system-button" onClick={() => setGoToJoinRoom(true)}> Join room </button>
+                  <button className="custom-button" onClick={() => createRoom()}> Create room </button>
+                  <button className="system-button-secondary" onClick={() => setGoToJoinRoom(true)}> Join room </button>
                 </div>
                 <div className="second-button-group">
                   <button className="system-button view-room-button" onClick={handleClickOnScroll}>Your rooms</button>

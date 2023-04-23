@@ -6,7 +6,7 @@ import { doc, getFirestore, setDoc } from "@firebase/firestore";
 import Login from "./authentication/login";
 import Navbar from "../../components/Navbar/Navbar";
 import { Center } from "@react-three/drei";
-import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineConsoleSql, AiOutlineLeft } from "react-icons/ai";
 import Switch from 'react-switch';
 import "../../components/Room/CreateRoom.css";
 import '../../components/Room/Modal.css';
@@ -16,11 +16,10 @@ function CreateRoom() {
   const auth = getAuth();
   const [user, setUser] = useState(null);
   const [roomName, setRoomName] = useState("");
-  const [isPrivate,setIsPrivate] = useState(false);
+  const [isPrivate,setIsPrivate] = useState(true);
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
-  const [isCheckedPublic, setIsCheckedPublic] = useState(false);
-  const [isCheckedPrivate, setIsCheckedPrivate] = useState(false);
+  const [includeCommentBox, setCommentBox] = useState(true);
   const [privacy, setPrivacy]= useState("");
 
   useEffect(() => {
@@ -39,17 +38,20 @@ function CreateRoom() {
     }
     return result;
   };
-  const handlePublicChange = (event) => {
-    setIsCheckedPublic(event.target.checked);
-    setIsCheckedPrivate(!event.target.checked);
-    setPrivacy("Public");
-  };
+  // const handlePublicChange = (event) => {
+  //   setIsCheckedPublic(event.target.checked);
+  //   setIsCheckedPrivate(!event.target.checked);
+  //   setPrivacy("Public");
+  //   console.log(privacy);
+  // };
   
-  const handlePrivateChange = (event) => {
-    setIsCheckedPrivate(event.target.checked);
-    setIsCheckedPublic(!event.target.checked);
-    setPrivacy("Private");
-  };
+  // const handlePrivateChange = (event) => {
+  //   setIsCheckedPrivate(event.target.checked);
+  //   setIsCheckedPublic(!event.target.checked);
+  //   setPrivacy("Private");
+  //   console.log(privacy);
+  // };
+
   function createRoom() {
     const randomCode = randomCodeGenerator();
     const db = getDatabase();    
@@ -63,7 +65,8 @@ function CreateRoom() {
         roomLocation: roomLocation,
         roomParticipants: [],
         timeStamp: Date.now(),
-        privacy: privacy
+        privacy: isPrivate ? "Private" : "Public",
+        commentBox: includeCommentBox ? "True" : "False"
         
       },
     });
@@ -77,8 +80,8 @@ function CreateRoom() {
       roomLocation: roomLocation,
       roomParticipants: [],
       timeStamp: Date.now(),
-      privacy:privacy
-      
+      privacy: isPrivate ? "Private" : "Public",
+      commentBox: includeCommentBox ? "True" : "False"
     });
    
     navigate(`/waitingroom/${randomCode}`);
@@ -92,10 +95,14 @@ function CreateRoom() {
     setRoomDescription(event.target.value);
   };
 
-  const onChangeIsPrivate = (nextChecked) => {
-    setIsPrivate(nextChecked);
+  const onChangeIsPrivate = (event) => {
+    setIsPrivate(!event.target.checked);
   }
-  
+
+  const onChangeCommentBox = (event) => {
+    setCommentBox(!event.target.checked);
+  }
+
   return (
     <>
     {
@@ -105,29 +112,25 @@ function CreateRoom() {
             <h1 className="headtext__major">Create room</h1>
             <div className="input-field">
               <h2 className="headtext__info">Room name</h2>
-              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
+              <input className="" type="text" onChange={onChangeRoomName} value={roomName} />
             </div>
             <div className="input-field">
               <h2 className="headtext__info">Room description</h2>
-              <input className="" type="text" onchange={onChangeRoomName} value={roomName} />
+              <input className="" type="text" onChange={onChangeRoomDescription} value={roomDescription} />
             </div>
+
             <div className="button-group-row">
-              <label>
-                <input type="checkbox" />
-                <span className="headtext__info">Anyone with link can contribute</span>
+              <label className="headtext__info">
+                <input type="checkbox" onChange={onChangeIsPrivate} /> Private
               </label>
-              <div class="pricing-toggle">
-              <input type="radio" id="pricing-toggle-monthly" name="pricing" value="monthly" checked/>
-              <label class="radio-button" for="pricing-toggle-monthly">Private</label>
-    
-              <input type="radio" id="pricing-toggle-annually" name="pricing" value="annually" />
-              <label class="radio-button" for="pricing-toggle-annually">Public</label>
-            </div>
+              <label className="headtext__info">
+                <input type="checkbox" onChange={onChangeCommentBox}/> Include comment box
+              </label>
             </div>
             
             <div className="button-group-row">
-              <button className="system-button" onClick={() => navigate(-1)}>No, cancel</button>
-              <button className="system-button system-button-primary" onClick={() => createRoom()}>Create room</button>
+              <button className="system-button-secondary" onClick={() => navigate(-1)}>Cancel</button>
+              <button className="system-button-primary" onClick={() => createRoom()}>Create room</button>
             </div>
           </div>
         </div>

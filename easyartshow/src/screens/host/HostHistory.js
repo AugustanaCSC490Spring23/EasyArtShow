@@ -18,8 +18,8 @@ const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
       <div className="modal">
         <p className="headtext__major title">Are you sure you want to delete this room?</p> <h1 className="headtext__major">{roomTitle}</h1>
         <div className="button-group-row">
-          <button className="system-button system-button-primary" onClick={onDelete}>Yes</button>
-          <button className="system-button" onClick={onCancel}>No</button>
+          <button className="system-button-secondary" onClick={onCancel}>No</button>
+          <button className="system-button-primary" onClick={onDelete}>Yes</button>
         </div>
       </div>
     </div>
@@ -91,7 +91,7 @@ function HostHistory({ userUid }) {
             />
           )}
 
-          <Carousel itemsToShow={3} className='host-history-wrapper wrapper'>
+          <Carousel itemsToShow={3} pagination={false} className='host-history-wrapper wrapper'>
             {Object.keys(roomData).map((key, index) => {
                 return (
                   <div key={index} className='room-card'>
@@ -99,22 +99,18 @@ function HostHistory({ userUid }) {
                     <h4 className="headtext__minor"> Code: {roomData[key].roomCode} </h4>
                     <img src={placeholder} />
                     <div className="button-group-row">
-                      <button className="system-button system-button-primary"
+                      <button className="system-button-secondary"
+                        onClick={() => onToggleDelete(roomData[key].roomCode, roomData[key].roomName)}
+                      > Delete </button>
+                      <button className="custom-button"
                         onClick={() =>
                           navigate(`/waitingroom/${roomData[key].roomCode}`)
                         }
                       >
                         Join room
                       </button>
-                      <button className="system-button"
-                        onClick={() => onToggleDelete(roomData[key].roomCode, roomData[key].roomName)}
-                      >
-                        {" "}
-                        Delete room
-                        {" "}
-                      </button>
+                      
                     </div>
-                    <br />
                   </div>
                 );
               })}
