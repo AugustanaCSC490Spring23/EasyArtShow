@@ -30,7 +30,7 @@ function Navbar() {
           <li className='headtext__major'><a href="/contact">Contact</a></li>
         </ul>
       </nav> */}
-      { user ? <div className='right-group'> <button className='system-button logout-button' onClick={() => logout()}> Log out</button> <a href='/dashboard'>  <img src={images.user} alt="user-icon" className='user-icon'/>  </a> </div> :
+      { user ? <div className='right-group'> <button className='system-button logout-button' onClick={() => logout()}> Log out</button> <a href='/dashboard'>  <img src={user.photoURL} style={{borderRadius: "50%"}} alt="user-icon" className='user-icon'/>  </a> </div> :
         <button className='system-button' onClick={() => navigate('/login')}>Log in</button> }
     </div>
   );

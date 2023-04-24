@@ -1,17 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./Background.module.css";
+
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ref,
   uploadBytes,
   getStorage,  
+  getDownloadURL
 } from "@firebase/storage";
 import { getDatabase, ref as dbRef, set } from "@firebase/database";
 import { auth } from "../../backend/firebase";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { doc, setDoc, updateDoc, addDoc,arrayUnion, getFirestore } from "@firebase/firestore";
+import {
+  doc,
+  setDoc,
+  updateDoc,
+  addDoc,
+  arrayUnion,
+  getFirestore,
+} from "@firebase/firestore";
 import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import background from "../../asset/background/caption_background_1.jpeg";
 
 const UploadPicRoom = () => {
   
@@ -26,7 +37,12 @@ const UploadPicRoom = () => {
   const [participantName, setParticipantName] = useState("");
   const [artTitle, setArtTitle] = useState("");
   const fileTypes = ["PNG", "HEIC", "GIF", "JPEG", "JPG"];
-  const fireStoreDB = getFirestore()
+  const fireStoreDB = getFirestore();
+  const [artCaption, setArtCaption] = useState("");
+
+  const onChangeArtCaption = (event) => {
+    setArtCaption(event.target.value);
+  };
 
   const handlePictureChange = (file) => {
     const reader = new FileReader();
@@ -92,7 +108,6 @@ const UploadPicRoom = () => {
         .then((snapshot) => {
           setIsUploaded(true);
           getDownloadURL(snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
             updateDoc(doc(fireStoreDB, "rooms", `${id}`), {
               images: arrayUnion({
                 fileName: filenameRef,
@@ -101,7 +116,8 @@ const UploadPicRoom = () => {
                 imageStamp: timeStamp,
                 timeCreatedFullFormat: convertTime(timeStamp),
                 imageUrl: downloadURL,
-              })
+                imageRef: snapshot.ref.fullPath.replace("easyartshow/", ""),
+              }),
             });
           });
           // window.location.reload();
@@ -142,32 +158,58 @@ const UploadPicRoom = () => {
             Photo uploaded. Upload another picture or go back to library.{" "}
           </h2>
         )}
-        Choose a picture:
-        <br />
-        <div style={{ textAlign: "-webkit-center" }}>
-          <FileUploader
-            handleChange={handlePictureChange}
-            name="Image"
-            types={fileTypes}
+
+        <div>
+          Choose a picture:
+          <br />
+          <div style={{ textAlign: "-webkit-center" }}>
+            <FileUploader
+              handleChange={handlePictureChange}
+              name="Image"
+              types={fileTypes}
+            />
+          </div>
+          <br />
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt="Selected"
+              style={{ width: "150px", height: "150px" }}
+            />
+          )}
+          <br />
+          <h3> Artwork title </h3>
+          <textarea
+            type="text"
+            placeholder="What do you call your art?"
+            onChangeCapture={onChangeArtTitle}
+            value={artTitle}
+            style={{ width: "70%" }}
           />
         </div>
-        <br />
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt="Selected"
-            style={{ width: "150px", height: "150px" }}
+
+        <div>
+          <br />
+          ------ or ------
+          <br />
+          <h2> Create art from caption </h2>
+          <br />
+          <textarea
+            type="text"
+            placeholder="Enter your caption here"
+            style={{ width: "70%" }}
+            value={artCaption}
+            onChangeCapture={onChangeArtCaption}
           />
-        )}
-        <br />
-        <h3> Artwork title </h3>
-        <textarea
-          type="text"
-          placeholder="What do you call your art?"
-          onChangeCapture={onChangeArtTitle}
-          value={artTitle}
-          style={{ width: "70%" }}
-        />
+          <br />
+          <article
+            className={styles.article}
+            style={{ backgroundImage: `url(${background})` }}
+          >
+            <h1 className={styles.header}>{artCaption}</h1>
+          </article>
+        </div>
+
         <br />
         <button onClick={() => uploadPhoto()}> Submit </button>
         <br />
@@ -189,5 +231,6 @@ function NameBox({ user }) {
     </div>
   );
 }
+
 
 export default UploadPicRoom;
