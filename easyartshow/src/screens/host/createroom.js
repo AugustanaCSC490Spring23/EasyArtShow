@@ -24,12 +24,10 @@ function CreateRoom() {
   
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
-  const [isPrivate, setIsPrivate] = useState(false);
-  const [includeCommentBox, setCommentBox] = useState(false);
-  
-  const [isCheckedPublic, setIsCheckedPublic] = useState(false);
-  const [isCheckedPrivate, setIsCheckedPrivate] = useState(false);
-  const [privacy, setPrivacy] = useState("");
+  const [isPrivate, setIsPrivate] = useState(true);
+  const [includeCommentBox, setCommentBox] = useState(true);
+
+  // const [privacy, setPrivacy] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -48,17 +46,6 @@ function CreateRoom() {
     return result;
   };
 
-  const handlePublicChange = (event) => {
-    setIsCheckedPublic(event.target.checked);
-    setIsCheckedPrivate(!event.target.checked);
-    setPrivacy("Public");
-  };
-
-  const handlePrivateChange = (event) => {
-    setIsCheckedPrivate(event.target.checked);
-    setIsCheckedPublic(!event.target.checked);
-    setPrivacy("Private");
-  };
   function createRoom() {
     const randomCode = randomCodeGenerator();
     const dbFireStore = getFirestore();
@@ -70,7 +57,8 @@ function CreateRoom() {
         roomName: roomName,
         roomDescription: roomDescription,
         roomLocation: roomLocation,
-        roomPrivacy: privacy,
+        roomPrivacy: isPrivate ? "Private" : "Public",
+        commentBox: includeCommentBox ? "Include" : "Exclude",
         createdAt: currentTime,
       },
       images: [],
@@ -83,7 +71,8 @@ function CreateRoom() {
         roomName: roomName,
         roomDescription: roomDescription,
         roomLocation: roomLocation,
-        roomPrivacy: privacy,
+        roomPrivacy: isPrivate ? "Private" : "Public",
+        commentBox: includeCommentBox ? "Include" : "Exclude",
         createdAt: currentTime,
       },
     });
@@ -105,6 +94,7 @@ function CreateRoom() {
 
   const onChangeCommentBox = (event) => {
     setCommentBox(!event.target.checked);
+    console.log(includeCommentBox)
   }
 
   return (
