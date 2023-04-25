@@ -1,63 +1,49 @@
-import { Slide } from "react-slideshow-image";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
-  ref,
-  uploadBytes,
-  getStorage,
-  listAll,
-  list,
-  getDownloadURL,
-  getMetadata,
-  deleteObject,
-} from "@firebase/storage";
+  doc,
+  getFirestore,
+  onSnapshot
+} from "@firebase/firestore";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
+import "./Room/SlideShow.css";
 
-const divStyle = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundSize: "cover",
-  height: "400px",
-};
+const SlideShow = () => {
+  const { id }= useParams();
+  const dbFireStore = getFirestore();
+  const [imageData, setImageData] = useState([]);
+  
+  const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
+    if (doc.data().images) {
+      setImageData(doc.data().images);
+    }
+  });
 
-function SlideShow({ imageUrlList, imageDirectory, userIDMatch }) {
-  function deletePhoto(url) {
-    // delete photo)
-    const storage = getStorage();
-    const imgRef = ref(storage, url);
-    deleteObject(imgRef)
-      .then(() => {
-        // File deleted successfully
-        console.log("File deleted successfully");
-        window.location.reload();
-      })
-      .catch((error) => {
-        // Uh-oh, an error occurred!
-        console.log(error);
-      });
-  }
   return (
-    <div className="slide-container">
-      <Slide>
-        {imageUrlList &&
-          imageUrlList.map((slideImage, index) => (
-            <div key={index}>
-              <div style={{ ...divStyle }}>
-                <img
-                  src={slideImage}
-                  alt={`${index}`}
-                  style={{ width: "400px", height: "400px" }}
-                />
-                {userIDMatch ? (
-                  <button onClick={() => deletePhoto(imageDirectory[index])}>
-                    delete
-                  </button>
-                ) : (
-                  <></>
-                )}
-              </div>
+    <>
+      <Carousel 
+        showArrows={true}
+        showStatus={false}
+        showThumbs={false}
+        autoPlay={true}
+        interval={2000}
+        dynamicHeight={true}
+        stopOnHover={false}
+        className="presentation-mode"
+      >
+        {imageData &&
+          imageData.map((item) => (
+            <div>
+              <img
+                src={item.imageUrl}
+                alt={item.artTitle}
+                className="slide-content"
+              />
             </div>
           ))}
-      </Slide>
-    </div>
+      </Carousel>
+    </>
   );
 }
 
