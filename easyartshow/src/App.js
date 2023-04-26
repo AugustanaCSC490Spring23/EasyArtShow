@@ -20,8 +20,8 @@ import DevNote from './screens/devnote';
 import Map from './components/Map';
 import ThreeDView from './components/ThreeDView';
 import PageNotFound from './screens/pageNotFound';
-import ContactUs from './screens/ContactUs';
-import About from './screens/About';
+import ContactUs from './screens/contactUs';
+import About from './screens/about';
 import QRCodeComponent from './components/QRCodeComponent';
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
             <Route path="/404" element={<PageNotFound />} />
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/contactus" element={<ContactUs />} />
-            <Route path="/About" element={<About />} />
+            <Route path="/about" element={<About />} />
             <Route path="/qrcode/:id" element={<QRCodeComponent />} />
             <Route path="/threedview" element={<ThreeDView />} />
         </Routes>

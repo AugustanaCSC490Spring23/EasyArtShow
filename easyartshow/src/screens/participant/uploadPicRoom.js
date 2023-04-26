@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   ref,
   uploadBytes,
+  getDownloadURL,
   getStorage,  
 } from "@firebase/storage";
 import { getDatabase, ref as dbRef, set } from "@firebase/database";

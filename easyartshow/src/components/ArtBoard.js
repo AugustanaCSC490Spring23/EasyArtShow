@@ -103,11 +103,6 @@ function ArtBoard({ id }) {
       });
     });
   }, []);
-  const swichView = () => {
-    setIsSlideShow(!isSlideShow);
-  };
-
-  const onInit = () => {};
 
   return (
     <div>

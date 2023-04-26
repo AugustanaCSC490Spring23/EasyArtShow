@@ -110,12 +110,12 @@ function MainPage() {
         <nav style={{ position: 'fixed', top: 0, left: 0, right: 0,  height: '50px' }}>
           <ul style={{display:'flex',  padding: '20px', gap: '50px'}}>
          
-            <li >
-              <Link to="/About">About</Link>
+            {/* <li >
+              <a href="/about">About</a>
             </li>
             <li>
-              <Link to="/ContactUs">Contact</Link>
-            </li>
+              <a href="/contactus">Contact</a>
+            </li> */}
           </ul>
         </nav>
         <div className="modal-box">
