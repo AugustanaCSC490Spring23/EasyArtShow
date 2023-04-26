@@ -20,16 +20,20 @@ const SlideShow = () => {
     }
   });
 
-  return (
+    return (
     <>
       <Carousel 
         showArrows={true}
         showStatus={false}
         showThumbs={false}
         autoPlay={true}
+        infiniteLoop={true}
         interval={2000}
         dynamicHeight={true}
+        autoFocus={true}
+        centerMode={true}
         stopOnHover={false}
+        useKeyboardArrows={true}
         className="presentation-mode"
       >
         {imageData &&

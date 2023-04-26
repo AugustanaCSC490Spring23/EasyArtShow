@@ -63,7 +63,6 @@ function ArtBoard({ id }) {
     deleteObject(desertRef)
       .then(() => {
         console.log("Document successfully deleted!");
-        // window.location.reload();
       })
       .catch((error) => {
         console.error("Error removing document: ", error);
@@ -79,7 +78,6 @@ function ArtBoard({ id }) {
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             setRoomData(docSnap.data());
-            console.log("Document data:", roomData.hostid);
             setUserIDMatch(roomData.hostid === user.uid.toString());
           } else {
             console.log("No such document!");
@@ -106,9 +104,9 @@ function ArtBoard({ id }) {
               alt={item.artTitle}
               style={{ width: "250px", height: "250px" }}
             />
-            {/* {userIDMatch && (
+            {userIDMatch && (
               <button onClick={() => deletePhoto(item.imageRef)}>delete</button>
-            )} */}
+            )}
           </a>
         )) 
       }
