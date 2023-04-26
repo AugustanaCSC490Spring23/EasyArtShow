@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Background.module.css";
-
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ref,
   uploadBytes,
-  getStorage,
-  listAll,
-  list,
-  getDownloadURL,
+  getStorage,  
 } from "@firebase/storage";
 import { getDatabase, ref as dbRef, set } from "@firebase/database";
 import { auth } from "../../backend/firebase";
@@ -27,8 +23,7 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import background from "../../asset/background/caption_background_1.jpeg";
 
 const UploadPicRoom = () => {
-  const [picture, setPicture] = useState(null);
-  const [progress, setProgress] = useState(0);
+  
   const [imageUrl, setImageUrl] = useState("");
   const [filename, setFilename] = useState("");
   const [isUploaded, setIsUploaded] = useState(false);

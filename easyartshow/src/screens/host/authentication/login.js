@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
+import {  signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
 import '../../../components/Auth/Login.css';
 import { images } from "../../../constants";
 import { auth } from '../../../backend/firebase';
@@ -28,6 +28,7 @@ function Login() {
         const dbFireStore = getFirestore();
         const docRef = doc(dbFireStore, "hosts", `${user.uid}`);
         setDoc(docRef, {});
+        
         navigate("/dashboard");
       })
       .catch((error) => {

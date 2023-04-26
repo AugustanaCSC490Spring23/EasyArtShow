@@ -5,7 +5,7 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Login from './screens/host/authentication/login';
 // import SignUp from './screens/host/authentication/signup';
@@ -20,8 +20,8 @@ import DevNote from './screens/devnote';
 import Map from './components/Map';
 import ThreeDView from './components/ThreeDView';
 import PageNotFound from './screens/pageNotFound';
-import Contact from './screens/contact';
-import About from './screens/about';
+import ContactUs from './screens/ContactUs';
+import About from './screens/About';
 import QRCodeComponent from './components/QRCodeComponent';
 
 function App() {
@@ -43,8 +43,8 @@ function App() {
             <Route path="/threedview" element={<ThreeDView />} />
             <Route path="/404" element={<PageNotFound />} />
             <Route path="*" element={<Navigate to="/404" />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/About" element={<About />} />
             <Route path="/qrcode/:id" element={<QRCodeComponent />} />
             <Route path="/threedview" element={<ThreeDView />} />
         </Routes>

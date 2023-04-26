@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import TopView from "../../components/TopView";
 import { getDatabase, ref, onValue, set } from "@firebase/database";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
 import { useNavigate, useParams } from "react-router-dom";

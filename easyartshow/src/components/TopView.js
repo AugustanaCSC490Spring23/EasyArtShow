@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-
 const top3 = ["BZWXdT", "CLyofb", "QDdLfW"];
-
 function SingleRoom({ id }) {
     const navigate = useNavigate();
   
@@ -25,7 +23,5 @@ function TopView() {
     </div>
   );
 }
-
-
 
 export default TopView;

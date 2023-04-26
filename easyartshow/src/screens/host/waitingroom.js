@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { ref, uploadBytes, getStorage, listAll } from "@firebase/storage";
 import ArtBoard from "../../components/ArtBoard.js";
-import ThreeDView from "../../components/ThreeDView.js";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import auth from "../../backend/firebase.js";
 
 import Navbar from "../../components/Navbar/Navbar";
+
 import {
   doc,
   getFirestore,
@@ -17,6 +14,7 @@ import {
   getDoc,
 } from "@firebase/firestore";
 import QRCodeComponent from "../../components/QRCodeComponent.js";
+
 import Loading from "../../components/Loading.js";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiOutlineCloudUpload } from "react-icons/ai";
@@ -69,7 +67,6 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
 }
 
 function WaitingRoom() {
-  const [imageUrl, setImageUrl] = useState("");
   const [roomData, setRoomData] = useState(null);
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");

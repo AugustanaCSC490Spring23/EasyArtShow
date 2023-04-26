@@ -1,26 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ClipLoader from "react-spinners/ClipLoader";
-import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
-import { useNavigate, useParams } from "react-router-dom";
+
+
 
 function Loading({ loadingState }) {
-  const [imageUrl, setImageUrl] = useState("");
-  const [roomData, setRoomData] = useState(null);
-  const [roomName, setRoomName] = useState("");
-  const [roomDescription, setRoomDescription] = useState("");
-  const [roomLocation, setRoomLocation] = useState("");
-  const [roomIsPrivate, setRoomIsPrivate] = useState(true);
-  const [roomVerify, setRoomVerify] = useState(true);
-  const [roomParticipants, setRoomParticipants] = useState([]);
-  const [stateDone, setStateDone] = useState(false);
-  const [userInfo, setUser] = useState(null);
-  const [userIDMatch, setUserIDMatch] = useState(false);
-
-  const db = getDatabase();
-  const roomRef = dbRef(db, "easyartshow/rooms/");
-  const navigate = useNavigate();
-  const { id } = useParams();
-
+  
+  
   return (
     <div>
       <ClipLoader
