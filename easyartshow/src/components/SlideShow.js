@@ -29,12 +29,9 @@ const SlideShow = () => {
         autoPlay={true}
         infiniteLoop={true}
         interval={2000}
-        dynamicHeight={true}
         autoFocus={true}
-        centerMode={true}
         stopOnHover={false}
         useKeyboardArrows={true}
-        className="presentation-mode"
       >
         {imageData &&
           imageData.map((item) => (
@@ -42,7 +39,6 @@ const SlideShow = () => {
               <img
                 src={item.imageUrl}
                 alt={item.artTitle}
-                className="slide-content"
               />
             </div>
           ))}
