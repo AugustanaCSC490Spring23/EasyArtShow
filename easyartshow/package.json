@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@auth0/auth0-react": "^2.0.2",
     "@firebase/auth": "^0.21.3",
     "@google-cloud/secret-manager": "^4.2.1",
     "@react-three/drei": "^9.56.28",

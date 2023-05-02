@@ -1,9 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithPopup, GoogleAuthProvider } from "@firebase/auth";
 import { images } from "../../../constants";
-import { auth } from "../../../backend/firebase";
-import { doc, getFirestore, setDoc } from "@firebase/firestore";
 
 import LoginComponent from "../../../components/Auth/LoginComponent";
 import helperFunctions from "../../../components/helperFunctions";
@@ -12,7 +9,7 @@ import "../../../components/Auth/Login.css";
 
 function Login() {
   const navigate = useNavigate();
-  
+
   const login = () => {
     if (helperFunctions.loginWithGoogle()) {
       navigate("/dashboard");

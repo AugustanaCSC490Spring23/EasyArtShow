@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
-import { doc, getFirestore, setDoc, updateDoc } from "@firebase/firestore";
+import {
+  doc,
+  getFirestore,
+  setDoc,
+  updateDoc,
+  getDoc,
+} from "@firebase/firestore";
 
 import Login from "../../../screens/host/authentication/login";
 
@@ -49,11 +55,11 @@ function CreateRoom() {
     setPrivacy("Private");
   };
 
-  function createRoom() {
+  const createRoom = async () => {
     const randomCode = randomCodeGenerator();
     const dbFireStore = getFirestore();
     const currentTime = Date.now();
-    const roomListRef = doc(dbFireStore, "rooms/" + randomCode)
+    const roomListRef = doc(dbFireStore, "rooms/" + randomCode);
     setDoc(roomListRef, {
       hostid: user.uid,
       hostname: user.displayName,
@@ -69,20 +75,35 @@ function CreateRoom() {
     });
 
     const hostListRef = doc(dbFireStore, "hosts/", `${user.uid}`);
-    setDoc(hostListRef, {
-      [randomCode]: {
-        roomCode: randomCode,
-        roomName: roomName,
-        roomDescription: roomDescription,
-        roomLocation: roomLocation,
-        roomPrivacy: privacy,
-        createdAt: currentTime,
-        hostid: user.uid,
-      },
-    });
+    const hostListSnap = await getDoc(hostListRef);
+    if (hostListSnap.exists()) {
+      updateDoc(hostListRef, {
+        [randomCode]: {
+          roomCode: randomCode,
+          roomName: roomName,
+          roomDescription: roomDescription,
+          roomLocation: roomLocation,
+          roomPrivacy: privacy,
+          createdAt: currentTime,
+          hostid: user.uid,
+        },
+      });
+    } else {
+      setDoc(hostListRef, {
+        [randomCode]: {
+          roomCode: randomCode,
+          roomName: roomName,
+          roomDescription: roomDescription,
+          roomLocation: roomLocation,
+          roomPrivacy: privacy,
+          createdAt: currentTime,
+          hostid: user.uid,
+        },
+      });
+    }
 
     navigate(`/waitingroom/${randomCode}`);
-  }
+  };
 
   const onChangeRoomName = (event) => {
     setRoomName(event.target.value);
