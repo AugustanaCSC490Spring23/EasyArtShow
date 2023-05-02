@@ -1,75 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  getDatabase,
-  ref,
-  onValue,
-  orderByChild,
-  equalTo,
-} from "@firebase/database";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { auth } from '../backend/firebase';
+import { getDatabase, ref, onValue } from "@firebase/database";
+import { getDocs, getFirestore, collection } from "@firebase/firestore";
+import { onAuthStateChanged } from "@firebase/auth";
+import { auth } from "../backend/firebase";
+import { images } from "../constants/";
 
 import Navbar from "../components/Navbar/Navbar";
 import "../components/Landing/LandingModal.css";
-import { images } from "../constants/";
-import TopView from "../components/TopView";
 
 function MainPage() {
   const navigate = useNavigate();
   const [roomCode, setRoomCode] = useState("");
   const [roomList, setRoomList] = useState([]);
-  const [roomPartcipantName, setRoomParticipantName] = useState("");
   const [user, setUser] = useState(null);
-  //
+
   const [roomData, setRoomData] = useState({});
   const [publicRoomsMap, setPublicRoomsMap] = useState({});
 
-  const db = getDatabase();
-  const roomRef = ref(db, "easyartshow/rooms/");
-  // const ul = document.querySelector('ul');
+  const firestoreDB = getFirestore();
+  const roomRef = collection(firestoreDB, `rooms`);
 
   const onChangeHandler = (event) => {
     setRoomCode(event.target.value);
   };
-  useEffect(() => {
-    onValue(roomRef, (snapshot) => {
-      const data = snapshot.val();
-      setRoomList(data);
-    });
+
+  const getUser = () => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
+  }
+
+  const getRoomData = async () => {
+    const data = await getDocs(roomRef);
+    data.forEach((doc) => {
+      roomList.push(doc.id);
+    });
+  };
+
+  useEffect(() => {
+    getRoomData();
+    getUser();
   }, []);
 
-  // function getPublicRooms() {
-  //   return new Promise((resolve, reject) => {
-  //     onValue(
-  //       roomRef,
-  //       (snapshot) => {
-  //         const rooms = snapshot.val();
-  //         if (rooms) {
-  //           Object.keys(rooms).forEach((roomCode) => {
-  //             const roomPrivacy = rooms[roomCode].roomInfo.privacy;
-  //             const roomName = rooms[roomCode].roomInfo.roomName;
-  //             if (roomPrivacy == "Public") {
-  //               setPublicRoomsMap(roomCode, { roomCode, roomName });
-  //               console.log(
-  //                 publicRoomsMap.get(roomCode).roomCode,
-  //                 publicRoomsMap.get(roomCode).roomName
-  //               );
-  //               setRoomData(roomName, roomCode);
-  //             }
-  //           });
-  //           resolve(publicRoomsMap);
-  //         }
-  //       },
-  //       (error) => {
-  //         console.error("Error:", error);
-  //       }
-  //     );
-  //   });
-  // }
   function getPublicRooms() {
     return new Promise((resolve, reject) => {
       onValue(
@@ -101,9 +74,8 @@ function MainPage() {
     });
   }
 
-  function joinroom(id) {
-    if (roomCode in roomList) {
-      // Debug
+  function joinroom(roomCode) {
+    if (roomList.includes(roomCode)) {
       navigate(`/waitingroom/${roomCode}`);
     } else {
       alert("Room does not exist");
@@ -114,23 +86,23 @@ function MainPage() {
     if (user) {
       navigate("/createroom");
     } else {
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   }
   return (
     <div className="mainpage-container">
       <Navbar />
       <div className="modal-wrapper">
-        <nav style={{ position: 'fixed', top: 0, left: 0, right: 0,  height: '50px' }}>
-          <ul style={{display:'flex',  padding: '20px', gap: '50px'}}>
-         
-            <li >
-              <Link to="/About">About</Link>
-            </li>
-            <li>
-              <Link to="/ContactUs">Contact</Link>
-            </li>
-          </ul>
+        <nav
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "50px",
+          }}
+        >
+          <ul style={{ display: "flex", padding: "20px", gap: "50px" }}></ul>
         </nav>
         <div className="modal-box">
           <div className="text-content">
@@ -154,7 +126,7 @@ function MainPage() {
             value={roomCode}
           />
           <div className="button-group-row">
-            <button className="system-button" onClick={() => joinroom()}>
+            <button className="system-button" onClick={() => joinroom(roomCode)}>
               Join room
             </button>
             <button
@@ -164,19 +136,24 @@ function MainPage() {
               Create room
             </button>
           </div>
-          <div style={{ marginTop: '50px' }}>
+          <div style={{ marginTop: "50px" }}>
             <h3> Public rooms: </h3>
             <button onClick={() => getPublicRooms()}> Get public rooms </button>
-            <div style={{ display: "flex", flexDirection: "row", marginTop: '50px' , gap: '20px'}}>
-              
-
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginTop: "50px",
+                gap: "20px",
+              }}
+            >
               {Object.entries(publicRoomsMap).map(
                 ([roomCode, roomData], index) => (
-                  <div key={index} >
+                  <div key={index}>
                     <h2>{roomData.roomName}</h2>
-                    <p >Room Code: {roomData.roomCode}</p>                   
-                    <p >Privacy: Public</p>
-                    <button 
+                    <p>Room Code: {roomData.roomCode}</p>
+                    <p>Privacy: Public</p>
+                    <button
                       onClick={() => navigate(`/waitingroom/${roomCode}`)}
                     >
                       Join room
@@ -184,8 +161,6 @@ function MainPage() {
                   </div>
                 )
               )}
-
-            
             </div>
           </div>
         </div>

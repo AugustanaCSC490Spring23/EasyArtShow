@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { getAuth } from '@firebase/auth';
 import Typed from 'typed.js'
+
+// CSS
 import './User.css';
 
 const WelcomeUser = () => {
     const auth = getAuth();
     const user = auth.currentUser;
-    const el = useRef(null);
+    const element = useRef(null);
     const typed = useRef(null);
 
     useEffect(() => {
@@ -20,7 +22,7 @@ const WelcomeUser = () => {
             loop: true
         };
 
-        typed.current = new Typed(el.current, options);
+        typed.current = new Typed(element.current, options);
 
         return () => {
             typed.current.destroy();
@@ -30,7 +32,7 @@ const WelcomeUser = () => {
     return (
         <div className="text-wrapper">
             <h1 className="headtext__major">Welcome back,</h1>
-            <h1 className="headtext__major"><span className="multiText" ref={el}></span></h1>
+            <h1 className="headtext__major"><span className="multiText" ref={element}></span></h1>
         </div>
     )
 }

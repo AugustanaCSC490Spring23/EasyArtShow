@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { getDatabase, ref, push, set } from "@firebase/database";
-import {
-  doc,
-  getFirestore,
-  setDoc,
-  addDoc,
-  updateDoc,
-} from "@firebase/firestore";
-import Login from "./authentication/login";
-import Navbar from "../../components/Navbar/Navbar";
-import { Center } from "@react-three/drei";
-import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
-import "../../components/Room/CreateRoom.css";
-import "../../components/Room/Modal.css";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { doc, getFirestore, setDoc, updateDoc } from "@firebase/firestore";
+
+import Login from "../../../screens/host/authentication/login";
+
+import "./CreateRoom.css";
+// import "../../components/Room/Room.css";
 
 function CreateRoom() {
   const navigate = useNavigate();
@@ -44,6 +36,7 @@ function CreateRoom() {
     }
     return result;
   };
+
   const handlePublicChange = (event) => {
     setIsCheckedPublic(event.target.checked);
     setIsCheckedPrivate(!event.target.checked);
@@ -55,11 +48,13 @@ function CreateRoom() {
     setIsCheckedPublic(!event.target.checked);
     setPrivacy("Private");
   };
+
   function createRoom() {
     const randomCode = randomCodeGenerator();
     const dbFireStore = getFirestore();
     const currentTime = Date.now();
-    setDoc(doc(dbFireStore, "rooms/" + randomCode), {
+    const roomListRef = doc(dbFireStore, "rooms/" + randomCode)
+    setDoc(roomListRef, {
       hostid: user.uid,
       hostname: user.displayName,
       roomInfo: {
@@ -68,12 +63,13 @@ function CreateRoom() {
         roomLocation: roomLocation,
         roomPrivacy: privacy,
         createdAt: currentTime,
+        hostid: user.uid,
       },
       images: [],
     });
 
     const hostListRef = doc(dbFireStore, "hosts/", `${user.uid}`);
-    updateDoc(hostListRef, {
+    setDoc(hostListRef, {
       [randomCode]: {
         roomCode: randomCode,
         roomName: roomName,
@@ -81,6 +77,7 @@ function CreateRoom() {
         roomLocation: roomLocation,
         roomPrivacy: privacy,
         createdAt: currentTime,
+        hostid: user.uid,
       },
     });
 
@@ -168,7 +165,10 @@ function CreateRoom() {
           </div>
         </div>
       ) : (
-        <Login />
+        <div>
+          <h1> Please log in before creating room </h1>
+          <Login />
+        </div>
       )}
     </>
   );

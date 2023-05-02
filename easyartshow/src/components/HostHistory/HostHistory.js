@@ -1,26 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, set } from "@firebase/database";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  getStorage,
-  ref as storageRef,
-  deleteObject,
-} from "@firebase/storage";
-import {
-  doc,
-  getFirestore,
-  setDoc,
-  addDoc,
-  updateDoc,
-  getDoc,
-  deleteDoc, 
-  deleteField
-} from "@firebase/firestore";
-import '../../components/Dashboard/HostHistory.css';
-import '../../components/Room/Modal.css';
-import placeholder from "../../asset/img-3.jpg";
+import { useNavigate } from "react-router-dom";
+import { doc, getFirestore, updateDoc, getDocs, deleteDoc,  deleteField, collection, getDoc } from "@firebase/firestore";
 import Carousel from "react-elastic-carousel";
+
+import '../../components/HostHistory/HostHistory.css';
+import '../../components/Room/Modal.css';
+
+import placeholder from "../../asset/img-3.jpg";
 
 const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
   return (
@@ -38,13 +24,13 @@ const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
 
 function HostHistory({ userUid }) {
   const firestoreDB = getFirestore();
+  const navigate = useNavigate();
+
   const roomRef = doc(firestoreDB, `hosts/${userUid}/`);
   const [roomData, setRoomData] = useState([]);
-  const navigate = useNavigate();
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
   const [selectRoomCode, setSelectRoomCode] = useState("");
   const [selectRoomTitle, setSelectRoomTitle] = useState("");
-
 
   const deletePhoto = (roomCode) => {
     deleteDoc(doc(firestoreDB, "rooms", `${roomCode}`));
@@ -74,15 +60,16 @@ function HostHistory({ userUid }) {
     setShowDeletePrompt(false);
   };
 
+  const getRoomData = async () => {
+    const roomDataSnap = await getDoc(roomRef);
+    if (roomDataSnap.exists()) {
+      setRoomData(roomDataSnap.data());
+    } else {
+      console.log("No such document!");
+    }
+  };
+
   useEffect(() => {
-    const getRoomData = async () => {
-      const roomData = await getDoc(roomRef);
-      if (roomData.exists()) {
-        setRoomData(roomData.data());
-      } else {
-        console.log("No such document!");
-      }
-    };
     getRoomData();
   }, []);
 

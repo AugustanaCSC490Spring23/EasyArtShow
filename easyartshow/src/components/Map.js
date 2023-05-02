@@ -5,23 +5,19 @@ import { useGeolocated } from "react-geolocated";
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 const getDirection = (degrees, isLongitude) =>
-    degrees > 0 ? (isLongitude ? "E" : "N") : isLongitude ? "W" : "S";
+  degrees > 0 ? (isLongitude ? "E" : "N") : isLongitude ? "W" : "S";
 
 const formatDegrees = (degrees, isLongitude) =>
-    `${0 | degrees}° ${
-        0 | (((degrees < 0 ? (degrees = -degrees) : degrees) % 1) * 60)
-    }' ${0 | (((degrees * 60) % 1) * 60)}" ${getDirection(
-        degrees,
-        isLongitude,
-    )}`;
+  `${0 | degrees}° ${
+    0 | (((degrees < 0 ? (degrees = -degrees) : degrees) % 1) * 60)
+  }' ${0 | (((degrees * 60) % 1) * 60)}" ${getDirection(degrees, isLongitude)}`;
 
 function Map() {
   const {
     coords,
-    
+
     isGeolocationAvailable,
     isGeolocationEnabled,
-    
   } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: false,
@@ -41,7 +37,11 @@ function Map() {
     <div>Geolocation is not enabled</div>
   ) : coords ? (
     <div style={{ height: "100vh", width: "100%" }}>
-        <h2> Current location:  {formatDegrees(coords.latitude, false)} {formatDegrees(coords.longitude, false)}</h2>
+      <h2>
+        {" "}
+        Current location: {formatDegrees(coords.latitude, false)}{" "}
+        {formatDegrees(coords.longitude, false)}
+      </h2>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "" }}
         defaultCenter={defaultProps.center}

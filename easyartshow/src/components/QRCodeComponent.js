@@ -1,14 +1,17 @@
 import React from "react";
-import { useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import QRCode from "react-qr-code";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function QRCodeComponent() {
   const { id } = useParams();
-  const waitingRoomLocation = window.location.href.replace(`qrcode/${id}`, `waitingroom/${id}`); 
+  const waitingRoomLocation = window.location.href.replace(
+    `qrcode/${id}`,
+    `waitingroom/${id}`
+  );
 
   return (
-    <div style={{textAlign:"center"}}>
+    <div style={{ textAlign: "center" }}>
       <br />
       <a href={`/waitingroom/${id}`}>
         <AiOutlineArrowLeft />
@@ -17,9 +20,10 @@ function QRCodeComponent() {
       <div>
         Your passcode is <h2>{id}</h2>
         <br />
-        Share this code with your participants or scan the QR code below to join the room.
+        Share this code with your participants or scan the QR code below to join
+        the room.
         <br />
-        </div>
+      </div>
       <br />
       <h1> QR Code: </h1>
       <div

@@ -9,6 +9,7 @@ import {
 import { getDatabase, ref as dbRef, set } from "@firebase/database";
 import { auth } from "../../backend/firebase";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import { getDownloadURL } from "@firebase/storage";
 import {
   doc,
   setDoc,

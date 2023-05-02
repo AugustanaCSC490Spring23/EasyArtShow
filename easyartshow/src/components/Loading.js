@@ -1,11 +1,7 @@
 import React from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
-
-
 function Loading({ loadingState }) {
-  
-  
   return (
     <div>
       <ClipLoader

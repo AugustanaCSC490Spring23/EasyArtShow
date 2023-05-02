@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from "react";
-import ArtBoard from "../../components/ArtBoard.js";
+import ArtBoard from "../ArtBoard/ArtBoard.js";
 import { useNavigate, useParams} from "react-router-dom";
-import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
+import { doc, getFirestore, getDoc } from "@firebase/firestore";
 
-import Navbar from "../../components/Navbar/Navbar";
-
-import {
-  doc,
-  getFirestore,
-  setDoc,
-  addDoc,
-  updateDoc,
-  getDoc,
-} from "@firebase/firestore";
-import QRCodeComponent from "../../components/QRCodeComponent.js";
-
-import Loading from "../../components/Loading.js";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { AiOutlineCloudUpload } from "react-icons/ai";
-import { FiShare, FiUpload } from "react-icons/fi";
+import { FiShare } from "react-icons/fi";
 import { SlInfo } from "react-icons/sl";
-import "../../components/Room/WaitingRoom.css";
+
+import Navbar from "../../Navbar/Navbar.js";
+import Loading from "../../Loading.js";
+
+import "./WaitingRoom.css";
 
 function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
   const navigate = useNavigate();

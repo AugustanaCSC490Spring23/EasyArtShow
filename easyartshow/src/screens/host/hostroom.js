@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { images } from "../../constants";
 
 import Login from "./authentication/login";
-
-import HostHistory from "./HostHistory";
+import HostHistory from "../../components/HostHistory/HostHistory";
 import Navbar from "../../components/Navbar/Navbar";
-import WelcomeUser from "../../components/Dashboard/User";
-import '../../components/Dashboard/Dashboard.css';
-import { images } from '../../constants';
+import WelcomeUser from "../../components/User/User";
+
+import "../../components/Dashboard/Dashboard.css";
 
 const HostRoom = () => {
   const navigate = useNavigate();
@@ -32,11 +32,11 @@ const HostRoom = () => {
   }, [goToJoinRoom]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClickOnScroll = () => {
-    const element = document.getElementById('host-history-section');
+    const element = document.getElementById("host-history-section");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth'})
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   return (
     <>
@@ -48,24 +48,39 @@ const HostRoom = () => {
               <WelcomeUser />
               <div className="hostroom-button-group">
                 <div className="button-group-row">
-                  <button className="system-button system-button-primary" onClick={() => createRoom()}> Create room </button>
-                  <button className="system-button" onClick={() => setGoToJoinRoom(true)}> Join room </button>
+                  <button
+                    className="system-button system-button-primary"
+                    onClick={() => createRoom()}
+                  >
+                    {" "}
+                    Create room{" "}
+                  </button>
+                  <button
+                    className="system-button"
+                    onClick={() => setGoToJoinRoom(true)}
+                  >
+                    {" "}
+                    Join room{" "}
+                  </button>
                 </div>
                 <div className="second-button-group">
-                  <button className="system-button view-room-button" onClick={handleClickOnScroll}>Your rooms</button>
+                  <button
+                    className="system-button view-room-button"
+                    onClick={handleClickOnScroll}
+                  >
+                    Your rooms
+                  </button>
                 </div>
               </div>
             </div>
-            <img src={images.gallery02} alt='gallery-img' className="img"/>
-            <HostHistory userUid={user.uid}/>
+            <img src={images.gallery02} alt="gallery-img" className="img" />
+            <HostHistory userUid={user.uid} />
           </div>
-
-          
         </div>
       ) : (
         <Login />
       )}
-      </>
+    </>
   );
 };
 

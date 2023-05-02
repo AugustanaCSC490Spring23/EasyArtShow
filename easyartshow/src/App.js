@@ -11,8 +11,8 @@ import Login from './screens/host/authentication/login';
 // import SignUp from './screens/host/authentication/signup';
 import MainPage from './screens/mainpage';
 import Dashboard from './screens/host/dashboard';
-import WaitingRoom from './screens/host/waitingroom';
-import CreateRoom from './screens/host/createroom';
+import WaitingRoom from './components/Room/WaitingRoom/WaitingRoom';
+import CreateRoom from './components/Room/CreateRoom/CreateRoom';
 import HostRoom from './screens/host/hostroom';
 import JoinRoom from './screens/participant/joinroom';
 import UploadPicRoom from './screens/participant/uploadPicRoom';
@@ -20,8 +20,8 @@ import DevNote from './screens/devnote';
 import Map from './components/Map';
 import ThreeDView from './components/ThreeDView';
 import PageNotFound from './screens/pageNotFound';
-import ContactUs from './screens/ContactUs';
-import About from './screens/About';
+import ContactUs from './screens/contactUs';
+import About from './screens/about';
 import QRCodeComponent from './components/QRCodeComponent';
 
 function App() {
@@ -31,7 +31,6 @@ function App() {
         <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/signup" element={<SignUp />} /> */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/waitingroom/:id" element={<WaitingRoom />} />
             <Route path="/createroom" element={<CreateRoom />} />

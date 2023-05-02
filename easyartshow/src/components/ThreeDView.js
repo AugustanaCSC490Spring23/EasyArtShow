@@ -1,8 +1,7 @@
-import { Suspense, useRef} from "react";
+import { Suspense, useRef } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
- 
   Preload,
   Image as ImageImpl,
   ScrollControls,
@@ -123,30 +122,6 @@ function Loader() {
   return null;
 }
 
-// function Box(props) {
-//   // This reference gives us direct access to the THREE.Mesh object
-//   const ref = useRef();
-//   // Hold state for hovered and clicked events
-//   const [hovered, hover] = useState(false);
-//   const [clicked, click] = useState(false);
-//   // Subscribe this component to the render-loop, rotate the mesh every frame
-//   useFrame((state, delta) => (ref.current.rotation.x += delta));
-//   // Return the view, these are regular Threejs elements expressed in JSX
-//   return (
-//     <mesh
-//       {...props}
-//       ref={ref}
-//       scale={clicked ? 1.5 : 1}
-//       onClick={(event) => click(!clicked)}
-//       onPointerOver={(event) => hover(true)}
-//       onPointerOut={(event) => hover(false)}
-//     >
-//       <boxGeometry args={[1, 1, 1]} />
-//       <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
-//     </mesh>
-//   );
-// }
-
 export default function ThreeDView() {
   return (
     <>
@@ -163,19 +138,7 @@ export default function ThreeDView() {
             <Scroll>
               <Pages />
             </Scroll>
-            <Scroll html>
-              {/* <h1 style={{ position: "absolute", top: "20vh", left: "-75vw" }}></h1>
-              <h1 style={{ position: "absolute", top: "20vh", left: "25vw" }}></h1>
-              <h1 style={{ position: "absolute", top: "20vh", left: "125vw" }}></h1>
-              <h1 style={{ position: "absolute", top: "20vh", left: "225vw" }}></h1>
-              <h1 style={{ position: "absolute", top: "20vh", left: "325vw" }}></h1>
-
-              <h1 style={{ position: "absolute", top: "20vh", left: "425vw" }}></h1>
-              <h1 style={{ position: "absolute", top: "20vh", left: "525vw" }}></h1>
-              <h1 style={{ position: "absolute", top: "20vh", left: "625vw" }}></h1>
-              <h1 style={{ position: "absolute", top: "20vh", left: "725vw" }}></h1>
-              <h1 style={{ position: "absolute", top: "20vh", left: "825vw" }}></h1> */}
-            </Scroll>
+            <Scroll html></Scroll>
           </ScrollControls>
           <Preload />
         </Suspense>

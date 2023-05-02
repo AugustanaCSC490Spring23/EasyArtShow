@@ -1,14 +1,5 @@
 import { Slide } from "react-slideshow-image";
-import {
-  ref,
-  uploadBytes,
-  getStorage,
-  listAll,
-  list,
-  getDownloadURL,
-  getMetadata,
-  deleteObject,
-} from "@firebase/storage";
+import { ref, getStorage, deleteObject } from "@firebase/storage";
 
 const divStyle = {
   display: "flex",
