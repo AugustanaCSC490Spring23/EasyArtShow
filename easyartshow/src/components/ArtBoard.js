@@ -27,7 +27,7 @@ function ArtBoard({ id }) {
   const storage = getStorage();
   const listRef = ref(storage, `easyartshow/rooms/${id.toString()}/images/`);
   const [ user, setUser] = useState(null);
-  const [setImageDirectory] = useState([]);
+  const [imageDirectory, setImageDirectory] = useState([]);
   const auth = getAuth();
   const [userIDMatch, setUserIDMatch] = useState(false);
   const [ roomData, setRoomData] = useState(null);
@@ -38,13 +38,21 @@ function ArtBoard({ id }) {
   const [imageData, setImageData] = useState([]);
   const docRef = doc(dbFireStore, "rooms", `${id}`);
   const roomRef = dbRef(db, "easyartshow/rooms/");
-  const [ setCaptionList] = useState([]);
+  const [ captionList, setCaptionList] = useState([]);
 
-  const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
-    if (doc.data().images) {
-      setImageData(doc.data().images);
-    }
-  });
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  }
+
+  // const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
+  //   if (doc.data().images) {
+  //    setImageData(doc.data().images);
+  //  }
+  // });
 
   function deletePhoto(url) {
     const fireStoreDB = getFirestore();

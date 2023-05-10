@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   ref,
   uploadBytes,
+  getDownloadURL,
   getStorage,  
   getDownloadURL
 } from "@firebase/storage";
