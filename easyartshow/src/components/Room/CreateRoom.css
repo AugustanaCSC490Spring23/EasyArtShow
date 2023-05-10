@@ -1,0 +1,11 @@
+.system {
+    border: 1px solid #4F4F4F;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+
+    display: flex;
+    align-items: center;
+    color: #4F4F4F;
+}

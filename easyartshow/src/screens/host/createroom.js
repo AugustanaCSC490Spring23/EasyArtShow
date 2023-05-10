@@ -122,7 +122,7 @@ function CreateRoom() {
             </div>
             
             <div className="button-group-row">
-              <button className="system-button-secondary" onClick={() => navigate(-1)}>Cancel</button>
+              <button className="system-button-secondary system" onClick={() => navigate(-1)}>Cancel</button>
               <button className="system-button-primary" onClick={() => createRoom()}>Create room</button>
             </div>
           </div>

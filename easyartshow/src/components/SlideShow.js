@@ -26,20 +26,32 @@ const SlideShow = () => {
         showArrows={true}
         showStatus={false}
         showThumbs={false}
-        autoPlay={true}
+        // autoPlay={true}
         infiniteLoop={true}
         interval={2000}
-        autoFocus={true}
-        stopOnHover={false}
         useKeyboardArrows={true}
       >
         {imageData &&
           imageData.map((item) => (
-            <div>
+            <div className="slide-item">
               <img
                 src={item.imageUrl}
                 alt={item.artTitle}
+                className="slide-background"
               />
+              <div className="slide-img">
+                <img
+                    src={item.imageUrl}
+                    alt={item.artTitle}
+                />
+              </div>
+              
+              <span className="title-span">
+                  <h2 className="title">{item.artTitle}</h2>
+                  <h2 className="description">The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox. Bright vixens</h2>
+                  <h2 className="description">Contributed by: {item.participantName}</h2>
+              </span>
+              
             </div>
           ))}
       </Carousel>

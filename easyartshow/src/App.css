@@ -13,7 +13,7 @@
 .headtext__minor {
   font-family: var(--font-system);
   color: var(--color-gray);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .headtext__info {
@@ -43,6 +43,7 @@ button {
   cursor: pointer;
 
   min-height: 40px;
+  min-width: fit-content;
   /* max-width: 200px; */
 }
 

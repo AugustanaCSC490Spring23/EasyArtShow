@@ -66,7 +66,6 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation}) {
             <AiOutlineCloudUpload /> Upload photos
           </button>
       </div>
-
     </div>
   );
 }

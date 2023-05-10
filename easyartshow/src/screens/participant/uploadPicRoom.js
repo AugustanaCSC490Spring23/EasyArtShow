@@ -21,7 +21,8 @@ import {
 } from "@firebase/firestore";
 import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineClose } from "react-icons/ai";
+import { GrClose } from "react-icons/gr";
 import background from "../../asset/background/caption_background_1.jpeg";
 
 const UploadPicRoom = () => {
@@ -131,18 +132,15 @@ const UploadPicRoom = () => {
   };
 
   return (
-    <div>
-      <Navbar />
-      <div style={{ textAlign: "center" }}>
-        <a href={`/waitingroom/${id}`}>
-          <AiOutlineArrowLeft />
-          <text> Back to library </text>
-        </a>
-        <h2> Upload Pic </h2>
+    <div className="modal-background">
+      <div className="modal">
+        <GrClose />
+
+        <h2 className="headtext__major title"> Upload picture</h2>
         {user ? (
           <NameBox user={user.displayName} />
         ) : (
-          <div>
+          <div className="input-field">
             <h4> Your Name </h4>
             <input
               type="text"
@@ -160,39 +158,32 @@ const UploadPicRoom = () => {
         )}
 
         <div>
-          Choose a picture:
-          <br />
-          <div style={{ textAlign: "-webkit-center" }}>
+          <div className="input-field">
+            <h2 className="headtext__info" >Choose a picture</h2>
             <FileUploader
               handleChange={handlePictureChange}
               name="Image"
               types={fileTypes}
             />
           </div>
-          <br />
           {imageUrl && (
-            <img
-              src={imageUrl}
-              alt="Selected"
-              style={{ width: "150px", height: "150px" }}
-            />
+            <h2 className="headtext__minor">{filename} selected</h2>
           )}
-          <br />
-          <h3> Artwork title </h3>
-          <textarea
-            type="text"
-            placeholder="What do you call your art?"
-            onChangeCapture={onChangeArtTitle}
-            value={artTitle}
-            style={{ width: "70%" }}
-          />
+          <div className="input-field">
+            <h2 className="headtext__info"> Artwork title </h2>
+            <input
+              type="text"
+              onChangeCapture={onChangeArtTitle}
+              value={artTitle}
+              style={{ width: "70%" }}
+            />
+          </div>
+          
         </div>
 
         <div>
-          <br />
-          ------ or ------
-          <br />
-          <h2> Create art from caption </h2>
+          <h2 className="headtext__info">or</h2>
+          <h2 className="headtext__major title"> Create art from caption </h2>
           <br />
           <textarea
             type="text"
@@ -209,12 +200,9 @@ const UploadPicRoom = () => {
             <h1 className={styles.header}>{artCaption}</h1>
           </article>
         </div>
-
+        <button className="system-button-primary" onClick={() => uploadPhoto()}> Upload this file </button>
         <br />
-        <button onClick={() => uploadPhoto()}> Submit </button>
-        <br />
-        <br />
-        <button onClick={() => navigate(`/waitingroom/${id}`)}>
+        <button className="system-button-secondary" onClick={() => navigate(`/waitingroom/${id}`)}>
           {" "}
           Go to library{" "}
         </button>
@@ -226,8 +214,7 @@ const UploadPicRoom = () => {
 function NameBox({ user }) {
   return (
     <div>
-      <h4> Welcome, {user} </h4>
-      <br />
+      <h4 className="headtext__info"> Welcome, {user} </h4>
     </div>
   );
 }
