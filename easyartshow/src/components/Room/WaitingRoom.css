@@ -17,7 +17,6 @@
     justify-content: center;
     
     padding: 1rem;
-    gap: 10px;
 }
 
 .info-wrapper .title {
@@ -79,4 +78,9 @@
 
     margin-top: 1rem;
     gap: 4rem;
+}
+
+.gallery-wrapper button {
+    position: sticky;
+    bottom: 5%;
 }

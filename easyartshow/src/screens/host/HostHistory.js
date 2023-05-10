@@ -7,6 +7,16 @@ import {
   ref as storageRef,
   deleteObject,
 } from "@firebase/storage";
+import {
+  doc,
+  getFirestore,
+  setDoc,
+  addDoc,
+  updateDoc,
+  getDoc,
+  deleteDoc, 
+  deleteField
+} from "@firebase/firestore";
 import '../../components/Dashboard/HostHistory.css';
 import '../../components/Room/Modal.css';
 import placeholder from "../../asset/img-3.jpg";
@@ -18,8 +28,8 @@ const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
       <div className="modal">
         <p className="headtext__major title">Are you sure you want to delete this room?</p> <h1 className="headtext__major">{roomTitle}</h1>
         <div className="button-group-row">
-          <button className="system-button system-button-primary" onClick={onDelete}>Yes</button>
-          <button className="system-button" onClick={onCancel}>No</button>
+          <button className="system-button-secondary" onClick={onCancel}>No</button>
+          <button className="system-button-primary" onClick={onDelete}>Yes</button>
         </div>
       </div>
     </div>
@@ -27,9 +37,8 @@ const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
 };
 
 function HostHistory({ userUid }) {
-  const db = getDatabase();
-  const storage = getStorage();
-  const roomRef = ref(db, `easyartshow/hosts/${userUid}/`);
+  const firestoreDB = getFirestore();
+  const roomRef = doc(firestoreDB, `hosts/${userUid}/`);
   const [roomData, setRoomData] = useState([]);
   const navigate = useNavigate();
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
@@ -38,20 +47,15 @@ function HostHistory({ userUid }) {
 
 
   const deletePhoto = (roomCode) => {
-    const imgRef = storageRef(storage, "easyartshow/rooms/" + roomCode);
-    set(ref(db, "easyartshow/rooms/" + roomCode), null);
-    set(ref(db, `easyartshow/hosts/${userUid}/${roomCode}`), null);
-    deleteObject(imgRef)
-      .then(() => {
-        // File deleted successfully
-        console.log("File deleted successfully");
-        window.location.reload();
-      })
-      .catch((error) => {
-        // Uh-oh, an error occurred!
-        console.log(error);
-      });
-    window.location.reload();
+    deleteDoc(doc(firestoreDB, "rooms", `${roomCode}`));
+    updateDoc(doc(firestoreDB, "hosts", `${userUid}`), {
+      [roomCode]: deleteField()
+    }).then(() => {
+      console.log("Document successfully deleted!");
+      window.location.reload();
+    }).catch((error) => {
+      console.error("Error removing document: ", error);
+    });
   };
 
   const onToggleDelete = (roomCode, roomTitle) => {
@@ -71,11 +75,16 @@ function HostHistory({ userUid }) {
   };
 
   useEffect(() => {
-    onValue(roomRef, (snapshot) => {
-      const data = snapshot.val();
-      setRoomData(data);
-    });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const getRoomData = async () => {
+      const roomData = await getDoc(roomRef);
+      if (roomData.exists()) {
+        setRoomData(roomData.data());
+      } else {
+        console.log("No such document!");
+      }
+    };
+    getRoomData();
+  }, []);
 
 
   return (
@@ -91,7 +100,7 @@ function HostHistory({ userUid }) {
             />
           )}
 
-          <Carousel itemsToShow={3} className='host-history-wrapper wrapper'>
+          <Carousel itemsToShow={3} pagination={false} className='host-history-wrapper wrapper'>
             {Object.keys(roomData).map((key, index) => {
                 return (
                   <div key={index} className='room-card'>
@@ -99,22 +108,18 @@ function HostHistory({ userUid }) {
                     <h4 className="headtext__minor"> Code: {roomData[key].roomCode} </h4>
                     <img src={placeholder} />
                     <div className="button-group-row">
-                      <button className="system-button system-button-primary"
+                      <button className="system-button-secondary"
+                        onClick={() => onToggleDelete(roomData[key].roomCode, roomData[key].roomName)}
+                      > Delete </button>
+                      <button className="custom-button"
                         onClick={() =>
                           navigate(`/waitingroom/${roomData[key].roomCode}`)
                         }
                       >
                         Join room
                       </button>
-                      <button className="system-button"
-                        onClick={() => onToggleDelete(roomData[key].roomCode, roomData[key].roomName)}
-                      >
-                        {" "}
-                        Delete room
-                        {" "}
-                      </button>
+                      
                     </div>
-                    <br />
                   </div>
                 );
               })}

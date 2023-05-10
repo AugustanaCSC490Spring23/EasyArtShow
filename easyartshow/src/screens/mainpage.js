@@ -7,6 +7,8 @@ import {
   orderByChild,
   equalTo,
 } from "@firebase/database";
+import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
+import { auth } from '../backend/firebase';
 
 import Navbar from "../components/Navbar/Navbar";
 import "../components/Landing/LandingModal.css";
@@ -18,6 +20,7 @@ function MainPage() {
   const [roomCode, setRoomCode] = useState("");
   const [roomList, setRoomList] = useState([]);
   const [roomPartcipantName, setRoomParticipantName] = useState("");
+  const [user, setUser] = useState(null);
   //
   const [roomData, setRoomData] = useState({});
   const [publicRoomsMap, setPublicRoomsMap] = useState({});
@@ -34,7 +37,10 @@ function MainPage() {
       const data = snapshot.val();
       setRoomList(data);
     });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  }, []);
 
   // function getPublicRooms() {
   //   return new Promise((resolve, reject) => {
@@ -103,21 +109,28 @@ function MainPage() {
       alert("Room does not exist");
     }
   }
+
+  function createRoom() {
+    if (user) {
+      navigate("/createroom");
+    } else {
+      navigate('/dashboard');
+    }
+  }
   return (
     <div className="mainpage-container">
       <Navbar />
       <div className="modal-wrapper">
-        <nav style={{ position: 'fixed', top: 0, left: 0, right: 0,  height: '50px' }}>
+        {/* <nav style={{ position: 'fixed', top: 0, left: 0, right: 0,  height: '50px' }}>
           <ul style={{display:'flex',  padding: '20px', gap: '50px'}}>
-         
-            {/* <li >
-              <a href="/about">About</a>
+            <li >
+              <a href="/About">About</a>
             </li>
             <li>
-              <a href="/contactus">Contact</a>
-            </li> */}
+              <a href="/ContactUs">Contact</a>
+            </li>
           </ul>
-        </nav>
+        </nav> */}
         <div className="modal-box">
           <div className="text-content">
             <h1 className="headtext__major headtext">
@@ -140,19 +153,19 @@ function MainPage() {
             value={roomCode}
           />
           <div className="button-group-row">
-            <button className="system-button" onClick={() => joinroom()}>
+            <button className="system-button-secondary" onClick={() => joinroom()}>
               Join room
             </button>
             <button
-              className="system-button system-button-primary"
-              onClick={() => navigate("/dashboard")}
+              className="custom-button"
+              onClick={() => createRoom()}
             >
               Create room
             </button>
           </div>
           <div style={{ marginTop: '50px' }}>
             <h3> Public rooms: </h3>
-            <button onClick={() => getPublicRooms()}> Get public rooms </button>
+            <button className="system-button-secondary" onClick={() => getPublicRooms()}> Get public rooms </button>
             <div style={{ display: "flex", flexDirection: "row", marginTop: '50px' , gap: '20px'}}>
               
 

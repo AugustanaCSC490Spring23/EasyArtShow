@@ -1,30 +1,11 @@
+.system {
+    border: 1px solid #4F4F4F;
 
-.pricing-toggle {
-    background-color: #F5F5F5;
-    padding: 14px 5px;
-    border-radius: 30px;
-    display: inline-block;
-  }
-  
-.pricing-toggle [name="pricing"] {
-    display: none;
-}
-  
-.pricing-toggle input[type="radio"]+label {
-    background-color: #4F4F4F;
-    color: #F5F5F5;
-    padding: 10px 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    user-select: none;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
 
-    font-family: var(--font-system);
-    font-style: normal;
-    font-weight: 300;
-    font-size: 13px;
-}
-  
-.pricing-toggle input[type="radio"]:checked+label {
-    background-color: #F5F5F5;
+    display: flex;
+    align-items: center;
     color: #4F4F4F;
 }

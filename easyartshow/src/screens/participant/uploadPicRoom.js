@@ -1,18 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./Background.module.css";
+
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ref,
   uploadBytes,
   getDownloadURL,
   getStorage,  
+  getDownloadURL
 } from "@firebase/storage";
 import { getDatabase, ref as dbRef, set } from "@firebase/database";
 import { auth } from "../../backend/firebase";
 import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { doc, setDoc, updateDoc, addDoc,arrayUnion, getFirestore } from "@firebase/firestore";
+import {
+  doc,
+  setDoc,
+  updateDoc,
+  addDoc,
+  arrayUnion,
+  getFirestore,
+} from "@firebase/firestore";
 import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowLeft, AiOutlineClose } from "react-icons/ai";
+import { GrClose } from "react-icons/gr";
+import background from "../../asset/background/caption_background_1.jpeg";
 
 const UploadPicRoom = () => {
   
@@ -27,7 +39,12 @@ const UploadPicRoom = () => {
   const [participantName, setParticipantName] = useState("");
   const [artTitle, setArtTitle] = useState("");
   const fileTypes = ["PNG", "HEIC", "GIF", "JPEG", "JPG"];
-  const fireStoreDB = getFirestore()
+  const fireStoreDB = getFirestore();
+  const [artCaption, setArtCaption] = useState("");
+
+  const onChangeArtCaption = (event) => {
+    setArtCaption(event.target.value);
+  };
 
   const handlePictureChange = (file) => {
     const reader = new FileReader();
@@ -93,7 +110,6 @@ const UploadPicRoom = () => {
         .then((snapshot) => {
           setIsUploaded(true);
           getDownloadURL(snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
             updateDoc(doc(fireStoreDB, "rooms", `${id}`), {
               images: arrayUnion({
                 fileName: filenameRef,
@@ -102,7 +118,8 @@ const UploadPicRoom = () => {
                 imageStamp: timeStamp,
                 timeCreatedFullFormat: convertTime(timeStamp),
                 imageUrl: downloadURL,
-              })
+                imageRef: snapshot.ref.fullPath.replace("easyartshow/", ""),
+              }),
             });
           });
           // window.location.reload();
@@ -116,18 +133,15 @@ const UploadPicRoom = () => {
   };
 
   return (
-    <div>
-      <Navbar />
-      <div style={{ textAlign: "center" }}>
-        <a href={`/waitingroom/${id}`}>
-          <AiOutlineArrowLeft />
-          <text> Back to library </text>
-        </a>
-        <h2> Upload Pic </h2>
+    <div className="modal-background">
+      <div className="modal">
+        <GrClose />
+
+        <h2 className="headtext__major title"> Upload picture</h2>
         {user ? (
           <NameBox user={user.displayName} />
         ) : (
-          <div>
+          <div className="input-field">
             <h4> Your Name </h4>
             <input
               type="text"
@@ -143,37 +157,53 @@ const UploadPicRoom = () => {
             Photo uploaded. Upload another picture or go back to library.{" "}
           </h2>
         )}
-        Choose a picture:
-        <br />
-        <div style={{ textAlign: "-webkit-center" }}>
-          <FileUploader
-            handleChange={handlePictureChange}
-            name="Image"
-            types={fileTypes}
-          />
+
+        <div>
+          <div className="input-field">
+            <h2 className="headtext__info" >Choose a picture</h2>
+            <FileUploader
+              handleChange={handlePictureChange}
+              name="Image"
+              types={fileTypes}
+            />
+          </div>
+          {imageUrl && (
+            <h2 className="headtext__minor">{filename} selected</h2>
+          )}
+          <div className="input-field">
+            <h2 className="headtext__info"> Artwork title </h2>
+            <input
+              type="text"
+              onChangeCapture={onChangeArtTitle}
+              value={artTitle}
+              style={{ width: "70%" }}
+            />
+          </div>
+          
         </div>
-        <br />
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt="Selected"
-            style={{ width: "150px", height: "150px" }}
+
+        <div>
+          <h2 className="headtext__info">or</h2>
+          <h2 className="headtext__major title"> Create art from caption </h2>
+          <br />
+          <textarea
+            type="text"
+            placeholder="Enter your caption here"
+            style={{ width: "70%" }}
+            value={artCaption}
+            onChangeCapture={onChangeArtCaption}
           />
-        )}
+          <br />
+          <article
+            className={styles.article}
+            style={{ backgroundImage: `url(${background})` }}
+          >
+            <h1 className={styles.header}>{artCaption}</h1>
+          </article>
+        </div>
+        <button className="system-button-primary" onClick={() => uploadPhoto()}> Upload this file </button>
         <br />
-        <h3> Artwork title </h3>
-        <textarea
-          type="text"
-          placeholder="What do you call your art?"
-          onChangeCapture={onChangeArtTitle}
-          value={artTitle}
-          style={{ width: "70%" }}
-        />
-        <br />
-        <button onClick={() => uploadPhoto()}> Submit </button>
-        <br />
-        <br />
-        <button onClick={() => navigate(`/waitingroom/${id}`)}>
+        <button className="system-button-secondary" onClick={() => navigate(`/waitingroom/${id}`)}>
           {" "}
           Go to library{" "}
         </button>
@@ -185,10 +215,10 @@ const UploadPicRoom = () => {
 function NameBox({ user }) {
   return (
     <div>
-      <h4> Welcome, {user} </h4>
-      <br />
+      <h4 className="headtext__info"> Welcome, {user} </h4>
     </div>
   );
 }
+
 
 export default UploadPicRoom;

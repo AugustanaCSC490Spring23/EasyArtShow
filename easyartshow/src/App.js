@@ -23,6 +23,7 @@ import PageNotFound from './screens/pageNotFound';
 import ContactUs from './screens/contactUs';
 import About from './screens/about';
 import QRCodeComponent from './components/QRCodeComponent';
+import SlideShow from './components/SlideShow';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/qrcode/:id" element={<QRCodeComponent />} />
             <Route path="/threedview" element={<ThreeDView />} />
+            <Route path="/slideshow/:id" element={<SlideShow/>} />
         </Routes>
       </BrowserRouter>
     </div>
