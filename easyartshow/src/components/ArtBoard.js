@@ -40,18 +40,10 @@ function ArtBoard({ id }) {
   const roomRef = dbRef(db, "easyartshow/rooms/");
   const [ captionList, setCaptionList] = useState([]);
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  }
-
   // const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
   //   if (doc.data().images) {
-  //    setImageData(doc.data().images);
-  //  }
+  //     setImageData(doc.data().images);
+  //   }
   // });
 
   function deletePhoto(url) {
@@ -86,7 +78,9 @@ function ArtBoard({ id }) {
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             setRoomData(docSnap.data());
-            setUserIDMatch(roomData.hostid === user.uid.toString());
+            if (roomData) {
+              setUserIDMatch(roomData.hostid === user.uid.toString());
+            }
           } else {
             console.log("No such document!");
           }

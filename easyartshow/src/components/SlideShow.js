@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
   doc,
   getFirestore,
@@ -11,45 +11,51 @@ import "./Room/SlideShow.css";
 
 const SlideShow = () => {
   const { id }= useParams();
+  const location = useLocation();
   const dbFireStore = getFirestore();
   const [imageData, setImageData] = useState([]);
-  
+  const slideShowStates = location.state.slideShowStates;
+
   const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
     if (doc.data().images) {
       setImageData(doc.data().images);
     }
   });
 
-    return (
+  return (
     <>
       <Carousel 
         showArrows={true}
         showStatus={false}
         showThumbs={false}
-        // autoPlay={true}
-        infiniteLoop={true}
-        interval={2000}
+        autoPlay={slideShowStates.autoPlay}
+        infiniteLoop={slideShowStates.infiniteLooping}
+        interval={slideShowStates.slideDuration}
         useKeyboardArrows={true}
       >
         {imageData &&
           imageData.map((item) => (
             <div className="slide-item">
-              <img
-                src={item.imageUrl}
-                alt={item.artTitle}
-                className="slide-background"
-              />
-              <div className="slide-img">
-                <img
+              <div id="slide-background-div">
+                {slideShowStates.includeBackground ? 
+                    <img
                     src={item.imageUrl}
                     alt={item.artTitle}
+                    id="slide-background"
+                  />
+                : <></>
+                }
+                <img
+                      src={item.imageUrl}
+                      alt={item.artTitle}
+                      id="slide-img"
+                      className={slideShowStates.includeBackground ? "position-absolute" : ""}
                 />
               </div>
-              
               <span className="title-span">
-                  <h2 className="title">{item.artTitle}</h2>
-                  <h2 className="description">The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox. Bright vixens</h2>
-                  <h2 className="description">Contributed by: {item.participantName}</h2>
+                  <h2 className={slideShowStates.includeTitle ? "title" : "display-none"}>{item.artTitle}</h2>
+                  <h2 className={slideShowStates.includeDescription ? "description" : "display-none"}>The quick, brown fox jumps over a lazy dog. DJs flock by when MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs jumpy veldt fox. Bright vixens</h2>
+                  <h2 className={slideShowStates.includeContributor ? "description" : "display-none"}>Contributed by: {item.participantName}</h2>
               </span>
               
             </div>
