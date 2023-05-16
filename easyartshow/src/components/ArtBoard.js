@@ -40,11 +40,11 @@ function ArtBoard({ id }) {
   const roomRef = dbRef(db, "easyartshow/rooms/");
   const [ setCaptionList] = useState([]);
 
-  const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
-    if (doc.data().images) {
-      setImageData(doc.data().images);
-    }
-  });
+  // const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
+  //   if (doc.data().images) {
+  //     setImageData(doc.data().images);
+  //   }
+  // });
 
   function deletePhoto(url) {
     const fireStoreDB = getFirestore();
@@ -78,7 +78,9 @@ function ArtBoard({ id }) {
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             setRoomData(docSnap.data());
-            setUserIDMatch(roomData.hostid === user.uid.toString());
+            if (roomData) {
+              setUserIDMatch(roomData.hostid === user.uid.toString());
+            }
           } else {
             console.log("No such document!");
           }

@@ -31,10 +31,8 @@
       font-size: 18px;
       border-radius: 18px;
       color: #444;
-    }button :hover{
-      color: white;
-      background-color: gray;
     }
+    
     .hero{
       width: 100%;
       min-height: 100vh;
