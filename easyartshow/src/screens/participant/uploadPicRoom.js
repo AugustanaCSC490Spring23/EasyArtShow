@@ -7,7 +7,6 @@ import {
   uploadBytes,
   getDownloadURL,
   getStorage,  
-  getDownloadURL
 } from "@firebase/storage";
 import { getDatabase, ref as dbRef, set } from "@firebase/database";
 import { auth } from "../../backend/firebase";
