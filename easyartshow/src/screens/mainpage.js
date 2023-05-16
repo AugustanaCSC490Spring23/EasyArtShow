@@ -123,7 +123,6 @@ function MainPage() {
       <div className="modal-wrapper">
         {/* <nav style={{ position: 'fixed', top: 0, left: 0, right: 0,  height: '50px' }}>
           <ul style={{display:'flex',  padding: '20px', gap: '50px'}}>
-         
             <li >
               <a href="/About">About</a>
             </li>
