@@ -28,6 +28,5 @@ yarn-error.log*
 .env.development
 .env.production
 
-
 /.firebase
 yarn.lock
