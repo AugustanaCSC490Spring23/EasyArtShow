@@ -14,9 +14,9 @@ import {
   onSnapshot,
   deleteDoc,
 } from "@firebase/firestore";
-import "./Room/ArtBoard.css"
+import "./ArtBoard.css";
 
-import CommentBox from "./CommentBox";
+import CommentBox from "../../CommentBox";
 const spanStyle = {
   padding: "20px",
   background: "#efefef",

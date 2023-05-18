@@ -10,9 +10,9 @@ import React from 'react';
 import Login from './screens/host/authentication/login';
 // import SignUp from './screens/host/authentication/signup';
 import MainPage from './screens/mainpage';
-import Dashboard from './screens/host/dashboard';
-import WaitingRoom from './screens/host/waitingroom';
-import CreateRoom from './screens/host/createroom';
+import Dashboard from './components/Dashboard/dashboard';
+import WaitingRoom from './components/Room/WaitingRoom/waitingroom';
+import CreateRoom from './components/Room/CreateRoom/createroom';
 import HostRoom from './screens/host/hostroom';
 import JoinRoom from './screens/participant/joinroom';
 import UploadPicRoom from './screens/participant/uploadPicRoom';
@@ -23,7 +23,7 @@ import PageNotFound from './screens/pageNotFound';
 import ContactUs from './screens/contactUs';
 import About from './screens/about';
 import QRCodeComponent from './components/QRCodeComponent';
-import SlideShow from './components/SlideShow';
+import SlideShow from './components/Room/SlideShow/SlideShow';
 
 function App() {
   return (

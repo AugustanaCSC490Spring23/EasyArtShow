@@ -4,9 +4,9 @@ import { getAuth, onAuthStateChanged } from "@firebase/auth";
 
 import Login from "./authentication/login";
 
-import HostHistory from "./HostHistory";
+import HostHistory from "../../components/Dashboard/HostHistory/HostHistory";
 import Navbar from "../../components/Navbar/Navbar";
-import WelcomeUser from "../../components/Dashboard/User";
+import WelcomeUser from "../../components/Dashboard/User/User";
 import '../../components/Dashboard/Dashboard.css';
 import { images } from '../../constants';
 

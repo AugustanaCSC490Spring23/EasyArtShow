@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Component } from "react";
-import ArtBoard from "../../components/ArtBoard.js";
+import ArtBoard from "../ArtBoard/ArtBoard.js";
 import { useNavigate, useParams, useLocation, Routes} from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../Navbar/Navbar.js";
 import {
   doc,
   getFirestore,
@@ -10,17 +10,17 @@ import {
   updateDoc,
   getDoc,
 } from "@firebase/firestore";
-import QRCodeComponent from "../../components/QRCodeComponent.js";
-import Loading from "../../components/Loading.js";
+import QRCodeComponent from "../../QRCodeComponent.js";
+import Loading from "../../Loading.js";
 import { AiOutlineArrowLeft, AiOutlineCloudUpload } from "react-icons/ai";
 import { FiShare} from "react-icons/fi";
 import { SlInfo } from "react-icons/sl";
 import { GrClose } from "react-icons/gr";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import "../../components/Room/WaitingRoom.css";
-import "../../components/Room/Modal.css";
-import images from "../../constants/images.js";
+import "./WaitingRoom.css";
+import "../../Room/Modal.css";
+import images from "../../../constants/images.js";
 
 
 const SlideshowSettingModal = ( { show, handleClose, id }) => {

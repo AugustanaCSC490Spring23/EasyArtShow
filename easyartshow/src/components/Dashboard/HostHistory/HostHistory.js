@@ -17,9 +17,9 @@ import {
   deleteDoc, 
   deleteField
 } from "@firebase/firestore";
-import '../../components/Dashboard/HostHistory.css';
-import '../../components/Room/Modal.css';
-import placeholder from "../../asset/img-3.jpg";
+import './HostHistory.css';
+import '../../Room/Modal.css';
+import placeholder from "../../../asset/img-3.jpg";
 import Carousel from "react-elastic-carousel";
 
 const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {

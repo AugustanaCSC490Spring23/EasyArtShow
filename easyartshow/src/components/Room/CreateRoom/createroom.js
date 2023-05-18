@@ -9,12 +9,12 @@ import {
   addDoc,
   updateDoc,
 } from "@firebase/firestore";
-import Login from "./authentication/login";
-import Navbar from "../../components/Navbar/Navbar";
+import Login from "../../../screens/host/authentication/login";
+import Navbar from "../../Navbar/Navbar";
 import { Center } from "@react-three/drei";
 import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
-import "../../components/Room/CreateRoom.css";
-import "../../components/Room/Modal.css";
+import "./CreateRoom.css";
+import "../../Room/Modal.css";
 
 function CreateRoom() {
   const navigate = useNavigate();

@@ -7,12 +7,13 @@ import {
 } from "@firebase/firestore";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
-import "./Room/SlideShow.css";
+import "./SlideShow.css";
 
 const SlideShow = () => {
   const { id }= useParams();
   const location = useLocation();
   const dbFireStore = getFirestore();
+  const navigate = useNavigate();
   const [imageData, setImageData] = useState([]);
   const slideShowStates = location.state.slideShowStates;
 
@@ -24,6 +25,7 @@ const SlideShow = () => {
 
   return (
     <>
+      <button onClick={() => navigate(`waitingroom/${id}`)}> Back </button>
       <Carousel 
         showArrows={true}
         showStatus={false}
