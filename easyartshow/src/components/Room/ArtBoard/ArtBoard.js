@@ -1,22 +1,11 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
-import {
-  ref,
-  getStorage,
-  deleteObject,
-} from "@firebase/storage";
+import { ref, getStorage, deleteObject } from "@firebase/storage";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
-import { getDatabase, ref as dbRef, onValue } from "@firebase/database";
-import {
-  doc,
-  getFirestore,
-  getDoc,
-  onSnapshot,
-  deleteDoc,
-} from "@firebase/firestore";
-import "./ArtBoard.css";
+import { getDatabase, ref as dbRef } from "@firebase/database";
+import { doc, getFirestore, getDoc, onSnapshot, deleteDoc } from "@firebase/firestore";
+import "./ArtBoard.css"
 
-import CommentBox from "../../CommentBox";
 const spanStyle = {
   padding: "20px",
   background: "#efefef",
@@ -24,21 +13,14 @@ const spanStyle = {
 };
 
 function ArtBoard({ id }) {
-  const storage = getStorage();
-  const listRef = ref(storage, `easyartshow/rooms/${id.toString()}/images/`);
-  const [ user, setUser] = useState(null);
-  const [imageDirectory, setImageDirectory] = useState([]);
   const auth = getAuth();
+  const dbFireStore = getFirestore();
+  const docRef = doc(dbFireStore, "rooms", `${id}`);
+
+  const [ user, setUser] = useState(null);
   const [userIDMatch, setUserIDMatch] = useState(false);
   const [ roomData, setRoomData] = useState(null);
-
-  const [imageUrlList, setImageUrlList] = useState([]);
-  const db = getDatabase();
-  const dbFireStore = getFirestore();
   const [imageData, setImageData] = useState([]);
-  const docRef = doc(dbFireStore, "rooms", `${id}`);
-  const roomRef = dbRef(db, "easyartshow/rooms/");
-  const [ captionList, setCaptionList] = useState([]);
 
   const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
     if (doc.data().images) {
@@ -47,22 +29,28 @@ function ArtBoard({ id }) {
   });
 
   function deletePhoto(url) {
+    /**
+     * delete photo from database
+     * 
+     * @param {string} url - url of the photo to be deleted.
+     * 
+     * @returns {void}
+     */
     const fireStoreDB = getFirestore();
+    const storageRef = getStorage();
+    const desertRef = ref(storageRef, url.replace("rooms/", "easyartshow/rooms/"));
     const imgRef = doc(fireStoreDB, url);
+
     deleteDoc(imgRef).then(() => {
       console.log("Document successfully deleted!");
-      // window.location.reload();
     }).catch((error) => {
       console.error("Error removing document: ", error);
     });
 
-    // delete photo from storage
-    const storageRef = getStorage();
-    console.log("url", url);
-    const desertRef = ref(storageRef, url.replace("rooms/", "easyartshow/rooms/"));
     deleteObject(desertRef)
       .then(() => {
         console.log("Document successfully deleted!");
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error removing document: ", error);
@@ -72,7 +60,6 @@ function ArtBoard({ id }) {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
-     
         const waitDoc = async () => {
           if (user) {
           const docSnap = await getDoc(docRef);

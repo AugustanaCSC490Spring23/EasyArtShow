@@ -1,29 +1,36 @@
 import React, { useState, useEffect, Component } from "react";
+
 import ArtBoard from "../ArtBoard/ArtBoard.js";
-import { useNavigate, useParams, useLocation, Routes} from "react-router-dom";
 import Navbar from "../../Navbar/Navbar.js";
-import {
-  doc,
-  getFirestore,
-  setDoc,
-  addDoc,
-  updateDoc,
-  getDoc,
-} from "@firebase/firestore";
 import QRCodeComponent from "../../QRCodeComponent.js";
 import Loading from "../../Loading.js";
+
+import { useNavigate, useParams } from "react-router-dom";
+import { doc, getFirestore, getDoc } from "@firebase/firestore";
+
+// Icons
 import { AiOutlineArrowLeft, AiOutlineCloudUpload } from "react-icons/ai";
 import { FiShare} from "react-icons/fi";
 import { SlInfo } from "react-icons/sl";
 import { GrClose } from "react-icons/gr";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+
+// Images
+import images from "../../../constants/images.js";
+
+// CSS
 import "./WaitingRoom.css";
 import "../../Room/Modal.css";
-import images from "../../../constants/images.js";
 
 
 const SlideshowSettingModal = ( { show, handleClose, id }) => {
+  /**
+   * Modal for setting slideshow options
+   * @param {boolean} show
+   * @param {function} handleClose
+   * @param {string} id
+   */
   const navigate = useNavigate();
   const [includeBackground, setIncludeBackground] = useState(true);
   const [includeTitle, setIncludeTitle] = useState(true);
@@ -38,6 +45,11 @@ const SlideshowSettingModal = ( { show, handleClose, id }) => {
 
   // Shoutout to ChatGPT for this graceful solution
   const handleButtonClick = (index) => {
+    /**
+     * Handles button clicks for slideshow settings modal
+     * @param {number} index
+     * @returns {void}
+     */
     const newButtonStates = [...buttonStates];
     newButtonStates[index] = !newButtonStates[index];
     setButtonStates(newButtonStates);
@@ -56,6 +68,12 @@ const SlideshowSettingModal = ( { show, handleClose, id }) => {
   ];
 
   const handleSlideDuration = (event) => {
+    /**
+     * Handles slide duration input
+     * @param {event} event
+     * @returns {void}
+     * */
+
     setSlideDuration(event.target.value);
   }
 
@@ -79,6 +97,11 @@ const SlideshowSettingModal = ( { show, handleClose, id }) => {
   }
 
   const handleStartSlideshow = () => {
+    /**
+     * Handles start slideshow button
+     * @returns {void}
+     * */
+
     navigate(
       `/slideshow/${id}`,
       { state: {slideShowStates}
@@ -123,6 +146,14 @@ const SlideshowSettingModal = ( { show, handleClose, id }) => {
 }
 
 function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation}) {
+  /**
+   * Waiting room component
+   * @param {string} id
+   * @param {string} roomName
+   * @param {string} roomDescription
+   * @param {string} roomLocation
+   * @returns {JSX.Element}
+   * */
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
 

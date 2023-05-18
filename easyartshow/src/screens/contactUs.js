@@ -1,7 +1,6 @@
 import React from "react";
 import "./style.css";
 import { Container, Row, Col } from "react-bootstrap";
-//import { contactConfig } from "./ValidateForm";
 function ContactUs() {
   return (
     <Container className="contact">

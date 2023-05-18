@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { getDatabase, ref, push, set } from "@firebase/database";
-import {
-  doc,
-  getFirestore,
-  setDoc,
-  addDoc,
-  updateDoc,
-} from "@firebase/firestore";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { doc, getFirestore, setDoc, updateDoc } from "@firebase/firestore";
 import Login from "../../../screens/host/authentication/login";
-import Navbar from "../../Navbar/Navbar";
-import { Center } from "@react-three/drei";
-import { AiOutlineArrowLeft, AiOutlineLeft } from "react-icons/ai";
+
+// CSS
 import "./CreateRoom.css";
 import "../../Room/Modal.css";
 
@@ -26,8 +18,6 @@ function CreateRoom() {
   const [roomLocation, setRoomLocation] = useState("");
   const [isPrivate, setIsPrivate] = useState(true);
   const [includeCommentBox, setCommentBox] = useState(true);
-
-  // const [privacy, setPrivacy] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

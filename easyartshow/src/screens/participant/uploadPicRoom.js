@@ -2,43 +2,29 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./Background.module.css";
 
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  getStorage,  
-} from "@firebase/storage";
-import { getDatabase, ref as dbRef, set } from "@firebase/database";
+import { ref, uploadBytes, getDownloadURL, getStorage } from "@firebase/storage";
 import { auth } from "../../backend/firebase";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import {
-  doc,
-  setDoc,
-  updateDoc,
-  addDoc,
-  arrayUnion,
-  getFirestore,
-} from "@firebase/firestore";
-import Navbar from "../../components/Navbar/Navbar";
+import { onAuthStateChanged } from "@firebase/auth";
+import { doc,updateDoc, arrayUnion, getFirestore } from "@firebase/firestore";
 import { FileUploader } from "react-drag-drop-files";
-import { AiOutlineArrowLeft, AiOutlineClose } from "react-icons/ai";
 import { GrClose } from "react-icons/gr";
+
 import background from "../../asset/background/caption_background_1.jpeg";
 
 const UploadPicRoom = () => {
-  
+  const navigate = useNavigate();
+  const storage = getStorage();
+  const { id } = useParams();
+  const fireStoreDB = getFirestore();
+  const fileTypes = ["PNG", "HEIC", "GIF", "JPEG", "JPG"];
+
   const [imageUrl, setImageUrl] = useState("");
   const [filename, setFilename] = useState("");
   const [isUploaded, setIsUploaded] = useState(false);
   const [file, setFile] = useState(null);
-  const navigate = useNavigate();
-  const storage = getStorage();
-  const { id } = useParams();
   const [user, setUser] = useState(null);
   const [participantName, setParticipantName] = useState("");
   const [artTitle, setArtTitle] = useState("");
-  const fileTypes = ["PNG", "HEIC", "GIF", "JPEG", "JPG"];
-  const fireStoreDB = getFirestore();
   const [artCaption, setArtCaption] = useState("");
 
   const onChangeArtCaption = (event) => {
@@ -46,6 +32,11 @@ const UploadPicRoom = () => {
   };
 
   const handlePictureChange = (file) => {
+    /**
+     * Convert image to base64
+     * @param {File} file
+     * @returns {Promise<string>} base64 string
+     */
     const reader = new FileReader();
     reader.onload = () => {
       setImageUrl(reader.result);
@@ -85,6 +76,9 @@ const UploadPicRoom = () => {
   };
 
   const uploadPhoto = () => {
+    /**
+     * Upload image to firebase storage
+     */
     const filenameRef = new Date().getTime() + "-" + filename;
     const storageRef = ref(
       storage,

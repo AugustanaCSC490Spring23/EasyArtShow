@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, set } from "@firebase/database";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { useNavigate, useParams } from "react-router-dom";
-import {
-  getStorage,
-  ref as storageRef,
-  deleteObject,
-} from "@firebase/storage";
-import {
-  doc,
-  getFirestore,
-  setDoc,
-  addDoc,
-  updateDoc,
-  getDoc,
-  deleteDoc, 
-  deleteField
-} from "@firebase/firestore";
-import './HostHistory.css';
-import '../../Room/Modal.css';
+
+import { useNavigate } from "react-router-dom";
+import { doc, getFirestore, updateDoc, getDoc, deleteDoc,  deleteField } from "@firebase/firestore";
 import placeholder from "../../../asset/img-3.jpg";
 import Carousel from "react-elastic-carousel";
 
+// CSS
+import './HostHistory.css';
+import '../../Room/Modal.css';
+
 const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
+  /**
+   *  @description - This function returns a JSX element of the delete prompt
+   *               that is shown when the user clicks on the delete button.
+   *              The delete prompt is a modal that is shown on top of the
+   *             host history page.
+   *       
+   * @param {function} onDelete - function to call when user confirms deletion
+   * @param {function} onCancel - function to call when user cancels deletion
+   * @param {string} roomCode - room code of the room to be deleted
+   * @param {string} roomTitle - room title of the room to be deleted
+   * 
+   * @returns {JSX.Element} - JSX element of the delete prompt
+   * 
+  */
   return (
     <div className="modal-background">
       <div className="modal">
@@ -39,14 +40,23 @@ const DeletePrompt = ({ onDelete, onCancel, roomCode, roomTitle}) => {
 function HostHistory({ userUid }) {
   const firestoreDB = getFirestore();
   const roomRef = doc(firestoreDB, `hosts/${userUid}/`);
+
   const [roomData, setRoomData] = useState([]);
-  const navigate = useNavigate();
   const [showDeletePrompt, setShowDeletePrompt] = useState(false);
   const [selectRoomCode, setSelectRoomCode] = useState("");
   const [selectRoomTitle, setSelectRoomTitle] = useState("");
 
+  const navigate = useNavigate();
 
   const deletePhoto = (roomCode) => {
+    /**
+     * @description - This function deletes the room from the database
+     * 
+     * @param {string} roomCode - room code of the room to be deleted
+     * 
+     * @returns {void}
+     * 
+     */
     deleteDoc(doc(firestoreDB, "rooms", `${roomCode}`));
     updateDoc(doc(firestoreDB, "hosts", `${userUid}`), {
       [roomCode]: deleteField()
@@ -59,13 +69,27 @@ function HostHistory({ userUid }) {
   };
 
   const onToggleDelete = (roomCode, roomTitle) => {
+    /**
+     * @description - This function toggles the delete prompt
+     * 
+     * @param {string} roomCode - room code of the room to be deleted
+     * @param {string} roomTitle - room title of the room to be deleted
+     * 
+     * @returns {void}
+     * 
+     * */
     setShowDeletePrompt(true);
     setSelectRoomCode(roomCode);
     setSelectRoomTitle(roomTitle);
   };
 
   const handleDelete = () => {
-    // delete the file
+    /**
+     * @description - This function handles the deletion of the room
+     * 
+     * @returns {void}
+     *  
+     * */
     deletePhoto(selectRoomCode);
     setShowDeletePrompt(false);
   };
@@ -75,6 +99,12 @@ function HostHistory({ userUid }) {
   };
 
   useEffect(() => {
+    /**
+     * @description - This function gets the room data from the database
+     * 
+     * @returns {void}
+     * 
+     * */
     const getRoomData = async () => {
       const roomData = await getDoc(roomRef);
       if (roomData.exists()) {
@@ -126,7 +156,6 @@ function HostHistory({ userUid }) {
           </Carousel>
         </div>
       )}
-      {/* <text> Maximum 3 rooms allowed. <a href="#">Subscribe</a> to add more. </text> */}
     </div>
   );
 }
