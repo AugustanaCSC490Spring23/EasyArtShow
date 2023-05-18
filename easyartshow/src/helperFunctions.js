@@ -1,4 +1,9 @@
 const randomCodeGenerator = () => {
+    /**
+     * Generate a random 6-character code
+     * 
+     * @returns {string} - 6-character code
+     */
   let result = "";
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
