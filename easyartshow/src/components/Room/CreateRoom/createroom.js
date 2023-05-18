@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { doc, getFirestore, setDoc, updateDoc } from "@firebase/firestore";
+import { randomCodeGenerator } from "../../../helperFunctions";
+
 import Login from "../../../screens/host/authentication/login";
 
 // CSS
@@ -24,17 +26,6 @@ function CreateRoom() {
       setUser(user);
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const randomCodeGenerator = () => {
-    let result = "";
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const charactersLength = characters.length;
-    for (let i = 0; i < 6; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  };
 
   function createRoom() {
     const randomCode = randomCodeGenerator();
