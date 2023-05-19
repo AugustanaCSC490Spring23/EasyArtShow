@@ -3,8 +3,14 @@ import React, { useEffect, useState } from "react";
 import { ref, getStorage, deleteObject } from "@firebase/storage";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import { getDatabase, ref as dbRef } from "@firebase/database";
-import { doc, getFirestore, getDoc, onSnapshot, deleteDoc } from "@firebase/firestore";
-import "./ArtBoard.css"
+import {
+  doc,
+  getFirestore,
+  getDoc,
+  onSnapshot,
+  deleteDoc,
+} from "@firebase/firestore";
+import "./ArtBoard.css";
 
 const spanStyle = {
   padding: "20px",
@@ -17,35 +23,45 @@ function ArtBoard({ id }) {
   const dbFireStore = getFirestore();
   const docRef = doc(dbFireStore, "rooms", `${id}`);
 
-  const [ user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   const [userIDMatch, setUserIDMatch] = useState(false);
-  const [ roomData, setRoomData] = useState(null);
+  const [roomData, setRoomData] = useState(null);
   const [imageData, setImageData] = useState([]);
 
-  const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
-    if (doc.data().images) {
-      setImageData(doc.data().images);
-    }
-  });
+  useEffect(() => {
+    const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
+      if (doc.data().images) {
+        setImageData(doc.data().images);
+      }
+    });
+
+    // Clean up the listener when the component unmounts
+    return () => unsub();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function deletePhoto(url) {
     /**
      * delete photo from database
-     * 
+     *
      * @param {string} url - url of the photo to be deleted.
-     * 
+     *
      * @returns {void}
      */
     const fireStoreDB = getFirestore();
     const storageRef = getStorage();
-    const desertRef = ref(storageRef, url.replace("rooms/", "easyartshow/rooms/"));
+    const desertRef = ref(
+      storageRef,
+      url.replace("rooms/", "easyartshow/rooms/")
+    );
     const imgRef = doc(fireStoreDB, url);
 
-    deleteDoc(imgRef).then(() => {
-      console.log("Document successfully deleted!");
-    }).catch((error) => {
-      console.error("Error removing document: ", error);
-    });
+    deleteDoc(imgRef)
+      .then(() => {
+        console.log("Document successfully deleted!");
+      })
+      .catch((error) => {
+        console.error("Error removing document: ", error);
+      });
 
     deleteObject(desertRef)
       .then(() => {
@@ -60,8 +76,8 @@ function ArtBoard({ id }) {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
-        const waitDoc = async () => {
-          if (user) {
+      const waitDoc = async () => {
+        if (user) {
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             setRoomData(docSnap.data());
@@ -71,17 +87,15 @@ function ArtBoard({ id }) {
           } else {
             console.log("No such document!");
           }
-        };
-       
-      }; 
+        }
+      };
       waitDoc();
     });
   }, []);
 
   return (
     <div>
-      {
-        imageData &&
+      {imageData &&
         imageData.map((item) => (
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
           <a
@@ -97,8 +111,7 @@ function ArtBoard({ id }) {
               <button onClick={() => deletePhoto(item.imageRef)}>delete</button>
             )}
           </a>
-        )) 
-      }
+        ))}
     </div>
   );
 }
