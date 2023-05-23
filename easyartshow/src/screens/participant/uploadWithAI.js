@@ -20,6 +20,12 @@ const UploadWithAI = () => {
   const { id } = useParams();
   const fireStoreDB = getFirestore();
   const fileTypes = ["PNG", "HEIC", "GIF", "JPEG", "JPG"];
+  const { Configuration, OpenAIApi } = require("openai");
+
+  const configuration = new Configuration({
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+  });
+  const openai = new OpenAIApi(configuration);
 
   const [imageUrl, setImageUrl] = useState("");
   const [artUrl, setArtUrl] = useState("");
@@ -95,12 +101,6 @@ const UploadWithAI = () => {
      * @returns {void}
      */
     setStartCreateArt(true);
-    const { Configuration, OpenAIApi } = require("openai");
-    const configuration = new Configuration({
-      apiKey: "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",
-    });
-    const openai = new OpenAIApi(configuration);
-
     const response = await openai.createImage({
       prompt: artPrompt,
       n: 1,
