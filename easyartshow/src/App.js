@@ -16,6 +16,7 @@ import CreateRoom from './components/Room/CreateRoom/createroom';
 import HostRoom from './screens/host/hostroom';
 import JoinRoom from './screens/participant/joinroom';
 import UploadPicRoom from './screens/participant/uploadPicRoom';
+import UploadWithAI from './screens/participant/uploadWithAI';
 import DevNote from './screens/devnote';
 import Map from './components/Map';
 import ThreeDView from './components/ThreeDView';
@@ -39,6 +40,7 @@ function App() {
             <Route path="/hostroom" element={<HostRoom />} />
             <Route path="/joinroom" element={<JoinRoom />} />
             <Route path="/uploadpicroom/:id" element={<UploadPicRoom />} />
+            <Route path="/uploadwithai/:id" element={<UploadWithAI />} />
             <Route path="/devnote" element={<DevNote />} />
             <Route path="/map" element={<Map />} />
             <Route path="/threedview" element={<ThreeDView />} />

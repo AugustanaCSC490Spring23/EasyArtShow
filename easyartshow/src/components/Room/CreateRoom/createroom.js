@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
-import { doc, getFirestore, setDoc, updateDoc } from "@firebase/firestore";
+import {
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+  updateDoc,
+} from "@firebase/firestore";
 import { randomCodeGenerator } from "../../../helperFunctions";
 
 import Login from "../../../screens/host/authentication/login";
@@ -27,18 +33,23 @@ function CreateRoom() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const createPublicRoom = (randomCode, privateMode, dbFireStore, currentTime) => {
+  const createPublicRoom = (
+    randomCode,
+    privateMode,
+    dbFireStore,
+    currentTime
+  ) => {
     /**
      * Create public room in database
-     * 
+     *
      * @param {string} randomCode - random code generated for room
      * @param {boolean} privateMode - true if private mode, false if public mode
      * @param {object} dbFireStore - firestore database object
      * @param {number} currentTime - current time in milliseconds
-     * 
+     *
      * @returns {void}
      */
-    
+
     setDoc(doc(dbFireStore, "public", randomCode), {
       hostid: user.uid,
       hostname: user.displayName,
@@ -54,16 +65,57 @@ function CreateRoom() {
       images: [],
     });
   };
-    
+
+  const createRoomFromHost = (hostListRef, randomCode, currentTime) => {
+    /**
+     * Create room in database from host
+     *
+     * @param {object} hostListRef - host list reference
+     * @param {string} randomCode - random code generated for room
+     * @param {number} currentTime - current time in milliseconds
+     *
+     * @returns {void}
+     */
+
+    //Check if host exist
+    getDoc(hostListRef).then((docSnap) => {
+      if (!docSnap.exists()) {
+        setDoc(hostListRef, {
+          [randomCode]: {
+            roomCode: randomCode,
+            roomName: roomName,
+            roomDescription: roomDescription,
+            roomLocation: roomLocation,
+            roomPrivacy: isPrivate ? "Private" : "Public",
+            commentBox: includeCommentBox ? "Include" : "Exclude",
+            createdAt: currentTime,
+          },
+        });
+      } else {
+        updateDoc(hostListRef, {
+          [randomCode]: {
+            roomCode: randomCode,
+            roomName: roomName,
+            roomDescription: roomDescription,
+            roomLocation: roomLocation,
+            roomPrivacy: isPrivate ? "Private" : "Public",
+            commentBox: includeCommentBox ? "Include" : "Exclude",
+            createdAt: currentTime,
+          },
+        });
+      }
+    });
+  };
+
   const createRoomByMode = (privateMode, randomCode) => {
     /**
      * Create room in database
-     * 
+     *
      * @param {boolean} privateMode - true if private mode, false if public mode
      * @param {string} randomCode - random code generated for room
-     * 
+     *
      * @returns {void}
-     * 
+     *
      */
 
     const dbFireStore = getFirestore();
@@ -85,20 +137,10 @@ function CreateRoom() {
       },
       images: [],
     });
-    
+
     // Set host history
-    updateDoc(hostListRef, {
-      [randomCode]: {
-        roomCode: randomCode,
-        roomName: roomName,
-        roomDescription: roomDescription,
-        roomLocation: roomLocation,
-        roomPrivacy: isPrivate ? "Private" : "Public",
-        commentBox: includeCommentBox ? "Include" : "Exclude",
-        createdAt: currentTime,
-      },
-    });
-    
+    createRoomFromHost(hostListRef, randomCode, currentTime);
+
     // Create public room if public mode
     if (privateMode === false) {
       createPublicRoom(randomCode, privateMode, dbFireStore, currentTime);
@@ -108,7 +150,7 @@ function CreateRoom() {
   function createRoom() {
     /**
      * Create room
-     * 
+     *
      * @returns {void}
      */
     const randomCode = randomCodeGenerator();

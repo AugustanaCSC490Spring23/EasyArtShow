@@ -26,7 +26,7 @@ const SlideShow = () => {
 
   return (
     <>
-      <button onClick={() => navigate(`waitingroom/${id}`)}> Back </button>
+      <button onClick={() => navigate(-1)}> Back </button>
       <Carousel
         showArrows={true}
         showStatus={false}
@@ -66,7 +66,7 @@ const SlideShow = () => {
                 >
                   {item.artTitle}
                 </h2>
-                <h2
+                {/* <h2
                   className={
                     slideShowStates.includeDescription
                       ? "description"
@@ -78,7 +78,7 @@ const SlideShow = () => {
                   jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick
                   jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs
                   jumpy veldt fox. Bright vixens
-                </h2>
+                </h2> */}
                 <h2
                   className={
                     slideShowStates.includeContributor

@@ -1,0 +1,23 @@
+[debug] [2023-05-23T07:05:13.283Z] ----------------------------------------------------------------------
+[debug] [2023-05-23T07:05:13.287Z] Command:       /usr/local/bin/firebase /Users/christopherle/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase deploy
+[debug] [2023-05-23T07:05:13.287Z] CLI Version:   10.4.0
+[debug] [2023-05-23T07:05:13.287Z] Platform:      darwin
+[debug] [2023-05-23T07:05:13.287Z] Node Version:  v12.18.1
+[debug] [2023-05-23T07:05:13.294Z] Time:          Tue May 23 2023 02:05:13 GMT-0500 (Central Daylight Time)
+[debug] [2023-05-23T07:05:13.295Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-05-23T07:05:13.305Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-05-23T07:05:13.435Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-05-23T07:05:13.436Z] > authorizing via signed-in user (christopherle19@augustana.edu)
+[debug] [2023-05-23T07:05:13.436Z] [iam] checking project easyartshow-2dbd2 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-05-23T07:05:13.438Z] > refreshing access token with scopes: []
+[debug] [2023-05-23T07:05:13.439Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2023-05-23T07:05:13.741Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2023-05-23T07:05:13.741Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2023-05-23T07:05:13.796Z] <<< HTTP RESPONSE 200 {"date":"Tue, 23 May 2023 07:05:13 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2023-05-23T07:05:13.812Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/easyartshow-2dbd2:testIamPermissions [none]
+[debug] [2023-05-23T07:05:13.812Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/easyartshow-2dbd2:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-05-23T07:05:14.087Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/easyartshow-2dbd2:testIamPermissions 200
+[debug] [2023-05-23T07:05:14.087Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/easyartshow-2dbd2:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-05-23T07:05:14.089Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/easyartshow-2dbd2 [none]

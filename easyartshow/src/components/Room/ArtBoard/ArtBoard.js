@@ -28,6 +28,8 @@ function ArtBoard({ id }) {
   const [roomData, setRoomData] = useState(null);
   const [imageData, setImageData] = useState([]);
 
+  const PROJECT_NAME = "easyartshow";
+
   useEffect(() => {
     const unsub = onSnapshot(doc(dbFireStore, "rooms", `${id}`), (doc) => {
       if (doc.data().images) {
@@ -49,9 +51,9 @@ function ArtBoard({ id }) {
      */
     const fireStoreDB = getFirestore();
     const storageRef = getStorage();
-    const desertRef = ref(
+    const docRef = ref(
       storageRef,
-      url.replace("rooms/", "easyartshow/rooms/")
+      url.replace("rooms/", `${PROJECT_NAME}/rooms/`)
     );
     const imgRef = doc(fireStoreDB, url);
 
@@ -63,7 +65,7 @@ function ArtBoard({ id }) {
         console.error("Error removing document: ", error);
       });
 
-    deleteObject(desertRef)
+    deleteObject(docRef)
       .then(() => {
         console.log("Document successfully deleted!");
         window.location.reload();
@@ -81,11 +83,12 @@ function ArtBoard({ id }) {
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             setRoomData(docSnap.data());
-            if (roomData) {
-              setUserIDMatch(roomData.hostid === user.uid.toString());
-            }
           } else {
             console.log("No such document!");
+          }
+
+          if (roomData) {
+            setUserIDMatch(roomData.hostid === user.uid.toString());
           }
         }
       };

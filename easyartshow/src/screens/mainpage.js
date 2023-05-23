@@ -4,13 +4,9 @@ import { getDatabase, ref, onValue } from "@firebase/database";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "../backend/firebase";
 import {
-  doc,
   collection,
   getFirestore,
   getDocs,
-  getDoc,
-  onSnapshot,
-  deleteDoc,
 } from "@firebase/firestore";
 
 import Navbar from "../components/Navbar/Navbar";
