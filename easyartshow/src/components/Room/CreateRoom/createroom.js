@@ -4,12 +4,13 @@ import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import {
   doc,
   getDoc,
+  collection,
   getFirestore,
   setDoc,
   updateDoc,
+  getDocs
 } from "@firebase/firestore";
 import { randomCodeGenerator } from "../../../helperFunctions";
-
 import Login from "../../../screens/host/authentication/login";
 
 // CSS
@@ -24,13 +25,34 @@ function CreateRoom() {
 
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
+  const [roomNameList, setRoomNameList] = useState([]); // eslint-disable-line no-unused-vars
   const [isPrivate, setIsPrivate] = useState(false);
   const [includeCommentBox, setCommentBox] = useState(true);
+
+  const dbFireStore = getFirestore();
+
+  const getRoomsNameList = async (assignedName) => {
+    /**
+     * Get rooms from database
+     */
+    const docRef = collection(dbFireStore, "public");
+    const querySnapshot = await getDocs(docRef);
+    querySnapshot.forEach((doc) => {
+      if (doc.data().roomInfo.roomName === assignedName) {
+        alert("Public room name already exists. Please choose another name or make this room private.");
+        return false
+      } else {
+        return true
+      }
+    });
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
+    getRoomsNameList(); 
+    console.log(roomNameList);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const createPublicRoom = (
@@ -65,6 +87,8 @@ function CreateRoom() {
       images: [],
     });
   };
+
+
 
   const createRoomFromHost = (hostListRef, randomCode, currentTime) => {
     /**
@@ -123,6 +147,13 @@ function CreateRoom() {
     const hostListRef = doc(dbFireStore, "hosts", `${user.uid}`);
     const roomRef = doc(dbFireStore, "rooms", randomCode);
 
+    // Create public room if public mode
+    if (privateMode === false) {
+      if (getRoomsNameList(roomName)) {
+        createPublicRoom(randomCode, privateMode, dbFireStore, currentTime);
+      }
+    }
+
     setDoc(roomRef, {
       hostid: user.uid,
       hostname: user.displayName,
@@ -140,11 +171,6 @@ function CreateRoom() {
 
     // Set host history
     createRoomFromHost(hostListRef, randomCode, currentTime);
-
-    // Create public room if public mode
-    if (privateMode === false) {
-      createPublicRoom(randomCode, privateMode, dbFireStore, currentTime);
-    }
   };
 
   function createRoom() {

@@ -13,6 +13,8 @@ import { doc, updateDoc, arrayUnion, getFirestore } from "@firebase/firestore";
 import { GrClose } from "react-icons/gr";
 import { NoToneMapping } from "three";
 import ClipLoader from "react-spinners/ClipLoader";
+import Dictaphone from "./Dictaphone";
+import { transcriptValue } from "./Dictaphone";
 
 const UploadWithAI = () => {
   const navigate = useNavigate();
@@ -67,6 +69,10 @@ const UploadWithAI = () => {
         setParticipantName(user.displayName);
       }
     });
+
+    if (transcriptValue !== "") {
+      setArtPrompt(transcriptValue);
+    }
   }, []);
 
   const onChangeParticipantName = (event) => {
@@ -95,9 +101,9 @@ const UploadWithAI = () => {
   const createArt = async (artPrompt) => {
     /**
      * Create art with AI
-     * 
+     *
      * @param {string} artPrompt
-     * 
+     *
      * @returns {void}
      */
     setStartCreateArt(true);
@@ -182,6 +188,9 @@ const UploadWithAI = () => {
           {imageUrl && <h2 className="headtext__minor">{filename} selected</h2>}
           <div className="input-field">
             <h2 className="headtext__info"> Your prompt</h2>
+            <h3 className="headtext__info"> Record your prompt </h3>
+            <Dictaphone />
+            <h3 className="headtext__info"> Or type here: </h3>
             <input
               type="text"
               onChangeCapture={onChangeArtPrompt}
@@ -202,7 +211,7 @@ const UploadWithAI = () => {
         <br />
 
         {startCreateArt && !artUrl && (
-            <ClipLoader
+          <ClipLoader
             // cssOverride={override}
             size={150}
             color={"#123abc"}
@@ -210,8 +219,8 @@ const UploadWithAI = () => {
             speedMultiplier={1.5}
             aria-label="Loading Spinner"
             data-testid="loader"
-          />    )
-        }
+          />
+        )}
 
         {artUrl && (
           <div>

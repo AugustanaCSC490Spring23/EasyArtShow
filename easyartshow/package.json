@@ -39,6 +39,7 @@
     "react-router-prompt": "^0.5.2",
     "react-scripts": "5.0.1",
     "react-slideshow-image": "^4.2.1",
+    "react-speech-recognition": "^3.10.0",
     "react-spinners": "^0.13.8",
     "react-wait": "^0.3.0",
     "styled-components": "^5.3.8",

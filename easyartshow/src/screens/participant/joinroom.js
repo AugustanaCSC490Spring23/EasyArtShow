@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getDatabase, ref, onValue } from "@firebase/database";
+import {
+  collection,
+  getFirestore,
+  getDocs,
+} from "@firebase/firestore";
 import Navbar from "../../components/Navbar/Navbar";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
@@ -8,32 +12,44 @@ function JoinRoom() {
   const navigate = useNavigate();
   const [roomCode, setRoomCode] = useState("");
   const [roomList, setRoomList] = useState([]);
- 
-  const db = getDatabase();
-  const roomRef = ref(db, "easyartshow/rooms/");
-
+  const dbFireStore = getFirestore();
 
   const onChangeHandler = (event) => {
+    /**
+     * Set room code
+     * 
+     * @param {Event} event - event object
+     */
     setRoomCode(event.target.value);
   };
   
-  useEffect(() => {
-    onValue(roomRef, (snapshot) => {
-      const data = snapshot.val();
-      setRoomList(data);
+  const getRoomsList = async () => {
+    /**
+     * Get rooms from database
+     */
+    const docRef = collection(dbFireStore, "rooms");
+    const querySnapshot = await getDocs(docRef);
+    querySnapshot.forEach((doc) => {
+      setRoomList((prev) => [...prev, doc.data().roomInfo.roomCode]);
     });
+  };
+
+
+  useEffect(() => {
+    getRoomsList();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function joinRoom(roomCode) {
     /**
      * Join room
+     * 
+     * @param {string} roomCode - room code of the room to be joined
      */
-    console.log(roomList)
-    // if (roomCode in roomList) {
-    //   navigate(`/waitingroom/${roomCode}`);
-    // } else {
-    //   alert("Room does not exist");
-    // }
+    if (roomList.includes(roomCode)) {
+      navigate(`/waitingroom/${roomCode}`);
+    } else {
+      alert("Room does not exist");
+    }
   }
 
   return (

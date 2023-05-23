@@ -48,7 +48,7 @@ function HostHistory({ userUid }) {
 
   const navigate = useNavigate();
 
-  const deletePhoto = (roomCode) => {
+  const deleteRoom = (roomCode) => {
     /**
      * @description - This function deletes the room from the database
      * 
@@ -58,6 +58,7 @@ function HostHistory({ userUid }) {
      * 
      */
     deleteDoc(doc(firestoreDB, "rooms", `${roomCode}`));
+    deleteDoc(doc(firestoreDB, "public", `${roomCode}`));
     updateDoc(doc(firestoreDB, "hosts", `${userUid}`), {
       [roomCode]: deleteField()
     }).then(() => {
@@ -90,7 +91,7 @@ function HostHistory({ userUid }) {
      * @returns {void}
      *  
      * */
-    deletePhoto(selectRoomCode);
+    deleteRoom(selectRoomCode);
     setShowDeletePrompt(false);
   };
 
