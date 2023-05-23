@@ -26,6 +26,7 @@ const UploadPicRoom = () => {
   const [participantName, setParticipantName] = useState("");
   const [artTitle, setArtTitle] = useState("");
   const [artCaption, setArtCaption] = useState("");
+  const PROJECT_NAME = "easyartshow"
 
   const onChangeArtCaption = (event) => {
     setArtCaption(event.target.value);
@@ -82,7 +83,7 @@ const UploadPicRoom = () => {
     const filenameRef = new Date().getTime() + "-" + filename;
     const storageRef = ref(
       storage,
-      `easyartshow/rooms/${id}/images/${filenameRef}`
+      `${PROJECT_NAME}/rooms/${id}/images/${filenameRef}`
     );
 
     if (user) {
@@ -111,7 +112,7 @@ const UploadPicRoom = () => {
                 imageStamp: timeStamp,
                 timeCreatedFullFormat: convertTime(timeStamp),
                 imageUrl: downloadURL,
-                imageRef: snapshot.ref.fullPath.replace("easyartshow/", ""),
+                imageRef: snapshot.ref.fullPath.replace(`${PROJECT_NAME}/`, ""),
               }),
             });
           });
@@ -173,26 +174,6 @@ const UploadPicRoom = () => {
             />
           </div>
           
-        </div>
-
-        <div>
-          <h2 className="headtext__info">or</h2>
-          <h2 className="headtext__major title"> Create art from caption </h2>
-          <br />
-          <textarea
-            type="text"
-            placeholder="Enter your caption here"
-            style={{ width: "70%" }}
-            value={artCaption}
-            onChangeCapture={onChangeArtCaption}
-          />
-          <br />
-          <article
-            className={styles.article}
-            style={{ backgroundImage: `url(${background})` }}
-          >
-            <h1 className={styles.header}>{artCaption}</h1>
-          </article>
         </div>
         <button className="system-button-primary" onClick={() => uploadPhoto()}> Upload this file </button>
         <br />

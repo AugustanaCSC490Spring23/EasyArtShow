@@ -15,10 +15,10 @@ function CreateRoom() {
   const auth = getAuth();
   const [user, setUser] = useState(null);
   const [roomName, setRoomName] = useState("");
-  
+
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
-  const [isPrivate, setIsPrivate] = useState(true);
+  const [isPrivate, setIsPrivate] = useState(false);
   const [includeCommentBox, setCommentBox] = useState(true);
 
   useEffect(() => {
@@ -27,15 +27,24 @@ function CreateRoom() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function createRoom() {
-    const randomCode = randomCodeGenerator();
-    const dbFireStore = getFirestore();
-    const currentTime = Date.now();
-    setDoc(doc(dbFireStore, "rooms/" + randomCode), {
+  const createPublicRoom = (randomCode, privateMode, dbFireStore, currentTime) => {
+    /**
+     * Create public room in database
+     * 
+     * @param {string} randomCode - random code generated for room
+     * @param {boolean} privateMode - true if private mode, false if public mode
+     * @param {object} dbFireStore - firestore database object
+     * @param {number} currentTime - current time in milliseconds
+     * 
+     * @returns {void}
+     */
+    
+    setDoc(doc(dbFireStore, "public", randomCode), {
       hostid: user.uid,
       hostname: user.displayName,
       roomInfo: {
         roomName: roomName,
+        roomCode: randomCode,
         roomDescription: roomDescription,
         roomLocation: roomLocation,
         roomPrivacy: isPrivate ? "Private" : "Public",
@@ -44,8 +53,40 @@ function CreateRoom() {
       },
       images: [],
     });
+  };
+    
+  const createRoomByMode = (privateMode, randomCode) => {
+    /**
+     * Create room in database
+     * 
+     * @param {boolean} privateMode - true if private mode, false if public mode
+     * @param {string} randomCode - random code generated for room
+     * 
+     * @returns {void}
+     * 
+     */
 
-    const hostListRef = doc(dbFireStore, "hosts/", `${user.uid}`);
+    const dbFireStore = getFirestore();
+    const currentTime = Date.now();
+    const hostListRef = doc(dbFireStore, "hosts", `${user.uid}`);
+    const roomRef = doc(dbFireStore, "rooms", randomCode);
+
+    setDoc(roomRef, {
+      hostid: user.uid,
+      hostname: user.displayName,
+      roomInfo: {
+        roomName: roomName,
+        roomDescription: roomDescription,
+        roomLocation: roomLocation,
+        roomCode: randomCode,
+        roomPrivacy: isPrivate ? "Private" : "Public",
+        commentBox: includeCommentBox ? "Include" : "Exclude",
+        createdAt: currentTime,
+      },
+      images: [],
+    });
+    
+    // Set host history
     updateDoc(hostListRef, {
       [randomCode]: {
         roomCode: randomCode,
@@ -57,7 +98,21 @@ function CreateRoom() {
         createdAt: currentTime,
       },
     });
+    
+    // Create public room if public mode
+    if (privateMode === false) {
+      createPublicRoom(randomCode, privateMode, dbFireStore, currentTime);
+    }
+  };
 
+  function createRoom() {
+    /**
+     * Create room
+     * 
+     * @returns {void}
+     */
+    const randomCode = randomCodeGenerator();
+    createRoomByMode(isPrivate, randomCode);
     navigate(`/waitingroom/${randomCode}`);
   }
 
@@ -71,12 +126,12 @@ function CreateRoom() {
 
   const onChangeIsPrivate = (event) => {
     setIsPrivate(!event.target.checked);
-  }
+  };
 
   const onChangeCommentBox = (event) => {
     setCommentBox(!event.target.checked);
-    console.log(includeCommentBox)
-  }
+    console.log(includeCommentBox);
+  };
 
   return (
     <>
@@ -86,11 +141,21 @@ function CreateRoom() {
             <h1 className="headtext__major">Create room</h1>
             <div className="input-field">
               <h2 className="headtext__info">Room name</h2>
-              <input className="" type="text" onChange={onChangeRoomName} value={roomName} />
+              <input
+                className=""
+                type="text"
+                onChange={onChangeRoomName}
+                value={roomName}
+              />
             </div>
             <div className="input-field">
               <h2 className="headtext__info">Room description</h2>
-              <input className="" type="text" onChange={onChangeRoomDescription} value={roomDescription} />
+              <input
+                className=""
+                type="text"
+                onChange={onChangeRoomDescription}
+                value={roomDescription}
+              />
             </div>
 
             <div className="button-group-row">
@@ -98,13 +163,24 @@ function CreateRoom() {
                 <input type="checkbox" onChange={onChangeIsPrivate} /> Private
               </label>
               <label className="headtext__info">
-                <input type="checkbox" onChange={onChangeCommentBox}/> Include comment box
+                <input type="checkbox" onChange={onChangeCommentBox} /> Include
+                comment box
               </label>
             </div>
-            
+
             <div className="button-group-row">
-              <button className="system-button-secondary system" onClick={() => navigate(-1)}>Cancel</button>
-              <button className="system-button-primary" onClick={() => createRoom()}>Create room</button>
+              <button
+                className="system-button-secondary system"
+                onClick={() => navigate(-1)}
+              >
+                Cancel
+              </button>
+              <button
+                className="system-button-primary"
+                onClick={() => createRoom()}
+              >
+                Create room
+              </button>
             </div>
           </div>
         </div>

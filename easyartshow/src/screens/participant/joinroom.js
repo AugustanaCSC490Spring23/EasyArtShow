@@ -24,13 +24,16 @@ function JoinRoom() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  function joinroom() {
-    if (roomCode in roomList) {
-      // Debug
-      navigate(`/waitingroom/${roomCode}`);
-    } else {
-      alert("Room does not exist");
-    }
+  function joinRoom(roomCode) {
+    /**
+     * Join room
+     */
+    console.log(roomList)
+    // if (roomCode in roomList) {
+    //   navigate(`/waitingroom/${roomCode}`);
+    // } else {
+    //   alert("Room does not exist");
+    // }
   }
 
   return (
@@ -49,7 +52,7 @@ function JoinRoom() {
       <input type="text" onChange={onChangeHandler} value={roomCode} />
       <br/>
       <br/>
-      <button onClick={() => joinroom()}>Join room</button>
+      <button onClick={() => joinRoom(roomCode)}>Join room</button>
       </div>
     </div>
   );

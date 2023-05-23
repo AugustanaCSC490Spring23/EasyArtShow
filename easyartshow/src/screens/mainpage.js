@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getDatabase, ref, onValue } from "@firebase/database";
+import { onAuthStateChanged } from "@firebase/auth";
+import { auth } from "../backend/firebase";
 import {
-  getDatabase,
-  ref,
-  onValue,
-  orderByChild,
-  equalTo,
-} from "@firebase/database";
-import { getAuth, signOut, onAuthStateChanged } from "@firebase/auth";
-import { auth } from '../backend/firebase';
+  doc,
+  collection,
+  getFirestore,
+  getDocs,
+  getDoc,
+  onSnapshot,
+  deleteDoc,
+} from "@firebase/firestore";
 
 import Navbar from "../components/Navbar/Navbar";
 import "../components/Landing/LandingModal.css";
@@ -17,93 +20,49 @@ import TopView from "../components/TopView";
 
 function MainPage() {
   const navigate = useNavigate();
+  const dbFireStore = getFirestore();
+
   const [roomCode, setRoomCode] = useState("");
   const [roomList, setRoomList] = useState([]);
-  const [roomPartcipantName, setRoomParticipantName] = useState("");
   const [user, setUser] = useState(null);
-  //
-  const [roomData, setRoomData] = useState({});
+  const [publicRoomList, setPublicRoomList] = useState([]);
   const [publicRoomsMap, setPublicRoomsMap] = useState({});
-
-  const db = getDatabase();
-  const roomRef = ref(db, "easyartshow/rooms/");
-  // const ul = document.querySelector('ul');
 
   const onChangeHandler = (event) => {
     setRoomCode(event.target.value);
   };
-  useEffect(() => {
-    onValue(roomRef, (snapshot) => {
-      const data = snapshot.val();
-      setRoomList(data);
-    });
-    onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-  }, []);
 
-  // function getPublicRooms() {
-  //   return new Promise((resolve, reject) => {
-  //     onValue(
-  //       roomRef,
-  //       (snapshot) => {
-  //         const rooms = snapshot.val();
-  //         if (rooms) {
-  //           Object.keys(rooms).forEach((roomCode) => {
-  //             const roomPrivacy = rooms[roomCode].roomInfo.privacy;
-  //             const roomName = rooms[roomCode].roomInfo.roomName;
-  //             if (roomPrivacy == "Public") {
-  //               setPublicRoomsMap(roomCode, { roomCode, roomName });
-  //               console.log(
-  //                 publicRoomsMap.get(roomCode).roomCode,
-  //                 publicRoomsMap.get(roomCode).roomName
-  //               );
-  //               setRoomData(roomName, roomCode);
-  //             }
-  //           });
-  //           resolve(publicRoomsMap);
-  //         }
-  //       },
-  //       (error) => {
-  //         console.error("Error:", error);
-  //       }
-  //     );
-  //   });
-  // }
-  function getPublicRooms() {
-    return new Promise((resolve, reject) => {
-      onValue(
-        roomRef,
-        (snapshot) => {
-          const rooms = snapshot.val();
-          if (rooms) {
-            Object.keys(rooms).forEach((roomCode) => {
-              const roomPrivacy = rooms[roomCode].roomInfo.privacy;
-              const roomName = rooms[roomCode].roomInfo.roomName;
-              if (roomPrivacy === "Public") {
-                setPublicRoomsMap((prevState) => ({
-                  ...prevState,
-                  [roomCode]: { roomCode, roomName },
-                }));
-                setRoomData((prevState) => ({
-                  ...prevState,
-                  [roomCode]: { roomName, roomCode },
-                }));
-              }
-            });
-            resolve(publicRoomsMap);
-          }
-        },
-        (error) => {
-          console.error("Error:", error);
-        }
-      );
+  const getPublicRooms = async () => {
+    /**
+     * Get public rooms from database
+     */
+    const docRef = collection(dbFireStore, "public");
+    const querySnapshot = await getDocs(docRef);
+    querySnapshot.forEach((doc) => {
+      setPublicRoomList((prev) => [...prev, doc.data()]);
     });
-  }
+  };
 
-  function joinroom(id) {
-    if (roomCode in roomList) {
-      // Debug
+  const getRoomsList = async () => {
+    /**
+     * Get rooms from database
+     */
+    const docRef = collection(dbFireStore, "rooms");
+    const querySnapshot = await getDocs(docRef);
+    querySnapshot.forEach((doc) => {
+      setRoomList((prev) => [...prev, doc.data().roomInfo.roomCode]);
+    });
+  };
+
+  function joinRoom(id) {
+    /**
+     * Join room
+     *
+     * @param {string} id - room code of the room to be joined
+     *
+     * @returns {void}
+     */
+    if (roomList.includes(roomCode)) {
       navigate(`/waitingroom/${roomCode}`);
     } else {
       alert("Room does not exist");
@@ -111,26 +70,28 @@ function MainPage() {
   }
 
   function createRoom() {
+    /**
+     * Create room
+     */
     if (user) {
       navigate("/createroom");
     } else {
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   }
+
+  useEffect(() => {
+    getRoomsList();
+    getPublicRooms();
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  }, []);
+
   return (
     <div className="mainpage-container">
       <Navbar />
       <div className="modal-wrapper">
-        {/* <nav style={{ position: 'fixed', top: 0, left: 0, right: 0,  height: '50px' }}>
-          <ul style={{display:'flex',  padding: '20px', gap: '50px'}}>
-            <li >
-              <a href="/About">About</a>
-            </li>
-            <li>
-              <a href="/ContactUs">Contact</a>
-            </li>
-          </ul>
-        </nav> */}
         <div className="modal-box">
           <div className="text-content">
             <h1 className="headtext__major headtext">
@@ -153,38 +114,39 @@ function MainPage() {
             value={roomCode}
           />
           <div className="button-group-row">
-            <button className="system-button-secondary" onClick={() => joinroom()}>
+            <button
+              className="system-button-secondary"
+              onClick={() => joinRoom(roomCode)}
+            >
               Join room
             </button>
-            <button
-              className="custom-button"
-              onClick={() => createRoom()}
-            >
+            <button className="custom-button" onClick={() => createRoom()}>
               Create room
             </button>
           </div>
-          <div style={{ marginTop: '50px' }}>
-            <h3> Public rooms: </h3>
-            <button className="system-button-secondary" onClick={() => getPublicRooms()}> Get public rooms </button>
-            <div style={{ display: "flex", flexDirection: "row", marginTop: '50px' , gap: '20px'}}>
-              
-
-              {Object.entries(publicRoomsMap).map(
-                ([roomCode, roomData], index) => (
-                  <div key={index} >
-                    <h2>{roomData.roomName}</h2>
-                    <p >Room Code: {roomData.roomCode}</p>                   
-                    <p >Privacy: Public</p>
-                    <button 
-                      onClick={() => navigate(`/waitingroom/${roomCode}`)}
-                    >
-                      Join room
-                    </button>
-                  </div>
-                )
-              )}
-
-            
+          <div>
+            <h3> Public rooms:</h3>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginTop: "50px",
+                gap: "20px",
+              }}
+            >
+              {publicRoomList.map((room, index) => (
+                <div key={index}>
+                  <h2>{room.roomInfo.roomName}</h2>
+                  <p>Room Code: {room.roomInfo.roomCode}</p>
+                  <button
+                    onClick={() =>
+                      navigate(`/waitingroom/${room.roomInfo.roomCode}`)
+                    }
+                  >
+                    Join room
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </div>
