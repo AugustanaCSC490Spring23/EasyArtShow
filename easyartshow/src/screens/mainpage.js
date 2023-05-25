@@ -36,34 +36,6 @@ function MainPage() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // function getPublicRooms() {
-  //   return new Promise((resolve, reject) => {
-  //     onValue(
-  //       roomRef,
-  //       (snapshot) => {
-  //         const rooms = snapshot.val();
-  //         if (rooms) {
-  //           Object.keys(rooms).forEach((roomCode) => {
-  //             const roomPrivacy = rooms[roomCode].roomInfo.privacy;
-  //             const roomName = rooms[roomCode].roomInfo.roomName;
-  //             if (roomPrivacy == "Public") {
-  //               setPublicRoomsMap(roomCode, { roomCode, roomName });
-  //               console.log(
-  //                 publicRoomsMap.get(roomCode).roomCode,
-  //                 publicRoomsMap.get(roomCode).roomName
-  //               );
-  //               setRoomData(roomName, roomCode);
-  //             }
-  //           });
-  //           resolve(publicRoomsMap);
-  //         }
-  //       },
-  //       (error) => {
-  //         console.error("Error:", error);
-  //       }
-  //     );
-  //   });
-  // }
   function getPublicRooms() {
     return new Promise((resolve) => {
       onValue(
@@ -79,10 +51,6 @@ function MainPage() {
                   ...prevState,
                   [roomCode]: { roomCode, roomName },
                 }));
-                // setRoomData((prevState) => ({
-                //   ...prevState,
-                //   [roomCode]: { roomName, roomCode },
-                // }));
               }
             });
             resolve(publicRoomsMap);
@@ -107,10 +75,17 @@ function MainPage() {
     <div className="mainpage-container">
       <Navbar />
       <div className="modal-wrapper">
-        <nav style={{ position: 'fixed', top: 0, left: 0, right: 0,  height: '50px' }}>
-          <ul style={{display:'flex',  padding: '20px', gap: '50px'}}>
-         
-            <li >
+        <nav
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "50px",
+          }}
+        >
+          <ul style={{ display: "flex", padding: "20px", gap: "50px" }}>
+            <li>
               <Link to="/About">About</Link>
             </li>
             <li>
@@ -150,19 +125,23 @@ function MainPage() {
               Create room
             </button>
           </div>
-          <div style={{ marginTop: '50px' }}>
+          <div style={{ marginTop: "50px" }}>
             <h3> Public rooms: </h3>
             <button onClick={() => getPublicRooms()}> Get public rooms </button>
-            <div style={{ display: "flex", flexDirection: "row", marginTop: '50px' , gap: '20px'}}>
-              
-
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginTop: "50px",
+                gap: "20px",
+              }}
+            >
               {Object.entries(publicRoomsMap).map(
                 ([roomCode, roomData], index) => (
-                  <div key={index} >
+                  <div key={index}>
                     <h2>{roomData.roomName}</h2>
-                    <p >Room Code: {roomData.roomCode}</p>                   
-                    <p >Privacy: Public</p>
-                    <button 
+                    <p>Room Code: {roomData.roomCode}</p>
+                    <button
                       onClick={() => navigate(`/waitingroom/${roomCode}`)}
                     >
                       Join room
@@ -170,8 +149,6 @@ function MainPage() {
                   </div>
                 )
               )}
-
-            
             </div>
           </div>
         </div>

@@ -19,42 +19,13 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation, cre
   const toggleInfo = () => {
     setShowInfo(!showInfo);
   };
-  // const handleMouseOver = () => {
-  //   setShowInfo(true);
-  // };
-  useEffect(() => {
-    const handleScroll = () => {
-      const button = document.getElementsById('info-button');
-      const buttonDistance = button.getBoundingClientRect().top;
-      const cursorDistance = Math.hypot(
-        button.getBoundingClientRect().left - window.event.clientX,
-        button.getBoundingClientRect().top - window.event.clientY
-      );
-      if (buttonDistance < window.innerHeight / 2 && cursorDistance < 100) {
-        setShowInfo(true);
-      } else {
-        setShowInfo(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-  const handleMouseMove = (event) => {
-    const button = document.getElementById('info-button');
-    const buttonDistance = button.getBoundingClientRect().top;
-    const cursorDistance = Math.hypot(
-      button.getBoundingClientRect().left - event.clientX,
-      button.getBoundingClientRect().top - event.clientY
-    );
-    if (buttonDistance < window.innerHeight / 2 && cursorDistance < 100) {
-      setShowInfo(true);
-    } else {
-      setShowInfo(false);
-    }
-  };
+  
 
   const handleButtonClick = () => {
     setShowInfo(!showInfo);
+    setTimeout(() => {
+      setShowInfo(false);
+  }, 5000);
   };
   return (
     <div className="waitingroom-wrapper">
@@ -75,7 +46,7 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation, cre
         </div>
         <div className="right-button-group">
           <button className="system-button system-button-primary">Slideshow</button>
-          <SlInfo id="info-button" onClick={handleButtonClick} onMouseMove={handleMouseMove}/>
+          <SlInfo id="info-button" onClick={handleButtonClick} />
           {/* <button onClick={toggleInfo}>Info</button> */}
           {showInfo && <div> 
             roomName={ roomName}
@@ -127,14 +98,14 @@ function WaitingRoom() {
         <Loading loadingState={true} />
       ) : (
         <div> 
-          {/* <h1> {roomData[id].roomInfo.roomName}</h1> */}
+         
           <Navbar/>
           <WaitingRoomComponent
-            id={id}
-            roomName={roomName}
-            roomDescription={roomDescription}
-            roomLocation={roomLocation}
-            creater={creater}
+            id={" " +id}
+            roomName={" " +roomName}
+            roomDescription={" " +roomDescription}
+            roomLocation={" " +roomLocation}
+            creater={" " + creater}
           />
         </div>
       )}

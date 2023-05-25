@@ -1,10 +1,11 @@
-import "./contact";
 import emailjs from "@emailjs/browser";
 import { reload } from "@firebase/auth";
-import { useState} from "react";
+import { useState } from "react";
 import React, { useRef } from "react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import "./contact.css";
+import "./mainpage";
 function ContactUs() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -58,12 +59,8 @@ function ContactUs() {
   return (
     <div className="body">
       <header>
-          <nav>
-          <ul>
-            <li><Link to='./mainpage.js'>Home</Link></li>
-          </ul>
-        </nav>
-        </header>
+      </header>
+      <main>
       <div className="contact-container">
         <div class="title">
           <h1>Contact Us</h1>
@@ -76,25 +73,21 @@ function ContactUs() {
 
         <div class="left-side">
           <div class="address details">
-        
-            
-            <FaMapMarkerAlt className="iconMap"  size={35}/>
-          
-            <div class="topic" >Address</div>
+            <FaMapMarkerAlt className="iconMap" size={35} />
+
+            <div class="topic">Address</div>
             <div class="text-one">Rock Island, IL</div>
             <div class="text-two">US</div>
           </div>
           <br></br>
           <div class="phone details">
-           
-            <FaPhoneAlt className="iconPhone"  size={35}/>
+            <FaPhoneAlt className="iconPhone" size={35} />
             <div class="topic">Phone</div>
             <div class="text-one">+1(309)-9893-5647</div>
           </div>
           <br></br>
           <div class="email details">
-          
-            <FaEnvelope className="iconEmail"  size={35}/>
+            <FaEnvelope className="iconEmail" size={35} />
             <div class="topic">Email</div>
             <div class="text-one">easyartshow01@gmail.com</div>
           </div>
@@ -129,7 +122,9 @@ function ContactUs() {
             <p className="validation-msg">{submitStatus}</p>
             <input
               type="submit"
-              value={submitStatus  === "Thank you for your message!" ? "Sent" : "Send"}
+              value={
+                submitStatus === "Thank you for your message!" ? "Sent" : "Send"
+              }
               className={submitStatus ? "success" : ""}
               style={{
                 backgroundColor:
@@ -139,6 +134,7 @@ function ContactUs() {
           </form>
         </div>
       </div>
+      </main>
     </div>
   );
 }
