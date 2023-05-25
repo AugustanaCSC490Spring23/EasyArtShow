@@ -9,7 +9,7 @@ Development blogs (check development's history for more): https://github.com/Aug
 ### How to run
 1. Clone the project
 2. On your terminal at the project's location, run 
-`cd easyartshow`and `npm install` and finally
+`cd easyartshow`and `npm install --force` and finally
 `npm start`
 3. The project should be on http://localhost:3000/
 4. Everytime you save your code file, it will reflect the new changes on the localhost site. 
