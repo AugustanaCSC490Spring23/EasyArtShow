@@ -42,20 +42,9 @@ const SlideshowSettingModal = ({ show, handleClose, id }) => {
   const [slideDuration, setSlideDuration] = useState(3000);
   const modalClassname = show ? "modal-background" : "display-none";
 
-  // Shoutout to ChatGPT for this graceful solution
-  const handleButtonClick = (index) => {
-    /**
-     * Handles button clicks for slideshow settings modal
-     * @param {number} index
-     * @returns {void}
-     */
-    const newButtonStates = [...buttonStates];
-    newButtonStates[index] = !newButtonStates[index];
-    setButtonStates(newButtonStates);
-
-    const buttonOnClick = buttonOnClicks[index];
-    buttonOnClick(newButtonStates[index]);
-  };
+  const getButtonStates = function() {
+    return [includeBackground, includeTitle, includeDescription, includeContributor, infiniteLooping, autoPlay];
+  }
 
   const buttonOnClicks = [
     () => setIncludeBackground(!includeBackground),
@@ -120,8 +109,7 @@ const SlideshowSettingModal = ({ show, handleClose, id }) => {
         </div>
 
         <div className="modal-content">
-          {buttonStates.map((isActive, index) => (
-          {getButtonStates().map((isActive, index) =>
+          {getButtonStates().map((isActive, index) => (
             <button
               key={index}
               className={isActive ? "active" : "inactive"}
@@ -135,6 +123,7 @@ const SlideshowSettingModal = ({ show, handleClose, id }) => {
               />
             </button>
           ))}
+
           <button className="duration-div">
             <label className="headtext_info">Duration (second/slide):</label>
             <input
@@ -265,7 +254,7 @@ function WaitingRoom() {
       {roomData === null ? (
         <Loading loadingState={true} />
       ) : (
-        <div className="waitingroom" style={{width: "100vw"}}>
+        <div className="waitingroom" style={{ width: "100vw" }}>
           {/* <h1> {roomData[id].roomInfo.roomName}</h1> */}
           <Navbar />
           <WaitingRoomComponent
