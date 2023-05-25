@@ -29,10 +29,6 @@ function Navbar() {
   return (
     <div className='navbar'>
       <a href="/" className='logo-anchor'><img src={images.logo} alt='logo' className='logo'/></a>
-<<<<<<< HEAD
-      { user ? <div className='right-group'> <button className='system-button logout-button' onClick={() => logout()}> Log out</button> <a href='/dashboard'>  <img src={user.photoURL} style={{borderRadius: "50%"}} alt="user-icon" className='user-icon'/>  </a> </div> :
-        <button className='system-button' onClick={() => navigate('/login')}>Log in</button> }
-=======
       {/* <h1 className='headtext__custom'>quail.</h1> */}
       <nav>
         <ul className='navbar-links'>
@@ -44,7 +40,6 @@ function Navbar() {
       </nav>
       { user ? <div className='right-group'> <button className='system-button-secondary' onClick={() => logout()}> Log out</button> <a href='/dashboard'>  <img src={user.photoURL} style={{borderRadius: "50%"}} alt="user-icon" className='user-icon'/>  </a> </div> :
         <button className='system-button-secondary' onClick={() => navigate('/login')}>Log in</button> }
->>>>>>> 98d90a9 (clean up, remove stuffs that are not styled:)
     </div>
   );
 }
