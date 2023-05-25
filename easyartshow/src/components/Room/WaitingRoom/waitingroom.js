@@ -35,21 +35,23 @@ const SlideshowSettingModal = ({ show, handleClose, id }) => {
   const navigate = useNavigate();
   const [includeBackground, setIncludeBackground] = useState(true);
   const [includeTitle, setIncludeTitle] = useState(true);
-  const [includeDescription, setIncludeDescription] = useState(true);
   const [includeContributor, setIncludeContributor] = useState(true);
   const [infiniteLooping, setInfiniteLooping] = useState(true);
   const [autoPlay, setAutoPlay] = useState(true);
   const [slideDuration, setSlideDuration] = useState(3000);
   const modalClassname = show ? "modal-background" : "display-none";
-
+  
+  /**
+   * Handles button clicks for slideshow settings modal
+   * @param {number} index
+   * @returns {void}
+   */
   const getButtonStates = function() {
-    return [includeBackground, includeTitle, includeDescription, includeContributor, infiniteLooping, autoPlay];
+      return [includeBackground, includeTitle, includeContributor, infiniteLooping, autoPlay];
   }
-
   const buttonOnClicks = [
     () => setIncludeBackground(!includeBackground),
     () => setIncludeTitle(!includeTitle),
-    () => setIncludeDescription(!includeDescription),
     () => setIncludeContributor(!includeContributor),
     () => setInfiniteLooping(!infiniteLooping),
     () => setAutoPlay(!autoPlay),
@@ -68,21 +70,19 @@ const SlideshowSettingModal = ({ show, handleClose, id }) => {
   const buttonLabels = [
     "Include background",
     "Include art title",
-    "Include description",
     "Include contributor",
     "Infinite looping",
     "Autoplay",
   ];
 
   const slideShowStates = {
-    includeBackground: includeBackground,
-    includeTitle: includeTitle,
-    includeDescription: includeDescription,
-    includeContributor: includeContributor,
-    infiniteLooping: infiniteLooping,
-    slideDuration: slideDuration,
-    autoPlay: autoPlay,
-  };
+    "includeBackground": includeBackground,
+    "includeTitle": includeTitle,
+    "includeContributor": includeContributor,
+    "infiniteLooping": infiniteLooping,
+    "slideDuration": slideDuration,
+    "autoPlay": autoPlay
+  }
 
   const handleStartSlideshow = () => {
     /**
@@ -116,23 +116,13 @@ const SlideshowSettingModal = ({ show, handleClose, id }) => {
               onClick={buttonOnClicks[index]}
             >
               <label className="headtext_info">{buttonLabels[index]}</label>
-              <FontAwesomeIcon
-                className={isActive ? "active" : "display-none"}
-                icon={faCheck}
-                size="lg"
-              />
+              <FontAwesomeIcon className={isActive ? "active" : "display-none"} icon={faCheck} size="lg" />
             </button>
           ))}
-
-          <button className="duration-div">
-            <label className="headtext_info">Duration (second/slide):</label>
-            <input
-              className="duration-input"
-              type="number"
-              onChange={handleSlideDuration}
-              value={slideDuration}
-            />
-          </button>
+            <button className="duration-div">
+              <label className="headtext_info">Duration (ms/slide):</label>
+              <input className="duration-input" type="number" onChange={handleSlideDuration} value={slideDuration}/>
+            </button>
         </div>
 
         <div className="button-group-row">

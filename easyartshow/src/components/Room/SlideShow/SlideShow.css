@@ -68,3 +68,13 @@
     font-size: 14px;
     letter-spacing: 0.04em;
 }
+
+.back-button {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    z-index: 999;
+    
+    background-color: transparent;
+    border: none;
+}

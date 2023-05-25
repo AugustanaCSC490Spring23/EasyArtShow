@@ -5,8 +5,6 @@ import {
   getFirestore,
   getDocs,
 } from "@firebase/firestore";
-import Navbar from "../../components/Navbar/Navbar";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 
 function JoinRoom() {
   const navigate = useNavigate();
@@ -53,22 +51,17 @@ function JoinRoom() {
   }
 
   return (
-    <div >
-      <div style={{textAlign:"center"}}> 
-      <Navbar />
-      <a href="/dashboard"> 
-      <AiOutlineArrowLeft/>
-      <text> Back to dashboard </text>
-      </a>
-      <h1> Join Room </h1>
-      <br />
-      Room passcode:{" "}
-      <br/>
-      <br/>
-      <input type="text" onChange={onChangeHandler} value={roomCode} />
-      <br/>
-      <br/>
-      <button onClick={() => joinRoom(roomCode)}>Join room</button>
+    <div className="modal-background">
+      <div className="modal">
+        <h1 className="headtext__major">Join room</h1>
+        <div className="input-field">
+          <h2 className="headtext__info">Room passcode</h2>
+          <input type="text" onChange={onChangeHandler} value={roomCode} />
+        </div>
+        <div className="button-group-row">
+          <button className="system-button-secondary system" onClick={() => navigate(-1)}>Cancel</button>
+          <button className="system-button-primary" onClick={() => joinRoom(roomCode)}>Join room</button>
+        </div>
       </div>
     </div>
   );

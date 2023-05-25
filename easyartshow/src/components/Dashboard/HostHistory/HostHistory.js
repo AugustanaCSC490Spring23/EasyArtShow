@@ -120,7 +120,7 @@ function HostHistory({ userUid }) {
 
   return (
     <div id='host-history-section'>
-      {roomData && (
+      {roomData ? (
         <div>
           {showDeletePrompt && (
             <DeletePrompt
@@ -130,14 +130,12 @@ function HostHistory({ userUid }) {
               onCancel={handleCancelDelete}
             />
           )}
-
           <Carousel itemsToShow={3} pagination={false} className='host-history-wrapper wrapper'>
             {Object.keys(roomData).map((key, index) => {
                 return (
                   <div key={index} className='room-card'>
                     <h3 className="headtext__major"> {roomData[key].roomName} </h3>
                     <h4 className="headtext__minor"> Code: {roomData[key].roomCode} </h4>
-                    <img src={placeholder} />
                     <div className="button-group-row">
                       <button className="system-button-secondary"
                         onClick={() => onToggleDelete(roomData[key].roomCode, roomData[key].roomName)}
@@ -156,7 +154,9 @@ function HostHistory({ userUid }) {
               })}
           </Carousel>
         </div>
-      )}
+      ) : 
+      <h1>You don't have any room yet.</h1>
+      }
     </div>
   );
 }
