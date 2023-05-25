@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+// import stream from 'stream-browserify';
+// window.stream = stream;
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // Remove strict mode to prevent Firebase from loading twice. 

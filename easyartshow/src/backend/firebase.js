@@ -16,14 +16,14 @@ import { getFirestore } from "@firebase/firestore";
 // const client = new SecretManagerServiceClient();
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_DATABASE_URL,
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
-  appId: process.env.REACT_APP_APP_ID,
-  measurementId: process.env.REACT_APP_MEASUREMENT_ID
+  apiKey: "AIzaSyBV_B_qv5tkl3gYwXFuAhPs06A2qRRwHaA",
+  authDomain: "easyartshow-2dbd2.firebaseapp.com",
+  databaseURL: "https://easyartshow-2dbd2-default-rtdb.firebaseio.com",
+  projectId: "easyartshow-2dbd2",
+  storageBucket: "easyartshow-2dbd2.appspot.com",
+  messagingSenderId: "1017423300118",
+  appId: "1:1017423300118:web:45e012119db4497e2ed737",
+  measurementId: "G-B3QKCQ1VDS"
 };
 
 

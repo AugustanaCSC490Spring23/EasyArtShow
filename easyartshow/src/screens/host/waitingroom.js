@@ -11,8 +11,51 @@ import { FiShare } from "react-icons/fi";
 import { SlInfo }  from "react-icons/sl";
 import "../../components/Room/WaitingRoom.css";
 
-function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
+function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation, creater }) {
+  
   const navigate = useNavigate();
+  const [showInfo, setShowInfo] = useState(false);
+
+  const toggleInfo = () => {
+    setShowInfo(!showInfo);
+  };
+  // const handleMouseOver = () => {
+  //   setShowInfo(true);
+  // };
+  useEffect(() => {
+    const handleScroll = () => {
+      const button = document.getElementsById('info-button');
+      const buttonDistance = button.getBoundingClientRect().top;
+      const cursorDistance = Math.hypot(
+        button.getBoundingClientRect().left - window.event.clientX,
+        button.getBoundingClientRect().top - window.event.clientY
+      );
+      if (buttonDistance < window.innerHeight / 2 && cursorDistance < 100) {
+        setShowInfo(true);
+      } else {
+        setShowInfo(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  const handleMouseMove = (event) => {
+    const button = document.getElementById('info-button');
+    const buttonDistance = button.getBoundingClientRect().top;
+    const cursorDistance = Math.hypot(
+      button.getBoundingClientRect().left - event.clientX,
+      button.getBoundingClientRect().top - event.clientY
+    );
+    if (buttonDistance < window.innerHeight / 2 && cursorDistance < 100) {
+      setShowInfo(true);
+    } else {
+      setShowInfo(false);
+    }
+  };
+
+  const handleButtonClick = () => {
+    setShowInfo(!showInfo);
+  };
   return (
     <div className="waitingroom-wrapper">
       <div className="header-wrapper">
@@ -32,7 +75,14 @@ function WaitingRoomComponent({ id, roomName, roomDescription, roomLocation }) {
         </div>
         <div className="right-button-group">
           <button className="system-button system-button-primary">Slideshow</button>
-          <SlInfo className="info-button" />
+          <SlInfo id="info-button" onClick={handleButtonClick} onMouseMove={handleMouseMove}/>
+          {/* <button onClick={toggleInfo}>Info</button> */}
+          {showInfo && <div> 
+            roomName={ roomName}
+            <br/>
+            roomDescription={ roomDescription}
+            <br/>
+            created by={ creater} </div>}
         </div>
       </div>
       
@@ -52,7 +102,7 @@ function WaitingRoom() {
   const [roomName, setRoomName] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
   const [roomLocation, setRoomLocation] = useState("");
-  
+  const [creater, setCreater] = useState(false); 
   const db = getDatabase();
 
   const roomRef = dbRef(db, "easyartshow/rooms/");
@@ -66,6 +116,7 @@ function WaitingRoom() {
       setRoomName(data[id].roomInfo.roomName);
       setRoomDescription(data[id].roomInfo.roomDescription);
       setRoomLocation(data[id].roomInfo.roomlocation);
+      setCreater(data[id].hostname);
       
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -83,6 +134,7 @@ function WaitingRoom() {
             roomName={roomName}
             roomDescription={roomDescription}
             roomLocation={roomLocation}
+            creater={creater}
           />
         </div>
       )}

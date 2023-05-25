@@ -103,9 +103,9 @@ function ArtBoard({ id }) {
       });
     });
   }, []);
-  const swichView = () => {
-    setIsSlideShow(!isSlideShow);
-  };
+  // const swichView = () => {
+  //   setIsSlideShow(!isSlideShow);
+  // };
 
   const onInit = () => {};
 

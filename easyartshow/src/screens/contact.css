@@ -1,0 +1,172 @@
+header {
+  background-color: bisque;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 0;
+  height: 13vh;
+  width: 100vw;
+}
+
+nav ul {
+  display: flex;
+}
+
+nav li {
+  margin-right: 1rem;
+}
+
+nav li:last-child {
+  margin-right: 0;
+}
+
+nav a {
+  padding: 0.5rem;
+}
+body{
+  background-color: palevioletred;
+}
+
+.body{
+  background-color: ivory;
+}
+
+ .contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vh;
+  background: ivory;
+ 
+  border-radius: 20px;
+  padding: 20px 60px 30px 40px;
+  position: relative;
+  height: 70vh;
+  bottom: -30px;
+  margin-left: 300px;
+
+}
+.contact-container h1 {
+  text-align: center;
+  color: peru;
+}
+.contact-container p{
+  margin-top: 40px;
+  
+}
+.contact-container .left-side {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 25px;
+  position: absolute;
+  font-size: 16px;
+  margin-left: -100px;
+  [class = "topic"]{
+    margin-left: 25px;
+
+  }
+  .iconMap{
+    margin-left: 25px;
+    color: burlywood;
+    
+  }
+  .iconPhone{
+    margin-left: 25px;
+    color: burlywood;
+  }
+  .iconEmail{
+    margin-left: 25px;
+    color: burlywood;
+  }
+ 
+}
+.contact-container .line {
+  position: absolute;
+  border-left: 5px solid burlywood;
+  height: 350px;
+  width: 2px;
+  margin-left: -250px;
+  bottom: 50px;
+}
+.contact-container .right-side {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 200px;
+  position: absolute;
+  font-size: 16px;
+  margin-left: 400px;
+ 
+}
+.right-side.submit{
+  width: 40%;
+}
+input{
+  width: 50%;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  height: 35px;
+  outline: none;
+  border: 1px solid rgb(220, 220, 220);
+
+  &:focus {
+    border: 2px solid peru;
+  }
+}
+textarea{
+  max-height: 120px;
+  min-height: 120px;
+  max-width: 50%;
+  min-width: 50%;
+  padding: 7px;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid rgb(220, 220, 220);
+
+  &:focus {
+    border: 2px solid peru;
+  }
+}
+
+form {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 80%;
+  font-size: 16px;
+  width: 75%;
+  margin-left: 100px;
+   
+}
+input[type="submit"] {
+  margin-top: 2rem;
+  width: 15%;
+  height: 40px;
+  cursor: pointer;
+  background: burlywood;
+  color: white;
+  border: none;
+  
+}
+input[type="submit"]:hover {
+  background-color: peru;
+}
+.invalid {
+  border-color: red;
+}
+
+
+
+
+

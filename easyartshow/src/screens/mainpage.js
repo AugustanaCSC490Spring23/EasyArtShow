@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   getDatabase,
   ref,
@@ -65,7 +65,7 @@ function MainPage() {
   //   });
   // }
   function getPublicRooms() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       onValue(
         roomRef,
         (snapshot) => {
@@ -79,10 +79,10 @@ function MainPage() {
                   ...prevState,
                   [roomCode]: { roomCode, roomName },
                 }));
-                setRoomData((prevState) => ({
-                  ...prevState,
-                  [roomCode]: { roomName, roomCode },
-                }));
+                // setRoomData((prevState) => ({
+                //   ...prevState,
+                //   [roomCode]: { roomName, roomCode },
+                // }));
               }
             });
             resolve(publicRoomsMap);

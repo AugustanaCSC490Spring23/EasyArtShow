@@ -13,6 +13,8 @@ import Navbar from "../../components/Navbar/Navbar";
 import { FileUploader } from "react-drag-drop-files";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
+
+
 const UploadPicRoom = () => {
   
   const [imageUrl, setImageUrl] = useState("");
