@@ -33,9 +33,9 @@ function Navbar() {
       <nav>
         <ul className='navbar-links'>
           <li className='navbar-text'><a href="/">Home</a></li>
-          <li className='navbar-text'><a href="/devnote">Dev Note</a></li>
-          <li className='navbar-text'><a href="/about">About</a></li>
+          {/* <li className='navbar-text'><a href="/devnote">Dev Note</a></li> */}
           <li className='navbar-text'><a href="/contact">Contact</a></li>
+          {/* <li className='navbar-text'><a href="/contact">Contact</a></li> */}
         </ul>
       </nav>
       { user ? <div className='right-group'> <button className='system-button-secondary' onClick={() => logout()}> Log out</button> <a href='/dashboard'>  <img src={user.photoURL} style={{borderRadius: "50%"}} alt="user-icon" className='user-icon'/>  </a> </div> :

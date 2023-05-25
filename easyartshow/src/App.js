@@ -19,9 +19,7 @@ import UploadPicRoom from './screens/participant/uploadPicRoom';
 import UploadWithAI from './screens/participant/uploadWithAI';
 import DevNote from './screens/devnote';
 import Map from './components/Map';
-// import ThreeDView from './components/ThreeD/ThreeDView';
 import PageNotFound from './screens/pageNotFound';
-import ContactUs from './screens/contactUs';
 import About from './screens/about';
 import QRCodeComponent from './components/QRCodeComponent';
 import SlideShow from './components/Room/SlideShow/SlideShow';
@@ -33,7 +31,6 @@ function App() {
         <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/signup" element={<SignUp />} /> */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/waitingroom/:id" element={<WaitingRoom />} />
             <Route path="/createroom" element={<CreateRoom />} />
@@ -43,13 +40,10 @@ function App() {
             <Route path="/uploadwithai/:id" element={<UploadWithAI />} />
             <Route path="/devnote" element={<DevNote />} />
             <Route path="/map" element={<Map />} />
-            {/* <Route path="/threedview" element={<ThreeDView />} /> */}
             <Route path="/404" element={<PageNotFound />} />
             <Route path="*" element={<Navigate to="/404" />} />
-            <Route path="/contactus" element={<ContactUs />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<About />} />
             <Route path="/qrcode/:id" element={<QRCodeComponent />} />
-            {/* <Route path="/threedview" element={<ThreeDView />} /> */}
             <Route path="/slideshow/:id" element={<SlideShow/>} />
         </Routes>
       </BrowserRouter>
