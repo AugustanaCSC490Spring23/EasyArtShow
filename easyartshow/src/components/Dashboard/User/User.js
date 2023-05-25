@@ -29,8 +29,8 @@ const WelcomeUser = () => {
 
     return (
         <div className="text-wrapper">
-            <h1 className="headtext__major">Welcome back,</h1>
-            <h1 className="headtext__major"><span className="multiText" ref={el}></span></h1>
+            <h1 className="navbar-text">Welcome back,</h1>
+            <h1 className="navbar-text"><span className="multiText" ref={el}></span></h1>
         </div>
     )
 }
