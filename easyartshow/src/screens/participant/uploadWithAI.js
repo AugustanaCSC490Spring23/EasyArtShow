@@ -162,7 +162,7 @@ const UploadWithAI = () => {
   return (
     <div className="modal-background">
       <div className="modal">
-        <GrClose onClick={() => navigate(-1)}> </GrClose>
+        <GrClose onClick={() => navigate(`/waitingroom/${id}`)}> </GrClose>
         <h2 className="headtext__major title"> Create Art with AI</h2>
         {user ? (
           <NameBox user={user.displayName} />
@@ -188,9 +188,11 @@ const UploadWithAI = () => {
           {imageUrl && <h2 className="headtext__minor">{filename} selected</h2>}
           <div className="input-field">
             <h2 className="headtext__info"> Your prompt</h2>
-            <h3 className="headtext__info"> Record your prompt </h3>
-            <Dictaphone />
-            <h3 className="headtext__info"> Or type here: </h3>
+            {/* <div>
+              <h3 className="headtext__info"> Record your prompt </h3>
+              <Dictaphone />
+              <h3 className="headtext__info"> Or type here: </h3>
+            </div> */}
             <input
               type="text"
               onChangeCapture={onChangeArtPrompt}

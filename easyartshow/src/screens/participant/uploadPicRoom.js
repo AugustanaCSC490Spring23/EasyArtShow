@@ -130,7 +130,7 @@ const UploadPicRoom = () => {
   return (
     <div className="modal-background">
       <div className="modal">
-      <GrClose onClick={() => navigate(-1)}> </GrClose>
+      <GrClose onClick={() => navigate(`/waitingroom/${id}`)}> </GrClose>
         <h2 className="headtext__major title"> Upload picture</h2>
         {user ? (
           <NameBox user={user.displayName} />

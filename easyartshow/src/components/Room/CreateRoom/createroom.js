@@ -8,7 +8,7 @@ import {
   getFirestore,
   setDoc,
   updateDoc,
-  getDocs
+  getDocs,
 } from "@firebase/firestore";
 import { randomCodeGenerator } from "../../../helperFunctions";
 import Login from "../../../screens/host/authentication/login";
@@ -31,29 +31,52 @@ function CreateRoom() {
 
   const dbFireStore = getFirestore();
 
-  const getRoomsNameList = async (assignedName) => {
-    /**
-     * Get rooms from database
-     */
-    const docRef = collection(dbFireStore, "public");
-    const querySnapshot = await getDocs(docRef);
-    querySnapshot.forEach((doc) => {
-      if (doc.data().roomInfo.roomName === assignedName) {
-        alert("Public room name already exists. Please choose another name or make this room private.");
-        return false
-      } else {
-        return true
-      }
-    });
-  };
+  // const getRoomsNameList = async (assignedName) => {
+  //   /**
+  //    * Get rooms from database
+  //    */
+  //   const docRef = collection(dbFireStore, "public");
+  //   const querySnapshot = await getDocs(docRef);
+  //   querySnapshot.forEach((doc) => {
+  //     if (doc.data().roomInfo.roomName === assignedName) {
+  //       alert(
+  //         "Public room name already exists. Please choose another name or make this room private."
+  //       );
+  //       return false;
+  //     } else {
+  //       return true;
+  //     }
+  //   });
+  // };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
-    getRoomsNameList(); 
-    console.log(roomNameList);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const verifyInput = (roomName) => {
+    /**
+     * Verify input
+     * @returns {boolean} true if input is valid, false otherwise
+    */
+
+    if (roomName === "") {
+      alert("Please enter a room name.");
+      return false;
+    } else if (roomName.length > 20) {
+      alert("Room name cannot be more than 20 characters.");
+      return false;
+    } else if (roomDescription.length > 100) {
+      alert("Room description cannot be more than 100 characters.");
+      return false;
+    } else if (roomLocation.length > 100) {
+      alert("Room location cannot be more than 100 characters.");
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const createPublicRoom = (
     randomCode,
@@ -88,8 +111,6 @@ function CreateRoom() {
     });
   };
 
-
-
   const createRoomFromHost = (hostListRef, randomCode, currentTime) => {
     /**
      * Create room in database from host
@@ -111,7 +132,7 @@ function CreateRoom() {
             roomDescription: roomDescription,
             roomLocation: roomLocation,
             roomPrivacy: isPrivate ? "Private" : "Public",
-            commentBox: includeCommentBox ? "Include" : "Exclude",
+            commentBox: includeCommentBox,
             createdAt: currentTime,
           },
         });
@@ -123,7 +144,7 @@ function CreateRoom() {
             roomDescription: roomDescription,
             roomLocation: roomLocation,
             roomPrivacy: isPrivate ? "Private" : "Public",
-            commentBox: includeCommentBox ? "Include" : "Exclude",
+            commentBox: includeCommentBox,
             createdAt: currentTime,
           },
         });
@@ -149,9 +170,7 @@ function CreateRoom() {
 
     // Create public room if public mode
     if (privateMode === false) {
-      if (getRoomsNameList(roomName)) {
-        createPublicRoom(randomCode, privateMode, dbFireStore, currentTime);
-      }
+      createPublicRoom(randomCode, privateMode, dbFireStore, currentTime);
     }
 
     setDoc(roomRef, {
@@ -163,7 +182,7 @@ function CreateRoom() {
         roomLocation: roomLocation,
         roomCode: randomCode,
         roomPrivacy: isPrivate ? "Private" : "Public",
-        commentBox: includeCommentBox ? "Include" : "Exclude",
+        commentBox: includeCommentBox,
         createdAt: currentTime,
       },
       images: [],
@@ -179,7 +198,11 @@ function CreateRoom() {
      *
      * @returns {void}
      */
+
     const randomCode = randomCodeGenerator();
+    if (!verifyInput(roomName)) {
+      return;
+    } 
     createRoomByMode(isPrivate, randomCode);
     navigate(`/waitingroom/${randomCode}`);
   }
@@ -193,12 +216,11 @@ function CreateRoom() {
   };
 
   const onChangeIsPrivate = (event) => {
-    setIsPrivate(!event.target.checked);
+    setIsPrivate(!isPrivate);
   };
 
   const onChangeCommentBox = (event) => {
-    setCommentBox(!event.target.checked);
-    console.log(includeCommentBox);
+    setCommentBox(!includeCommentBox);
   };
 
   return (

@@ -12,6 +12,8 @@ import {
 } from "@firebase/firestore";
 import "./ArtBoard.css";
 
+import ThreeDView from "../../ThreeDView"
+
 const spanStyle = {
   padding: "20px",
   background: "#efefef",
@@ -98,6 +100,7 @@ function ArtBoard({ id }) {
 
   return (
     <div>
+      {/* <ThreeDView /> */}
       {imageData &&
         imageData.map((item) => (
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
