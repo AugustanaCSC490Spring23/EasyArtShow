@@ -40,8 +40,6 @@ const SlideshowSettingModal = ({ show, handleClose, id }) => {
   const [infiniteLooping, setInfiniteLooping] = useState(true);
   const [autoPlay, setAutoPlay] = useState(true);
   const [slideDuration, setSlideDuration] = useState(3000);
-
-  const [buttonStates, setButtonStates] = useState(Array(6).fill(true));
   const modalClassname = show ? "modal-background" : "display-none";
 
   // Shoutout to ChatGPT for this graceful solution
@@ -123,10 +121,11 @@ const SlideshowSettingModal = ({ show, handleClose, id }) => {
 
         <div className="modal-content">
           {buttonStates.map((isActive, index) => (
+          {getButtonStates().map((isActive, index) =>
             <button
               key={index}
               className={isActive ? "active" : "inactive"}
-              onClick={() => handleButtonClick(index)}
+              onClick={buttonOnClicks[index]}
             >
               <label className="headtext_info">{buttonLabels[index]}</label>
               <FontAwesomeIcon
@@ -266,7 +265,7 @@ function WaitingRoom() {
       {roomData === null ? (
         <Loading loadingState={true} />
       ) : (
-        <div>
+        <div className="waitingroom" style={{width: "100vw"}}>
           {/* <h1> {roomData[id].roomInfo.roomName}</h1> */}
           <Navbar />
           <WaitingRoomComponent
