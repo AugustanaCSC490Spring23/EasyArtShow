@@ -219,10 +219,6 @@ function CreateRoom() {
     setIsPrivate(!isPrivate);
   };
 
-  const onChangeCommentBox = (event) => {
-    setCommentBox(!includeCommentBox);
-  };
-
   return (
     <>
       {user ? (
@@ -251,10 +247,6 @@ function CreateRoom() {
             <div className="button-group-row">
               <label className="headtext__info">
                 <input type="checkbox" onChange={onChangeIsPrivate} /> Private
-              </label>
-              <label className="headtext__info">
-                <input type="checkbox" onChange={onChangeCommentBox} /> Include
-                comment box
               </label>
             </div>
 

@@ -52,12 +52,12 @@ const HostRoom = () => {
                   <button className="system-button-secondary" onClick={() => setGoToJoinRoom(true)}> Join room </button>
                 </div>
                 <div className="second-button-group">
-                  {/* <button className="system-button view-room-button" onClick={handleClickOnScroll}>Your rooms</button> */}
+                  <button className="system-button view-room-button" onClick={handleClickOnScroll}>Your rooms</button>
                 </div>
               </div>
             </div>
             <img src={images.gallery02} alt='gallery-img' className="img"/>
-            {/* <HostHistory userUid={user.uid}/> */}
+            <HostHistory userUid={user.uid}/>
           </div>
 
           

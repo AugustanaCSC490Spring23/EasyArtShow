@@ -26,7 +26,7 @@ const SlideShow = () => {
 
   return (
     <>
-      <button onClick={() => navigate(-1)}> Back </button>
+      <button className="system-button-secondary back-button" onClick={() => navigate(-1)}> Back </button>
       <Carousel
         showArrows={true}
         showStatus={false}
@@ -58,7 +58,7 @@ const SlideShow = () => {
                   }
                 />
               </div>
-              <span className="title-span">
+              <span className={slideShowStates.includeTitle && slideShowStates.includeContributor ? "title-span" : "display-none"}>
                 <h2
                   className={
                     slideShowStates.includeTitle ? "title" : "display-none"
@@ -66,19 +66,6 @@ const SlideShow = () => {
                 >
                   {item.artTitle}
                 </h2>
-                {/* <h2
-                  className={
-                    slideShowStates.includeDescription
-                      ? "description"
-                      : "display-none"
-                  }
-                >
-                  The quick, brown fox jumps over a lazy dog. DJs flock by when
-                  MTV ax quiz prog. Junk MTV quiz graced by fox whelps. Bawds
-                  jog, flick quartz, vex nymphs. Waltz, bad nymph, for quick
-                  jigs vex! Fox nymphs grab quick-jived waltz. Brick quiz whangs
-                  jumpy veldt fox. Bright vixens
-                </h2> */}
                 <h2
                   className={
                     slideShowStates.includeContributor

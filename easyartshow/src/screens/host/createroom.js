@@ -27,8 +27,6 @@ function CreateRoom() {
   const [isPrivate, setIsPrivate] = useState(true);
   const [includeCommentBox, setCommentBox] = useState(true);
 
-  // const [privacy, setPrivacy] = useState("");
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -90,11 +88,6 @@ function CreateRoom() {
 
   const onChangeIsPrivate = (event) => {
     setIsPrivate(!event.target.checked);
-  }
-
-  const onChangeCommentBox = (event) => {
-    setCommentBox(!event.target.checked);
-    console.log(includeCommentBox)
   }
 
   return (
