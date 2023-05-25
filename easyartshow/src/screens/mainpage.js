@@ -9,6 +9,8 @@ import "../components/Landing/LandingModal.css";
 import { images } from "../constants/";
 import Carousel from "react-elastic-carousel";
 
+import ThreeDView from "../components/ThreeD/ThreeDView";
+
 function MainPage() {
   const navigate = useNavigate();
   const dbFireStore = getFirestore();
@@ -140,10 +142,14 @@ function MainPage() {
             </div>
           </div>
         </div>
-        <div className="img-wrapper">
+        {/* <div className="img-wrapper">
           <img src={images.gallery04} alt="img" />
-        </div>
+        </div> */}
+
+        <ThreeDView/>
       </div>
+
+
       
     </div>
   );

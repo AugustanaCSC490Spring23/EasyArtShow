@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { ref, getStorage, deleteObject } from "@firebase/storage";
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
-import { getDatabase, ref as dbRef } from "@firebase/database";
 import {
   doc,
   getFirestore,
@@ -12,7 +11,7 @@ import {
 } from "@firebase/firestore";
 import "./ArtBoard.css";
 
-import ThreeDView from "../../ThreeDView"
+import ThreeDView from "../../ThreeD/ThreeDView";
 
 const spanStyle = {
   padding: "20px",
@@ -100,7 +99,6 @@ function ArtBoard({ id }) {
 
   return (
     <div>
-      {/* <ThreeDView /> */}
       {imageData &&
         imageData.map((item) => (
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
