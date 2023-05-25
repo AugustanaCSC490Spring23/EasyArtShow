@@ -90,3 +90,15 @@
     transform: translateY(-20%);
 }
 
+.first-section {
+    padding: 1rem
+}
+
+.second-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+}

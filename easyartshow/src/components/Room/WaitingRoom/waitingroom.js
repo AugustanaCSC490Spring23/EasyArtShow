@@ -39,10 +39,9 @@ const SlideshowSettingModal = ( { show, handleClose, id }) => {
   const [infiniteLooping, setInfiniteLooping] = useState(true);
   const [autoPlay, setAutoPlay] = useState(true);
   const [slideDuration, setSlideDuration] = useState(3000);
-
-  const [buttonStates, setButtonStates] = useState(Array(6).fill(true));
   const modalClassname = show ? "modal-background" : "display-none";
 
+<<<<<<< HEAD:easyartshow/src/components/Room/WaitingRoom/waitingroom.js
   // Shoutout to ChatGPT for this graceful solution
   const handleButtonClick = (index) => {
     /**
@@ -58,6 +57,11 @@ const SlideshowSettingModal = ( { show, handleClose, id }) => {
     buttonOnClick(newButtonStates[index]);
   };
 
+=======
+  const getButtonStates = function() {
+      return [includeBackground, includeTitle, includeDescription, includeContributor, infiniteLooping, autoPlay];
+  }
+>>>>>>> 98d90a9 (clean up, remove stuffs that are not styled:):easyartshow/src/screens/host/waitingroom.js
   const buttonOnClicks = [
     () => setIncludeBackground(!includeBackground),
     () => setIncludeTitle(!includeTitle),
@@ -120,11 +124,11 @@ const SlideshowSettingModal = ( { show, handleClose, id }) => {
         </div>
 
         <div className="modal-content">
-          {buttonStates.map((isActive, index) =>
+          {getButtonStates().map((isActive, index) =>
             <button
               key={index}
               className={isActive ? "active" : "inactive"}
-              onClick={() => handleButtonClick(index)}
+              onClick={buttonOnClicks[index]}
             >
               <label className="headtext_info">{buttonLabels[index]}</label>
               <FontAwesomeIcon className={isActive ? "active" : "display-none"} icon={faCheck} size="lg" />
@@ -233,7 +237,7 @@ function WaitingRoom() {
       {roomData === null ? (
         <Loading loadingState={true} />
       ) : (
-        <div>
+        <div className="waitingroom" style={{width: "100vw"}}>
           {/* <h1> {roomData[id].roomInfo.roomName}</h1> */}
           <Navbar />
           <WaitingRoomComponent

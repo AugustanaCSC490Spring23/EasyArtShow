@@ -152,7 +152,7 @@ const UploadPicRoom = () => {
           </h2>
         )}
 
-        <div>
+        <div className="first-section">
           <div className="input-field">
             <h2 className="headtext__info" >Choose a picture</h2>
             <FileUploader
@@ -173,7 +173,6 @@ const UploadPicRoom = () => {
               style={{ width: "70%" }}
             />
           </div>
-          
         </div>
         <button className="system-button-primary" onClick={() => uploadPhoto()}> Upload this image </button>
         <br />

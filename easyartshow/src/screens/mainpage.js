@@ -4,15 +4,17 @@ import { getDatabase, ref, onValue } from "@firebase/database";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "../backend/firebase";
 import {
-  collection,
-  getFirestore,
-  getDocs,
-} from "@firebase/firestore";
+  getDatabase,
+  ref,
+  onValue,
+} from "@firebase/database";
+import { onAuthStateChanged } from "@firebase/auth";
+import { auth } from '../backend/firebase';
 
 import Navbar from "../components/Navbar/Navbar";
 import "../components/Landing/LandingModal.css";
 import { images } from "../constants/";
-import TopView from "../components/TopView";
+import Carousel from "react-elastic-carousel";
 
 function MainPage() {
   const navigate = useNavigate();
@@ -90,25 +92,24 @@ function MainPage() {
       <div className="modal-wrapper">
         <div className="modal-box">
           <div className="text-content">
-            <h1 className="headtext__major headtext">
+            <h1 className="navbar-text headtext">
               Explore & Share Art Together
             </h1>
-            <p className="headtext__minor">
-              Li Europan lingues es membres del sam familie. Lor separat
-              existentie es un myth. Por scientie, musica, sport etc, litot
-              Europa usa li sam vocabular.
+            <p className="navbar-text minor">
+            Empower Your Artistic Journey with EasyArtShow: Discover, Connect, and Showcase Your Masterpieces on the Revolutionary Art Sharing Web App
             </p>
           </div>
 
-          <div className="headtext__major modal-title component-padding">
-            Join Room
+          <div className="input-field">
+            <h2 className="navbar-text">Join a room</h2>
+            <input
+              placeholder="Room passcode"
+              type="text"
+              onChange={onChangeHandler}
+              value={roomCode}
+            />
           </div>
-          <input
-            placeholder="Room passcode"
-            type="text"
-            onChange={onChangeHandler}
-            value={roomCode}
-          />
+          
           <div className="button-group-row">
             <button
               className="system-button-secondary"
@@ -150,6 +151,7 @@ function MainPage() {
           <img src={images.gallery04} alt="img" />
         </div>
       </div>
+      
     </div>
   );
 }
