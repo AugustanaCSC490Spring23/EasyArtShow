@@ -5,6 +5,8 @@ Alpha verson: https://easyartshow-2dbd2.web.app/
 
 Development blogs (check development's history for more): https://github.com/AugustanaCSC490Spring23/EasyArtShow/wiki
 
+![](https://hackmd.io/_uploads/H1YmhEAr2.png)
+
 ## Contributing guide
 ### How to run
 1. Clone the project
