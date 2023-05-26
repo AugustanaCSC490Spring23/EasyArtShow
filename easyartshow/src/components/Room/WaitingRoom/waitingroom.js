@@ -199,7 +199,7 @@ function WaitingRoomComponent({
             handleClose={handleClose}
             id={id}
           />
-          <SlInfo className="info-button" />
+          {/* <SlInfo className="info-button" /> */}
         </div>
       </div>
 

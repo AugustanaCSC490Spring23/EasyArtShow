@@ -160,7 +160,7 @@ const UploadWithAI = () => {
             <h4> Your Name </h4>
             <input
               type="text"
-              onChangeCapture={onChangeParticipantName}
+              onChange={onChangeParticipantName}
               value={participantName}
             />
             <br />
@@ -179,7 +179,7 @@ const UploadWithAI = () => {
             <h2 className="headtext__info"> Your prompt</h2>
             <textarea
               type="text"
-              onChangeCapture={onChangeArtPrompt}
+              onChange={onChangeArtPrompt}
               value={artPrompt}
               style={{ width: "100%" }}
               placeholder="Example: A cat driving a rocket"
@@ -220,7 +220,7 @@ const UploadWithAI = () => {
             <input
               type="text"
               class="art-title-input"
-              onChangeCapture={onChangeArtTitle}
+              onChange={onChangeArtTitle}
               value={artTitle}
               placeholder="Please give this art a title"
             />

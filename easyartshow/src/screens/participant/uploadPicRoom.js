@@ -139,7 +139,7 @@ const UploadPicRoom = () => {
             <h4> Your Name </h4>
             <input
               type="text"
-              onChangeCapture={onChangeParticipantName}
+              onChange={onChangeParticipantName}
               value={participantName}
             />
             <br />
@@ -168,7 +168,7 @@ const UploadPicRoom = () => {
             <h2 className="headtext__info"> Artwork title </h2>
             <input
               type="text"
-              onChangeCapture={onChangeArtTitle}
+              onChange={onChangeArtTitle}
               value={artTitle}
               style={{ width: "70%" }}
             />
