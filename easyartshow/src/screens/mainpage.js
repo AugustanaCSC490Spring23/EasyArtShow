@@ -145,8 +145,10 @@ function MainPage() {
         {/* <div className="img-wrapper">
           <img src={images.gallery04} alt="img" />
         </div> */}
-
-        <ThreeDView/>
+        <div style={{width: "50vw", height:"80vh"}}>
+          <ThreeDView/>
+        </div>
+        
       </div>
 
 
