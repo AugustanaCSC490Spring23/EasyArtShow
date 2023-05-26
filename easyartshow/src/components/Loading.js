@@ -13,7 +13,7 @@ function Loading({ loadingState }) {
         aria-label="Loading Spinner"
         data-testid="loader"
       />
-      <h1> Loading.... </h1>
+      <h2 className=".headtext__major"> Loading.... </h2>
     </div>
   );
 }

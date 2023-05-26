@@ -8,6 +8,7 @@
 .headtext__major {
   font-family: var(--font-system);
   color: var(--color-black);
+  font-size: 33px;
 }
 
 .headtext__minor {
