@@ -8,7 +8,7 @@ import {
   getStorage,
   uploadString,
 } from "@firebase/storage";
-import './uploadWithAI.css';
+import "./uploadWithAI.css";
 import { auth } from "../../backend/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
 import { doc, updateDoc, arrayUnion, getFirestore } from "@firebase/firestore";
@@ -224,15 +224,16 @@ const UploadWithAI = () => {
               value={artTitle}
               placeholder="Please give this art a title"
             />
-            <br />
-            <button
-              className="system-button-primary"
-              onClick={() => uploadProcess()}
-            >
-              {" "}
-              Upload this art
-              {" "}
-            </button>
+            <div>
+              <br />
+              <button
+                className="system-button-primary"
+                onClick={() => uploadProcess()}
+              >
+                {" "}
+                Upload this art{" "}
+              </button>
+            </div>
           </div>
         )}
       </div>
