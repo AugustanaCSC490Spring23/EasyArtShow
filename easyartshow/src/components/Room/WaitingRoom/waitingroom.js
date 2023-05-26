@@ -160,6 +160,10 @@ function WaitingRoomComponent({
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
+  const handleDemo3D = () => {
+    navigate("/demo3d");
+  }
+
   return (
     <div className="waitingroom-wrapper">
       <div className="header-wrapper">
@@ -179,10 +183,16 @@ function WaitingRoomComponent({
             {" "}
             <FiShare /> Share this room
           </a>
+        
         </div>
         <div className="right-button-group">
           <button className="custom-button" onClick={handleShow}>
             Slideshow
+          </button>
+          <button className = "custom-button" 
+            onClick={handleDemo3D}
+          >
+            Demo 3D Gallery
           </button>
           <SlideshowSettingModal
             show={show}

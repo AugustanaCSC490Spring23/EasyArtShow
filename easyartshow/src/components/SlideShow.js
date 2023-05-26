@@ -26,6 +26,7 @@ const SlideShow = () => {
   return (
     <>
       {/* <button onClick={() => navigate(-1)}>Go back</button> */}
+
       <Carousel 
         showArrows={true}
         showStatus={false}
@@ -63,6 +64,8 @@ const SlideShow = () => {
             </div>
           ))}
       </Carousel>
+
+      
     </>
   );
 }

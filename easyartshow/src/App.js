@@ -24,6 +24,7 @@ import PageNotFound from './screens/pageNotFound';
 import About from './screens/about/about';
 import QRCodeComponent from './components/QRCodeComponent';
 import SlideShow from './components/Room/SlideShow/SlideShow';
+import Demo3D from './components/Room/Demo3D/Demo3D.js';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/qrcode/:id" element={<QRCodeComponent />} />
             <Route path="/slideshow/:id" element={<SlideShow/>} />
+            <Route path="/demo3d" element={<Demo3D/>} />
         </Routes>
       </BrowserRouter>
     </div>
