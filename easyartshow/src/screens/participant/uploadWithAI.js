@@ -118,7 +118,7 @@ const UploadWithAI = () => {
     setArtUrl(image_url);
   };
 
-  const uploadPhoto = () => {
+  const uploadPhoto = async () => {
     /**
      * Upload image to firebase storage
      */
@@ -135,7 +135,7 @@ const UploadWithAI = () => {
     );
 
     if (artTitle && artUrl && participantName) {
-      uploadString(storageRef, artUrl, "base64").then((snapshot) => {
+      await uploadString(storageRef, artUrl, "base64").then((snapshot) => {
         setIsUploaded(true);
         getDownloadURL(snapshot.ref).then((url) => {
           updateDoc(doc(fireStoreDB, "rooms", `${id}`), {
@@ -151,11 +151,19 @@ const UploadWithAI = () => {
           });
         });
       });
-      console.log("Uploaded a blob or file!");
-      navigate(`/waitingroom/${id}`);
     } else {
       alert("Please fill in all fields");
     }
+  };
+
+  const uploadProcess = async () => {
+    /**
+     * Upload image to firebase storage
+     * @returns {void}
+     */
+    uploadPhoto();
+    console.log("Photo uploaded");
+    navigate(`/waitingroom/${id}`);
   };
 
   return (
@@ -240,7 +248,7 @@ const UploadWithAI = () => {
             />
             <button
               className="system-button-primary"
-              onClick={() => uploadPhoto()}
+              onClick={() => uploadProcess()}
             >
               {" "}
               Upload this art{" "}
