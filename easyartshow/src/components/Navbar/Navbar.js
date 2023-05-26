@@ -33,7 +33,7 @@ function Navbar() {
       <nav>
         <ul className='navbar-links'>
           <li className='navbar-text'><a href="/">Home</a></li>
-          <li className='navbar-text'><a href="/devnote">Dev Note</a></li>
+          <li className='navbar-text'><a  href="https://github.com/AugustanaCSC490Spring23/EasyArtShow/wiki/Development-History" target="_blank" rel="noreferrer">Dev Note</a></li>
           <li className='navbar-text'><a href="/about">About</a></li>
           <li className='navbar-text'><a href="/contact">Contact</a></li>
         </ul>

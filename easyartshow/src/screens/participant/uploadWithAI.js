@@ -6,6 +6,7 @@ import {
   uploadBytes,
   getDownloadURL,
   getStorage,
+  uploadString,
 } from "@firebase/storage";
 import { auth } from "../../backend/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
@@ -30,7 +31,6 @@ const UploadWithAI = () => {
   const openai = new OpenAIApi(configuration);
 
   const [imageUrl, setImageUrl] = useState("");
-  const [artUrl, setArtUrl] = useState("");
   const [filename, setFilename] = useState("");
   const [isUploaded, setIsUploaded] = useState(false);
   const [file, setFile] = useState(null);
@@ -38,6 +38,7 @@ const UploadWithAI = () => {
   const [participantName, setParticipantName] = useState("");
   const [artTitle, setArtTitle] = useState("");
   const [artPrompt, setArtPrompt] = useState("");
+  const [artUrl, setArtUrl] = useState("");
   const [artCaption, setArtCaption] = useState("");
   const [startCreateArt, setStartCreateArt] = useState(false);
   const PROJECT_NAME = "easyartshow";
@@ -111,52 +112,58 @@ const UploadWithAI = () => {
       prompt: artPrompt,
       n: 1,
       size: "1024x1024",
+      response_format: "b64_json",
     });
-    const image_url = response.data.data[0].url;
+    const image_url = response.data.data[0]["b64_json"];
     setArtUrl(image_url);
   };
 
-  const uploadPhoto = () => {
+  const uploadPhoto = async () => {
     /**
      * Upload image to firebase storage
      */
     const filenameRef = new Date().getTime() + "-" + filename;
-    const storageRef = ref(
-      storage,
-      `${PROJECT_NAME}/rooms/${id}/images/${filenameRef}`
-    );
 
     if (user) {
       setParticipantName(user.displayName.toString());
     }
 
     const timeStamp = new Date().getTime();
-    const metadata = {
-      customMetadata: {
-        participantName: participantName,
-        artTitle: artTitle,
-        imageStamp: timeStamp,
-        timeCreatedFullFormat: convertTime(timeStamp),
-      },
-    };
+    const storageRef = ref(
+      storage,
+      `${PROJECT_NAME}/rooms/${id}/images/${filenameRef}`
+    );
+
     if (artTitle && artUrl && participantName) {
-      setIsUploaded(true);
-      updateDoc(doc(fireStoreDB, "rooms", `${id}`), {
-        images: arrayUnion({
-          fileName: filenameRef,
-          participantName: participantName,
-          artTitle: artTitle,
-          imageStamp: timeStamp,
-          timeCreatedFullFormat: convertTime(timeStamp),
-          imageUrl: artUrl,
-          imageRef: null,
-        }),
+      await uploadString(storageRef, artUrl, "base64").then((snapshot) => {
+        setIsUploaded(true);
+        getDownloadURL(snapshot.ref).then((url) => {
+          updateDoc(doc(fireStoreDB, "rooms", `${id}`), {
+            images: arrayUnion({
+              fileName: filenameRef,
+              participantName: participantName,
+              artTitle: artTitle,
+              imageStamp: timeStamp,
+              timeCreatedFullFormat: convertTime(timeStamp),
+              imageUrl: url,
+              imageRef: snapshot.ref.fullPath.replace(`${PROJECT_NAME}/`, ""),
+            }),
+          });
+        });
       });
-      console.log("Uploaded successfully");
-      navigate(`/waitingroom/${id}`);
     } else {
-      alert("Please enter all fields.");
+      alert("Please fill in all fields");
     }
+  };
+
+  const uploadProcess = async () => {
+    /**
+     * Upload image to firebase storage
+     * @returns {void}
+     */
+    uploadPhoto();
+    console.log("Photo uploaded");
+    navigate(`/waitingroom/${id}`);
   };
 
   return (
@@ -227,7 +234,11 @@ const UploadWithAI = () => {
         {artUrl && (
           <div>
             {" "}
-            <img src={artUrl} alt="" style={{ width: "50%" }} />
+            <img
+              src={`data:image/jpeg;base64,${artUrl}`}
+              alt=""
+              style={{ width: "50%" }}
+            />
             <br />
             <input
               type="text"
@@ -237,7 +248,7 @@ const UploadWithAI = () => {
             />
             <button
               className="system-button-primary"
-              onClick={() => uploadPhoto()}
+              onClick={() => uploadProcess()}
             >
               {" "}
               Upload this art{" "}

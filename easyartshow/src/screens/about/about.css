@@ -1,0 +1,159 @@
+html, body {
+  height: 90%;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Header styles */
+header {
+  background-color: bisque;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 0
+}
+
+
+nav ul {
+  display: flex;
+}
+
+
+nav li {
+  margin-right: 1rem;
+}
+
+
+nav li:last-child {
+  margin-right: 0;
+}
+
+
+nav a {
+  padding: 0.5rem;
+}
+
+
+/* Main styles */
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  min-height: 75vh ;
+  background-color: ivory;
+ 
+}
+
+
+.intro {
+ 
+  width: 500px;
+  padding-top: 100px;
+  padding-bottom: 50px;
+  padding-left: 10px;
+  border: 5px solid gray;
+  align-items: center;
+  margin-top: -60px;
+ 
+  background-color: bisque;
+}
+
+
+.intro h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  margin-left: 50px;
+  margin-top: -100px;
+}
+
+
+.intro p {
+  font-size: 1.2rem;
+  margin-left: 50px;
+}
+.mv-section{
+  width: 500px;
+  padding: 90px;
+  /* padding: bottom -10px; */
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border: 5px solid gray;
+  margin-right: 800px;
+  margin-top: 50px;
+  background-color: bisque;
+}
+
+
+.v-section{
+  width: 500px;
+  padding: 90px;
+  /* padding: bottom -10px; */
+  padding-left: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border: 5px solid gray;
+  margin-left: 800px;
+  margin-top: -180px;
+  background-color: bisque;
+
+
+}
+
+
+.mission-vision-values h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+ 
+}
+
+
+.mission-vision-values {
+  margin-bottom: 2rem;
+}
+
+
+.mission-vision-values h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+
+.mission-vision-values ul {
+  padding-left: 1rem;
+}
+
+
+/* Footer styles */
+footer {
+  background-color: cornsil;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+}
+
+
+footer p {
+  margin: 0;
+}

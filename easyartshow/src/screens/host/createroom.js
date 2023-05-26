@@ -109,6 +109,9 @@ function CreateRoom() {
               <label className="headtext__info">
                 <input type="checkbox" onChange={onChangeIsPrivate} /> Private
               </label>
+              <label className="headtext__info">
+                <input type="checkbox" onChange={() => setCommentBox(!includeCommentBox)} /> Include comment box
+              </label>
             </div>
             
             <div className="button-group-row">

@@ -11,6 +11,7 @@ import Login from './screens/host/authentication/login';
 // import SignUp from './screens/host/authentication/signup';
 import MainPage from './screens/mainpage';
 import Dashboard from './components/Dashboard/dashboard';
+import ContactUs from './screens/contact/contactUs';
 import WaitingRoom from './components/Room/WaitingRoom/waitingroom';
 import CreateRoom from './components/Room/CreateRoom/createroom';
 import HostRoom from './screens/host/hostroom';
@@ -19,10 +20,8 @@ import UploadPicRoom from './screens/participant/uploadPicRoom';
 import UploadWithAI from './screens/participant/uploadWithAI';
 import DevNote from './screens/devnote';
 import Map from './components/Map';
-// import ThreeDView from './components/ThreeD/ThreeDView';
 import PageNotFound from './screens/pageNotFound';
-import ContactUs from './screens/contactUs';
-import About from './screens/about';
+import About from './screens/about/about';
 import QRCodeComponent from './components/QRCodeComponent';
 import SlideShow from './components/Room/SlideShow/SlideShow';
 import Demo3D from './components/Room/Demo3D/Demo3D.js';
@@ -34,7 +33,6 @@ function App() {
         <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
-            {/* <Route path="/signup" element={<SignUp />} /> */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/waitingroom/:id" element={<WaitingRoom />} />
             <Route path="/createroom" element={<CreateRoom />} />
@@ -44,13 +42,11 @@ function App() {
             <Route path="/uploadwithai/:id" element={<UploadWithAI />} />
             <Route path="/devnote" element={<DevNote />} />
             <Route path="/map" element={<Map />} />
-            {/* <Route path="/threedview" element={<ThreeDView />} /> */}
             <Route path="/404" element={<PageNotFound />} />
             <Route path="*" element={<Navigate to="/404" />} />
-            <Route path="/contactus" element={<ContactUs />} />
             <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<ContactUs />} />
             <Route path="/qrcode/:id" element={<QRCodeComponent />} />
-            {/* <Route path="/threedview" element={<ThreeDView />} /> */}
             <Route path="/slideshow/:id" element={<SlideShow/>} />
             <Route path="/demo3d" element={<Demo3D/>} />
         </Routes>
