@@ -9,7 +9,7 @@ import React from 'react';
 
 import Login from './screens/host/authentication/login';
 // import SignUp from './screens/host/authentication/signup';
-import MainPage from './screens/mainpage';
+import MainPage from './components/Landing/mainpage';
 import Dashboard from './components/Dashboard/dashboard';
 import ContactUs from './screens/contact/contactUs';
 import WaitingRoom from './components/Room/WaitingRoom/waitingroom';

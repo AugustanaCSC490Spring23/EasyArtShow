@@ -8,6 +8,7 @@ import {
   getStorage,
   uploadString,
 } from "@firebase/storage";
+import './uploadWithAI.css';
 import { auth } from "../../backend/firebase";
 import { onAuthStateChanged } from "@firebase/auth";
 import { doc, updateDoc, arrayUnion, getFirestore } from "@firebase/firestore";
@@ -42,25 +43,6 @@ const UploadWithAI = () => {
   const [artCaption, setArtCaption] = useState("");
   const [startCreateArt, setStartCreateArt] = useState(false);
   const PROJECT_NAME = "easyartshow";
-
-  const onChangeArtCaption = (event) => {
-    setArtCaption(event.target.value);
-  };
-
-  const handlePictureChange = (file) => {
-    /**
-     * Convert image to base64
-     * @param {File} file
-     * @returns {Promise<string>} base64 string
-     */
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImageUrl(reader.result);
-    };
-    reader.readAsDataURL(file);
-    setFilename(file.name);
-    setFile(file);
-  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -152,7 +134,7 @@ const UploadWithAI = () => {
         });
       });
     } else {
-      alert("Please fill in all fields");
+      alert("Please enter your art's title and prompt.");
     }
   };
 
@@ -195,16 +177,11 @@ const UploadWithAI = () => {
           {imageUrl && <h2 className="headtext__minor">{filename} selected</h2>}
           <div className="input-field">
             <h2 className="headtext__info"> Your prompt</h2>
-            {/* <div>
-              <h3 className="headtext__info"> Record your prompt </h3>
-              <Dictaphone />
-              <h3 className="headtext__info"> Or type here: </h3>
-            </div> */}
-            <input
+            <textarea
               type="text"
               onChangeCapture={onChangeArtPrompt}
               value={artPrompt}
-              style={{ width: "70%" }}
+              style={{ width: "100%" }}
               placeholder="Example: A cat driving a rocket"
             />
           </div>
@@ -232,26 +209,29 @@ const UploadWithAI = () => {
         )}
 
         {artUrl && (
-          <div>
+          <div class="art-container">
             {" "}
             <img
               src={`data:image/jpeg;base64,${artUrl}`}
               alt=""
-              style={{ width: "50%" }}
+              class="art-image"
             />
             <br />
             <input
               type="text"
+              class="art-title-input"
               onChangeCapture={onChangeArtTitle}
               value={artTitle}
               placeholder="Please give this art a title"
             />
+            <br />
             <button
               className="system-button-primary"
               onClick={() => uploadProcess()}
             >
               {" "}
-              Upload this art{" "}
+              Upload this art
+              {" "}
             </button>
           </div>
         )}

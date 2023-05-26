@@ -5,7 +5,7 @@ import React, { useRef } from "react";
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./contact.css";
-import "../../screens/mainpage"
+import "../../components/Landing/mainpage"
 
 function ContactUs() {
   const [name, setName] = useState("");

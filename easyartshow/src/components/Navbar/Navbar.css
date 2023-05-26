@@ -1,71 +1,108 @@
-@import url('https://fonts.googleapis.com/css2?family=Duru+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Duru+Sans&display=swap");
 
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-    width: 100%;
-    max-height: 100px;
-    padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px; /* Adjust the height as needed */
+  padding: 0 2rem;
+  background-color: #ffffff; /* Replace with desired background color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  z-index: 999; /* Ensure the navbar appears above other elements */
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333333; /* Set link color */
+  margin: 0 1rem;
+  transition: color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.navbar a:hover {
+  color: #007bff; /* Change link color on hover */
 }
 
 .navbar .logo-anchor {
-    width: 20%
+  width: 20%;
 }
+
 .navbar .logo {
-    max-width: 80%;
+  font-weight: bold; /* Adjust font style as needed */
+  font-size: 1.5rem; /* Adjust font size as needed */
+}
+
+.navbar .nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .nav-items li {
+  list-style: none;
+}
+
+.navbar .nav-items li a {
+  text-decoration: none;
+  color: #333333; /* Set link color */
+  margin: 0 1rem;
+  transition: color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.navbar .nav-items li a:hover {
+  color: #007bff; /* Change link color on hover */
 }
 
 .navbar-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
 }
 
 .navbar li {
-    margin: 0 1rem;
-    cursor: pointer;
+  margin: 0 1rem;
+  cursor: pointer;
 }
 
 a:link {
-    color: var(--color-gray);
-    text-decoration: none;
+  color: var(--color-gray);
+  text-decoration: none;
 }
 
 a:active {
-    color: var(--color-black);
+  color: var(--color-black);
 }
 a:visited {
-    color: var(--color-gray)
+  color: var(--color-gray);
 }
 
 a:hover {
-    color: var(--color-black);
+  color: var(--color-black);
 }
 
 .navbar-text {
-    font-family: 'Duru Sans', sans-serif;
+  font-family: "Duru Sans", sans-serif;
 }
 
 .minor {
-    color: var(--color-gray);
-    font-size: 14px;
-    line-height: 18px;
-    letter-spacing: 0.04em;
+  color: var(--color-gray);
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.04em;
 }
 
 .navbar img {
-    max-width: 50px;
+  max-width: 50px;
 }
 
 .right-group {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    
-    gap: 0 1rem;
-}
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
+  gap: 0 1rem;
+}

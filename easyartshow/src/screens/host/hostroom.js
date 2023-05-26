@@ -42,7 +42,9 @@ const HostRoom = () => {
     <>
       {user ? (
         <div>
+          <div> 
           <Navbar />
+          </div>
           <div className="wrapper">
             <div className="content-wrapper">
               <WelcomeUser />

@@ -1,11 +1,12 @@
 .system {
     border: 1px solid #4F4F4F;
-
     font-weight: 500;
     font-size: 14px;
-    line-height: 17px;
-
-    display: flex;
+    line-height: 1.2; /* Adjusted line height for better readability */
+    padding: 8px; /* Added padding for better spacing */
+  
+    display: inline-flex; /* Changed display to inline-flex for better alignment */
     align-items: center;
     color: #4F4F4F;
-}
+  }
+  

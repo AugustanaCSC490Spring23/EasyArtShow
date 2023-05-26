@@ -245,8 +245,10 @@ function WaitingRoom() {
         <Loading loadingState={true} />
       ) : (
         <div className="waitingroom" style={{ width: "100vw" }}>
-          {/* <h1> {roomData[id].roomInfo.roomName}</h1> */}
+          <div>
           <Navbar />
+          </div>
+
           <WaitingRoomComponent
             id={id}
             roomName={roomName}
