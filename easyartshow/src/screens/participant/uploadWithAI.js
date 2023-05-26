@@ -136,7 +136,6 @@ const UploadWithAI = () => {
 
     if (artTitle && artUrl && participantName) {
       uploadString(storageRef, artUrl, "base64").then((snapshot) => {
-        console.log("Uploaded a blob or file!");
         setIsUploaded(true);
         getDownloadURL(snapshot.ref).then((url) => {
           updateDoc(doc(fireStoreDB, "rooms", `${id}`), {
@@ -152,6 +151,8 @@ const UploadWithAI = () => {
           });
         });
       });
+      console.log("Uploaded a blob or file!");
+      navigate(`/waitingroom/${id}`);
     } else {
       alert("Please fill in all fields");
     }
