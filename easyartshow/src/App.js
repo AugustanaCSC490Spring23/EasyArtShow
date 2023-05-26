@@ -25,6 +25,7 @@ import ContactUs from './screens/contactUs';
 import About from './screens/about';
 import QRCodeComponent from './components/QRCodeComponent';
 import SlideShow from './components/Room/SlideShow/SlideShow';
+import Demo3D from './components/Room/Demo3D/Demo3D.js';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route path="/qrcode/:id" element={<QRCodeComponent />} />
             {/* <Route path="/threedview" element={<ThreeDView />} /> */}
             <Route path="/slideshow/:id" element={<SlideShow/>} />
+            <Route path="/demo3d" element={<Demo3D/>} />
         </Routes>
       </BrowserRouter>
     </div>
