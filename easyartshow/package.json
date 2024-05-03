@@ -17,7 +17,7 @@
     "@types/three": "^0.149.0",
     "disqus-react": "^1.1.5",
     "firebase": "^9.17.1",
-    "firebase-tools": "^11.24.0",
+    "firebase-tools": "^13.6.0",
     "fortawesome": "^0.0.1-security",
     "google-map-react": "^2.2.0",
     "node-sd-webui": "^0.0.7",
